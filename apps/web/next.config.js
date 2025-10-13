@@ -20,3 +20,5 @@ const plugins = [
 
 module.exports = composePlugins(...plugins)(nextConfig);
 
+import { initOpenNextCloudflareForDev } from "@opennextjs/cloudflare";
+initOpenNextCloudflareForDev();
