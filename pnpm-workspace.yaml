@@ -1,5 +1,7 @@
 packages:
   - "packages/*"
 
-autoInstallPeers: true
+# If a package has missing peer dependencies, PNPM auto-installs them.
+autoInstallPeers: true 
+# Disables peer dependency resolution errors. Useful during development or with mismatched dependencies.
 strictPeerDependencies: false
