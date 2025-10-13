@@ -53,5 +53,8 @@
         "linter": "eslint"
       }
     }
+  },
+   "projects": {
+    "web": "apps/web"
   }
 }
