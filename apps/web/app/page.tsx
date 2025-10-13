@@ -1,7 +1,11 @@
-
-
+"use client";
+import { useEffect } from "react";
+import { API_ENDPOINTS } from '@acm/api-endpoints';
 
 export default function Index() {
+  useEffect(()=>{
+    console.log(API_ENDPOINTS.message)
+  })
   /*
    * Replace the elements below with your own.
    *
