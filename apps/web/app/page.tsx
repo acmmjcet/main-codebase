@@ -58,7 +58,6 @@ export default function Index() {
               rel="noreferrer"
               className="list-item-link"
             >
-              
               <svg
                 fill="none"
                 stroke="currentColor"
