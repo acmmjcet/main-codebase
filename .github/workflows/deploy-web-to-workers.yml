@@ -46,11 +46,12 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-pnpm-store-
 
+      - name: Build @acm/api-endpoints package
+        run: pnpm --filter @acm/api-endpoints build
+                
       - name: Install dependencies
         run: pnpm install --no-frozen-lockfile
     
-      - name: Build @acm/api-endpoints package
-        run: pnpm --filter @acm/api-endpoints build
 
       - name: Build OpenNext output
         run: pnpm exec opennextjs-cloudflare build
