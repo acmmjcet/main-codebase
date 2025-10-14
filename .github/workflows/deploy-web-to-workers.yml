@@ -54,6 +54,8 @@ jobs:
       # Debug build output of api-endpoints at root workspace level
       - name: Debug Check build output of @acm/api-endpoints (root workspace)
         run: |
+          echo "Current working directory:"
+          pwd || echo "Failed to get current directory"
           echo "Listing dist folder in packages/api-endpoints:"
           ls -la ./packages/api-endpoints/dist || echo "No dist folder found"
           echo "Listing package.json in packages/api-endpoints:"

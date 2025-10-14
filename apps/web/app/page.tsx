@@ -49,7 +49,6 @@ export default function Index() {
             </svg>
           </div>
         </div>
-
         <div id="middle-content">
           <div id="learning-materials" className="rounded shadow">
             <h2>Learning materials</h2>
