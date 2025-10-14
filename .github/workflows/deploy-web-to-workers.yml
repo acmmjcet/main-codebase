@@ -17,7 +17,7 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: apps/web   # run everything inside apps/web
+        working-directory: apps/web  # run everything inside apps/web
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -46,22 +46,53 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-pnpm-store-
 
+      # Build the @acm/api-endpoints package from source
       - name: Build @acm/api-endpoints package
         run: pnpm --filter @acm/api-endpoints build
-                
+        working-directory: .
+
+      # Debug build output of api-endpoints at root workspace level
+      - name: Debug Check build output of @acm/api-endpoints (root workspace)
+        run: |
+          echo "Listing dist folder in packages/api-endpoints:"
+          ls -la ./packages/api-endpoints/dist || echo "No dist folder found"
+          echo "Listing package.json in packages/api-endpoints:"
+          cat ./packages/api-endpoints/package.json
+
+      # Install dependencies for apps/web (and workspace)
       - name: Install dependencies
         run: pnpm install --no-frozen-lockfile
-    
+        working-directory: .
 
+      # Debug installed packages at root level
+      - name: Debug List workspace packages at root
+        run: pnpm list --depth 0
+
+      # Debug: Verify @acm/api-endpoints package in apps/web/node_modules
+      - name: Debug Verify @acm/api-endpoints installation in apps/web
+        run: |
+          echo "Listing @acm/api-endpoints package info inside apps/web:"
+          pnpm list @acm/api-endpoints
+          echo "Listing contents of node_modules/@acm/api-endpoints in apps/web:"
+          ls -l node_modules/@acm/api-endpoints || echo "Package folder not found"
+          echo "Resolved path of @acm/api-endpoints inside apps/web:"
+          readlink -f node_modules/@acm/api-endpoints || echo "Not a symlink or not found"
+        working-directory: apps/web
+
+      # Build the Next.js app with OpenNext (inside apps/web)
       - name: Build OpenNext output
         run: pnpm exec opennextjs-cloudflare build
         working-directory: apps/web
 
+      # Install Wrangler CLI globally
       - name: Install wrangler CLI
         run: pnpm add -g wrangler
+        working-directory: apps/web
 
+      # Deploy to Cloudflare Workers
       - name: Deploy to Cloudflare Workers
         run: pnpm run deploy
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+        working-directory: apps/web
