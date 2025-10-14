@@ -1,1 +1,1 @@
-export * from './lib/api-endpoints.js';
+export * from './lib/api-endpoints';
