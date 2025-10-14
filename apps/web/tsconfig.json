@@ -25,7 +25,8 @@
     "paths": {
       "@/*": [
         "./*"
-      ]
+      ],
+      "@acm/api-endpoints": ["../packages/api-endpoints/src"]
     },
     "outDir": "dist",
     "rootDir": "."
