@@ -1,24 +1,27 @@
-//@ts-check
-
-// eslint-disable-next-line @typescript-eslint/no-var-requires
 import { composePlugins, withNx } from '@nx/next';
+import type { NextConfig } from 'next';
+import path from 'path';
+import { initOpenNextCloudflareForDev } from '@opennextjs/cloudflare';
 
-
-/**
- * @type {import('@nx/next/plugins/with-nx').WithNxOptions}
- **/
-const nextConfig = {
-  // Use this to set Nx-specific options
-  // See: https://nx.dev/recipes/next/next-config-setup
+const nextConfig: NextConfig = {
+  reactStrictMode: true,
+  transpilePackages: ['@acm/api-endpoints'],
+  experimental: {
+    externalDir: true,
+  },
   nx: {},
+  webpack: (config) => {
+    config.resolve.alias = {
+      ...(config.resolve.alias ?? {}),
+      '@acm/api-endpoints': path.resolve(__dirname, '../../packages/api-endpoints/src'),
+    };
+    return config;
+  },
 };
 
-const plugins = [
-  // Add more Next.js plugins to this list if needed.
-  withNx,
-];
+const plugins = [withNx];
+const composed = composePlugins(...plugins)(nextConfig);
 
-module.exports = composePlugins(...plugins)(nextConfig);
-
-import { initOpenNextCloudflareForDev } from "@opennextjs/cloudflare";
 initOpenNextCloudflareForDev();
+
+export default composed;
