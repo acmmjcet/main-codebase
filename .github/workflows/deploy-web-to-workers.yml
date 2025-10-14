@@ -60,6 +60,7 @@ jobs:
           ls -la ./packages/api-endpoints/dist || echo "No dist folder found"
           echo "Listing package.json in packages/api-endpoints:"
           cat ./packages/api-endpoints/package.json
+        working-directory: .
 
       # Install dependencies for apps/web (and workspace)
       - name: Install dependencies
