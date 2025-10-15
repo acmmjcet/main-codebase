@@ -1,109 +1,225 @@
-# AcmWorkspace
+# ACM - Workspace
+<img alt="Status" src="https://img.shields.io/badge/status-under--development-orange" />
+<div style="display: flex; justify-content: space-between; align-items: center;">
+  <!-- <img alt="Status" src="https://img.shields.io/badge/status-production-brightgreen" /> -->
+  <!-- <img alt="Status" src="https://img.shields.io/badge/bug%20fixes-required-orange" /> -->
+  <!-- <img alt="Status" src="https://img.shields.io/badge/security%20improvements-needed-red" /> -->
+  <!-- <img alt="Status" src="https://img.shields.io/badge/maintenance-off-red" /> -->
+  <!-- <img alt="Status" src="https://img.shields.io/badge/status-production--in--progress-yellow" /> -->
+</div>
 
-<a alt="Nx logo" href="https://nx.dev" target="_blank" rel="noreferrer"><img src="https://raw.githubusercontent.com/nrwl/nx/master/images/nx-logo.png" width="45"></a>
+<div align="center">
+<img src="./apps/web/public/logo.png" alt="ACM Logo" width="200"/>
 
-✨ Your new, shiny [Nx workspace](https://nx.dev) is ready ✨.
 
-[Learn more about this workspace setup and its capabilities](https://nx.dev/nx-api/js?utm_source=nx_project&amp;utm_medium=readme&amp;utm_campaign=nx_projects) or run `npx nx graph` to visually explore what was created. Now, let's get you up to speed!
+**A Modern, Scalable System Architecture with the Edge compute power**
 
-## Generate a library
+[![Next.js](https://img.shields.io/badge/Next.js-15.3-black?style=for-the-badge&logo=next.js)](https://nextjs.org)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.9.2-blue?style=for-the-badge&logo=typescript)](https://www.typescriptlang.org)
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind%20CSS-3.4.3-blue?style=for-the-badge&logo=tailwindcss)](https://tailwindcss.com/)
+[![PNPM](https://img.shields.io/badge/PNPM-10.12.1-orange?style=for-the-badge&logo=pnpm)](https://pnpm.io)
+[![Nx](https://img.shields.io/badge/Nx-21.6.4-blue?style=for-the-badge&logo=nx)](https://nx.dev)
+[![Cloudflare Workers](https://img.shields.io/badge/Cloudflare_Workers-4.0-lightgray?style=for-the-badge&logo=cloudflare)](https://developers.cloudflare.com/workers)
+[![HonoJS](https://img.shields.io/badge/HonoJS-4.0-blue?style=for-the-badge&logo=honodev)](https://hono.dev)
+[![D1 Database](https://img.shields.io/badge/D1_Database-1.0-blue?style=for-the-badge&logo=cloudflare)](https://developers.cloudflare.com/d1)
+[![Drizzle](https://img.shields.io/badge/Drizzle-0.1-blue?style=for-the-badge&logo=drizzle)](https://www.drizzle.com)
+[![Mailtrap](https://img.shields.io/badge/Mailtrap-1.0-blue?style=for-the-badge&logo=mailtrap)](https://mailtrap.io)
+[![Resend](https://img.shields.io/badge/Resend-1.0-green?style=for-the-badge&logo=resend)](https://resend.com)
+[![Supabase](https://img.shields.io/badge/Supabase-1.0-green?style=for-the-badge&logo=supabase)](https://supabase.com)
+[![GCP OAuth](https://img.shields.io/badge/GCP%20OAuth-1.0-blue?style=for-the-badge&logo=googlecloud)](https://cloud.google.com/docs/authentication)
+[![ESLint](https://img.shields.io/badge/ESLint-8.35.0-blue?style=for-the-badge&logo=eslint)](https://eslint.org/)
+[![GitHub Actions](https://img.shields.io/badge/GitHub%20Actions-enabled-blue?style=for-the-badge&logo=github-actions)](https://github.com/features/actions)
 
-```sh
-npx nx g @nx/js:lib packages/pkg1 --publishable --importPath=@my-org/pkg1
+
+
+
+</div>
+
+## 🌟 Overview
+
+ACM-workspace is a comprehensive enterprise grade monorepo contains multiple applications organized in a scalable architecture.
+
+### Core Principles
+
+- **Security by Design**: Every component is built with security as a priority
+- **Scalable Architecture**: Designed to grow with traffic
+- **Maintainable Codebase**: Clean, documented, and easy to maintain
+- **Cloud Native**: Optimized for modern cloud environments
+
+## 📁 Project Structure
+
+```
+acm-workspace/
+├── apps/                    # Application packages
+│   ├── web/                 # Main web application
+│   ├── cf-server/           # Cloudflare backend worker
+│   ├── admin-web/           # Admin-portal for the entire infrastructure management and overlook
+├── packages/                # Shared packages
+│   ├── api-endpoints/       # Api-endpoints shared across tools, apps and packages
+└── tools/                   # Build and development tools to ease ACM Event management or plan execution
 ```
 
-## Run tasks
+##  Features
 
-To build the library use:
+- **Microservices Architecture**
+- **DevOps Integration**
+- **CI/CD Pipeline Support**
+- **Detailed Documentation**
+- **Animation System**
+- **Modern UI Components**
 
-```sh
-npx nx build pkg1
+## 🚦 Getting Started
+
+1. **Clone the repository**
+```bash
+git clone <Repo_link>
+cd <dir_name>
 ```
 
-To run any task with Nx use:
+2. **Install pnpm**
+pnpm is the package manager used for managing dependencies in this repository. To install pnpm, follow the steps below based on your operating system:
 
-```sh
-npx nx <target> <project-name>
+You can install pnpm globally using Homebrew (macOS) or npm (Linux/macOS/Windows) :
+```
+npm install -g pnpm
+```
+If you encounter any issues with the installation, refer to the official pnpm documentation.
+
+3. **Install dependencies**
+```bash
+pnpm install
 ```
 
-These targets are either [inferred automatically](https://nx.dev/concepts/inferred-tasks?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) or defined in the `project.json` or `package.json` files.
+# Running the Web UI
+The project contains a web application built using Next.js. To run the application, follow these steps:
 
-[More about running tasks in the docs &raquo;](https://nx.dev/features/run-tasks?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+1. Run the Web UI Locally
+To start the web application locally, use the following command:
 
-## Versioning and releasing
+nx serve web
+This will start the development server on a local machine and you can access the application in your browser at http://localhost:3000. If port 3000 is already in use, it will automatically use the next available port (e.g., 3001).
 
-To version and release the library use
+2. What Happens in the web Application
+The web application is built using Next.js, a React framework, and is designed to be used as the user interface of this project. Any changes made within the web directory will trigger rebuilding the project and potentially redeploying the application to Cloudflare Workers.
 
-```
-npx nx release
-```
+# Deployment to Cloudflare Workers
+The web application is also deployed to Cloudflare Workers. This deployment happens automatically when changes are made inside the web folder.
 
-Pass `--dry-run` to see what would happen without actually releasing the library.
+1. Deployment Flow
+Changes made within the apps/web folder will trigger automated web deployment to Cloudflare Workers. This is managed by OpenNext scripts written with pnpm run build and pnpm run deploy, through CD pipeline using Cloudflare accont ID and API token.
+Every time you run the nx serve web command and changes are made, the build will trigger the deployment process to Cloudflare Workers, ensuring the latest version is always live.
 
-[Learn more about Nx release &raquo;](https://nx.dev/features/manage-releases?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+## 📦 Available Scripts
 
-## Keep TypeScript project references up to date
+- `pnpm install` - Install all dependencies
+- `npx nx dev <app>` - Start development server
+- `npx nx build <app>` - Build application
+- `npx nx test <app>` - Run tests
+- `pnpm lint` - Lint code
 
-Nx automatically updates TypeScript [project references](https://www.typescriptlang.org/docs/handbook/project-references.html) in `tsconfig.json` files to ensure they remain accurate based on your project dependencies (`import` or `require` statements). This sync is automatically done when running tasks such as `build` or `typecheck`, which require updated references to function correctly.
+## General Nx Commands
+Nx provides several commands for managing your monorepo, including tasks like running, building, testing, and linting applications and libraries.
 
-To manually trigger the process to sync the project graph dependencies information to the TypeScript project references, run the following command:
+1. nx serve <project>
+Starts the development server for a given project (e.g., web).
 
-```sh
-npx nx sync
-```
+nx serve web
+This will start the development server for the web project, and you can access the application at http://localhost:3000 (or the next available port).
 
-You can enforce that the TypeScript project references are always in the correct state when running in CI by adding a step to your CI job configuration that runs the following command:
+2. nx build <project>
+Builds the project and compiles the code.
 
-```sh
-npx nx sync:check
-```
+nx build web
+This command will build the web project and output the compiled code to the dist/ folder, which is ready for deployment.
 
-[Learn more about nx sync](https://nx.dev/reference/nx-commands#sync)
+3. nx lint <project>
+Runs linting checks on the specified project.
 
-## Set up CI!
+nx lint web
+This will check the web project for linting errors, and output any issues found.
 
-### Step 1
+4. nx test <project>
+Runs unit tests for a given project.
 
-To connect to Nx Cloud, run the following command:
+nx test web
+This will run the unit tests for the web project and show the results in the terminal.
 
-```sh
-npx nx connect
-```
+5. nx affected:build
+Builds the affected projects based on the changes made to the workspace.
 
-Connecting to Nx Cloud ensures a [fast and scalable CI](https://nx.dev/ci/intro/why-nx-cloud?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) pipeline. It includes features such as:
+nx affected:build --base=main --head=HEAD
+This will only build projects that were affected by the changes between the main branch and the current branch.
 
-- [Remote caching](https://nx.dev/ci/features/remote-cache?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-- [Task distribution across multiple machines](https://nx.dev/ci/features/distribute-task-execution?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-- [Automated e2e test splitting](https://nx.dev/ci/features/split-e2e-tasks?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-- [Task flakiness detection and rerunning](https://nx.dev/ci/features/flaky-tasks?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+6. nx run-many
+Run a target (e.g., build, test, lint) for multiple projects at once.
 
-### Step 2
+nx run-many --target=build --projects=web,other-app
+This command allows you to run the build target for both the web project and another app in the workspace.
 
-Use the following command to configure a CI workflow for your workspace:
+7. nx migrate
+Upgrade the Nx workspace and its dependencies to the latest version.
 
-```sh
-npx nx g ci-workflow
-```
+nx migrate latest
+This will migrate your workspace to the latest Nx version, making sure everything is up-to-date.
 
-[Learn more about Nx on CI](https://nx.dev/ci/intro/ci-with-nx#ready-get-started-with-your-provider?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+## Troubleshooting
+If you run into any issues, here are a few things to check:
 
-## Install Nx Console
+Make sure pnpm is installed: Verify that you can run pnpm --version to ensure pnpm is installed globally.
+Run Nx with --verbose: If a command isn't working as expected, try adding --verbose to get more detailed error logs.
+Clear Nx cache: If things are stuck, try clearing the Nx cache with nx reset and reinstall dependencies.
 
-Nx Console is an editor extension that enriches your developer experience. It lets you run tasks, generate code, and improves code autocompletion in your IDE. It is available for VSCode and IntelliJ.
+## 🤝 Contributing
 
-[Install Nx Console &raquo;](https://nx.dev/getting-started/editor-setup?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+Contributions are welcome! Please read our contributing guidelines before submitting pull requests.
 
-## Useful links
+# Contributing Guidelines
+1. Branching Strategy
+Start from dev branch: When starting any work, always create your branch from the dev branch. Branch naming convention:
 
-Learn more:
+- For new features: feat/featurename
+- For bug fixes: fix/whatyouarefixing
+- For updating content: update/whereyouareupdating
+- For documentation updates: docs/whatyouupdated
+- For refactoring code: refactor/whatyourefactored
+- For urgent hotfixes: hotfix/urgentfix
+2. Pull Request (PR) Workflow
+Step 1: Development
+After completing task, push changes and create a PR to merge your branch into the dev branch. Provide a clear description of the changes in the PR.
 
-- [Learn more about this workspace setup](https://nx.dev/nx-api/js?utm_source=nx_project&amp;utm_medium=readme&amp;utm_campaign=nx_projects)
-- [Learn about Nx on CI](https://nx.dev/ci/intro/ci-with-nx?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-- [Releasing Packages with Nx release](https://nx.dev/features/manage-releases?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-- [What are Nx plugins?](https://nx.dev/concepts/nx-plugins?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+Testing Stage is avoided in this rapid development phase and the code is reviewed while merging to main branch itself.
 
-And join the Nx community:
-- [Discord](https://go.nx.dev/community)
-- [Follow us on X](https://twitter.com/nxdevtools) or [LinkedIn](https://www.linkedin.com/company/nrwl)
-- [Our Youtube channel](https://www.youtube.com/@nxdevtools)
-- [Our blog](https://nx.dev/blog?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+Step 2: Production
+After successful testing, create a PR from the test branch to the main branch. This PR must be approved by the CTO and at least 1 other member. Once approved, the changes will be deployed to production.
+
+3. Commit Message Guidelines
+Use the following prefixes for clear and consistent commit messages:
+
+- feat: for new features.
+- fix: for bug fixes.
+- docs: for documentation updates.
+- refactor: for code refactoring.
+- style: for formatting and style changes (not affecting code logic).
+- test: for adding or updating tests.
+- chore: for maintenance tasks.
+Example: feat: add user authentication to login page.
+4. CI/CD Pipeline Requirements
+The CI/CD pipeline must run error-free.
+
+5. Conflict Resolution
+If any merge conflicts arise, contributors should immediately contact the [Adnan](https://github.com/Adnan-The-Coder) for resolution.
+
+6. Emergency Procedure
+In case of critical hotfixes or urgent issues, [Abid](https://github.com/MohammedAbidNafi) must trigger the emergency procedure.
+
+
+## 📄 License
+
+This project is licensed under the ISC License - see the LICENSE file for details.
+
+---
+
+<div align="center">
+Built with ❤️ by the ACM Tech Team
+</div>
+        
