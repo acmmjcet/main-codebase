@@ -73,7 +73,7 @@ export default function Index() {
               </svg>
               <span>
                 Documentation
-                <span> Everything is in there </span>
+                <span> Everything is in there if you find it</span>
               </span>
               <svg
                 fill="none"
