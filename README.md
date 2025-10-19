@@ -1,4 +1,4 @@
-# ACM - Workspace
+# ACM - Main Codebase
 <img alt="Status" src="https://img.shields.io/badge/status-under--development-orange" />
 <div style="display: flex; justify-content: space-between; align-items: center;">
   <!-- <img alt="Status" src="https://img.shields.io/badge/status-production-brightgreen" /> -->
@@ -31,13 +31,50 @@
 [![GitHub Actions](https://img.shields.io/badge/GitHub%20Actions-enabled-blue?style=for-the-badge&logo=github-actions)](https://github.com/features/actions)
 
 
-
+<p align="center">
+    Official website of ACM MJCET — empowering students in computer science and technology through learning, collaboration, and innovation.
+    <br />
+    <br />
+    <a href="#getting-started"><strong>Explore the docs »</strong></a>
+    <br />
+    <br />
+    <a href="https://acmmjcet.com">View Website</a>
+    ·
+    <a href="https://github.com/acmmjcet/main-website/blob/main/.github/ISSUE_TEMPLATE/bug_report.md">Report Bug</a>
+    ·
+    <a href="https://github.com/acmmjcet/main-website/blob/main/.github/ISSUE_TEMPLATE/feature_request.md">Request Feature</a>
+  </p>
 
 </div>
 
+<details>
+  <summary>Table of Contents</summary>
+  <ol>
+    <li>
+      <a href="#overview">Overview</a>
+    </li>
+    <li>
+      <a href="#core-principles">Core Principles</a>
+      <ul>
+        <li><a href="#project-structure">Project Structure</a></li>
+        <li><a href="#features">Features</a></li>
+        <li><a href="#features">Getting Started</a></li>
+        <li><a href="#running-web-ui">Running Web UI</a></li>
+      </ul>
+    </li>
+    <li><a href="#general-nx-commands">General commands</a></li>
+    <li><a href="#top-contributers">Top Contributers</a></li>
+    <li><a href="#roadmap">Roadmap</a></li>
+    <li><a href="#license">License</a></li>
+    <li><a href="#contact">Contact</a></li>
+    <li><a href="#acknowledgments">Acknowledgments</a></li>
+  </ol>
+</details>
+
+
 ## 🌟 Overview
 
-ACM-workspace is a comprehensive enterprise grade monorepo contains multiple applications organized in a scalable architecture.
+ACM Main Codebase is a comprehensive enterprise grade monorepo contains multiple applications organized in a scalable architecture.
 
 ### Core Principles
 
@@ -49,7 +86,7 @@ ACM-workspace is a comprehensive enterprise grade monorepo contains multiple app
 ## 📁 Project Structure
 
 ```
-acm-workspace/
+main-codebase/
 ├── apps/                    # Application packages
 │   ├── web/                 # Main web application
 │   ├── cf-server/           # Cloudflare backend worker
@@ -72,8 +109,8 @@ acm-workspace/
 
 1. **Clone the repository**
 ```bash
-git clone <Repo_link>
-cd <dir_name>
+git clone https://github.com/acmmjcet/main-codebase.git
+cd main-codebase
 ```
 
 2. **Install pnpm**
@@ -173,51 +210,121 @@ Clear Nx cache: If things are stuck, try clearing the Nx cache with nx reset and
 
 Contributions are welcome! Please read our contributing guidelines before submitting pull requests.
 
-# Contributing Guidelines
-1. Branching Strategy
-Start from dev branch: When starting any work, always create your branch from the dev branch. Branch naming convention:
+## Contributing Guidelines
 
-- For new features: feat/featurename
-- For bug fixes: fix/whatyouarefixing
-- For updating content: update/whereyouareupdating
-- For documentation updates: docs/whatyouupdated
-- For refactoring code: refactor/whatyourefactored
-- For urgent hotfixes: hotfix/urgentfix
-2. Pull Request (PR) Workflow
-Step 1: Development
-After completing task, push changes and create a PR to merge your branch into the dev branch. Provide a clear description of the changes in the PR.
+### 1. Branching Strategy
 
-Testing Stage is avoided in this rapid development phase and the code is reviewed while merging to main branch itself.
+Start from **dev** branch. When starting any work, always create your branch from **dev**.
 
-Step 2: Production
-After successful testing, create a PR from the test branch to the main branch. This PR must be approved by the CTO and at least 1 other member. Once approved, the changes will be deployed to production.
+**Branch naming convention:**
 
-3. Commit Message Guidelines
-Use the following prefixes for clear and consistent commit messages:
-
-- feat: for new features.
-- fix: for bug fixes.
-- docs: for documentation updates.
-- refactor: for code refactoring.
-- style: for formatting and style changes (not affecting code logic).
-- test: for adding or updating tests.
-- chore: for maintenance tasks.
-Example: feat: add user authentication to login page.
-4. CI/CD Pipeline Requirements
-The CI/CD pipeline must run error-free.
-
-5. Conflict Resolution
-If any merge conflicts arise, contributors should immediately contact the [Adnan](https://github.com/Adnan-The-Coder) for resolution.
-
-6. Emergency Procedure
-In case of critical hotfixes or urgent issues, [Abid](https://github.com/MohammedAbidNafi) must trigger the emergency procedure.
-
-
-## 📄 License
-
-This project is licensed under the ISC License - see the LICENSE file for details.
+- `feat/featurename` → For new features  
+- `fix/whatyouarefixing` → For bug fixes  
+- `update/whereyouareupdating` → For content updates  
+- `docs/whatyouupdated` → For documentation changes  
+- `refactor/whatyourefactored` → For code refactoring  
+- `hotfix/urgentfix` → For urgent production fixes  
 
 ---
+
+### 2. Pull Request (PR) Workflow
+
+**Step 1: Development**  
+- Push your changes and create a PR to merge into `dev`.  
+- Provide a clear description of your work.
+
+**Step 2: Testing**  
+- After merging into `dev`, create a PR to `test`.  
+- Ensure all code passes checks.  
+- Minimum 2 approvals required.
+
+**Step 3: Production**  
+- Create a PR from `test` → `main`.  
+- Must be approved by **Tech Captain** and one reviewer.  
+- Upon approval, code is deployed.
+
+---
+
+### 3. Commit Message Guidelines
+
+Use prefixes for consistent commits:
+
+| Prefix | Purpose |
+|---------|----------|
+| feat | New features |
+| fix | Bug fixes |
+| docs | Documentation updates |
+| refactor | Code refactoring |
+| style | Non-functional changes (formatting) |
+| test | Adding/updating tests |
+| chore | Maintenance tasks |
+
+**Example:**  
+`feat: add events page with dynamic fetching`
+
+---
+
+### 4. CI/CD Pipeline
+All CI/CD checks (ESLint, build, and deployment validations) must pass before merging.
+
+### 5. Conflict Resolution
+If merge conflicts occur, contact the **Tech Captain** immediately.
+
+### 6. PR Review Time
+All PRs should be reviewed within **5 days** of submission.
+
+### 7. Emergency Procedure
+In case of urgent fixes, the Tech Captain may merge directly to production.
+
+---
+## 🏅 Top Contributers
+
+<a href="https://github.com/acmmjcet/main-website/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=acmmjcet/main-website" alt="contrib.rocks image" />
+</a>
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+---
+
+## 🧾 License
+
+This project is licensed under **GPL-3.0** — [Learn More](https://github.com/acmmjcet/main-website/blob/main/LICENSE)
+
+---
+
+## 📞 Contact
+
+📧 Email – acm@mjcollege.ac.in
+🌐 Website – [acmmjcet.com](https://acmmjcet.com)
+
+---
+
+## 🙏 Acknowledgments
+
+These open-source projects power ACM MJCET’s website:
+
+- [Shadcn](https://ui.shadcn.com)  
+- [Supabase](https://supabase.io)  
+- [Next.js](https://nextjs.org)  
+- [Tailwind CSS](https://tailwindcss.com)
+
+<!--Markdown Links-->
+
+[contributors-shield]: https://img.shields.io/github/contributors/acmmjcet/main-website.svg?style=for-the-badge
+[contributors-url]: https://github.com/acmmjcet/main-website/graphs/contributors
+[forks-shield]: https://img.shields.io/github/forks/acmmjcet/main-website.svg?style=for-the-badge
+[forks-url]: https://github.com/acmmjcet/main-website/network/members
+[stars-shield]: https://img.shields.io/github/stars/acmmjcet/main-website.svg?style=for-the-badge
+[stars-url]: https://github.com/acmmjcet/main-website/stargazers
+[issues-shield]: https://img.shields.io/github/issues/acmmjcet/main-website.svg?style=for-the-badge
+[issues-url]: https://github.com/acmmjcet/main-website/issues
+[license-shield]: https://img.shields.io/github/license/acmmjcet/main-website.svg?style=for-the-badge
+[license-url]: https://github.com/acmmjcet/main-website/blob/main/LICENSE.txt
+[linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
+[linkedin-url]: https://www.linkedin.com/company/acm-mjcet/
+
+
 
 <div align="center">
 Built with ❤️ by the ACM Tech Team
