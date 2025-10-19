@@ -365,3 +365,8 @@ module.exports = composePlugins(...plugins)(nextConfig);
 Applies all plugins to the base config using Nx's helper
 
 Exports the resulting Next.js configuration
+
+
+```
+nx g @nx/js:lib api-endpoints --importPath=@acm/api-endpoints
+```
