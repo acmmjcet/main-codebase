@@ -5,6 +5,12 @@
   "targets": {
     "serve": {
       "executor": "nx:run-commands",
+      "dependsOn": [
+        {
+          "target": "build",
+          "projects": ["@acm/api-endpoints"]
+        }
+      ],
       "options": {
         "command": "pnpm --filter web dev"
       }
