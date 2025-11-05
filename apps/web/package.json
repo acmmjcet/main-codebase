@@ -24,10 +24,13 @@
     "start": "next start"
   },
   "dependencies": {
+    "@acm/api-endpoints": "workspace:*",
+    "@gsap/react": "^2.1.2",
+    "@opennextjs/cloudflare": "1.3.0",
+    "gsap": "^3.13.0",
     "next": "15.3.3",
     "react": "19.0.0",
     "react-dom": "19.0.0",
-    "@opennextjs/cloudflare": "1.3.0",
-    "@acm/api-endpoints": "workspace:*"
+    "tailwind-scrollbar": "^4.0.2"
   }
 }
