@@ -2,8 +2,9 @@
 import { useEffect } from "react";
 import { API_ENDPOINTS } from '@acm/api-endpoints';
 import Navbar from "@/components/Navbar"
+import Team from "./team";
 
-export default function Index() {
+export function Index() {
   useEffect(()=>{
     console.log(API_ENDPOINTS.message)
   })
@@ -459,3 +460,11 @@ export default function Index() {
     </div>
   );
 };
+
+export default function Page() {
+  return (
+    <main>
+      <Team />
+    </main>
+  );
+}
