@@ -1,17 +1,13 @@
 "use client";
 import { useEffect } from "react";
 import { API_ENDPOINTS } from '@acm/api-endpoints';
-import Navbar from "@/components/Navbar"
-import Team from "./team";
 
-export function Index() {
+export default function Index() {
   useEffect(()=>{
     console.log(API_ENDPOINTS.message)
   })
   
   return (
-    <div>
-      <Navbar/>
     <div className="wrapper">
       <div className="container">
         <div id="welcome">
@@ -456,15 +452,5 @@ export function Index() {
         </p>
       </div>
     </div>
-  
-    </div>
   );
 };
-
-export default function Page() {
-  return (
-    <main>
-      <Team />
-    </main>
-  );
-}
