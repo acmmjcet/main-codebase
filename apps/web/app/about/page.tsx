@@ -97,25 +97,34 @@ export default function About() {
     
     // Calculate history content height
     useEffect(() => {
+        let observer: ResizeObserver | null = null;
+
+        const calculateHeight = () => {
+            // The required scroll height is the position of the last checkpoint plus its height/padding.
+            // Total timeline height needed: (Number of items * Spacing) + Header Offset
+            const neededHeight = HEADER_OFFSET + (HISTORY_DATA.length * CHECKPOINT_SPACING) + 500; // Extra padding at the bottom
+            setHistoryHeight(neededHeight);
+        };
+
+        // Try to set up observer if the element is available
         if (historyContentRef.current) {
-            const calculateHeight = () => {
-                // The required scroll height is the position of the last checkpoint plus its height/padding.
-                // Total timeline height needed: (Number of items * Spacing) + Header Offset
-                const neededHeight = HEADER_OFFSET + (HISTORY_DATA.length * CHECKPOINT_SPACING) + 500; // Extra padding at the bottom
-                setHistoryHeight(neededHeight);
-            };
-
             calculateHeight();
-            const observer = new ResizeObserver(calculateHeight);
+            observer = new ResizeObserver(calculateHeight);
             observer.observe(historyContentRef.current);
-            
             window.addEventListener('load', calculateHeight);
-
-            return () => {
-                observer.disconnect();
-                window.removeEventListener('load', calculateHeight);
-            }
+        } else {
+            // If ref isn't set yet, still attempt an initial calculation and ensure load listener is attached.
+            calculateHeight();
+            window.addEventListener('load', calculateHeight);
         }
+
+        // Always return a cleanup function so all code paths return a value.
+        return () => {
+            if (observer) {
+                observer.disconnect();
+            }
+            window.removeEventListener('load', calculateHeight);
+        };
     }, [])
 
     useGSAP(() => {
