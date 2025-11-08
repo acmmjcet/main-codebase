@@ -1,7 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
 import { API_ENDPOINTS } from '@acm/api-endpoints';
-import Navbar from "@/components/Navbar"
 import Hero from "@/components/Hero";
 import DummyPage from "@/components/LandingPage/Dummy-trial-2";
 
@@ -17,9 +16,8 @@ export default function Index() {
 
   
   return (
-    <div>
-      <Navbar/>
-      {/* <Hero/> */}
+    <>
+      <Hero/>
       <div
         className={`fixed z-50 h-screen w-full ${
           loading ? "block" : "hidden"
@@ -27,8 +25,7 @@ export default function Index() {
           >
         <DummyPage handleLoading={handleLoading} />
       </div>
-      <Hero/>
   
-    </div>
+    </>
   );
 };
