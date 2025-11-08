@@ -1,0 +1,278 @@
+[
+  {
+    "name": "Patan Ahmed Khan",
+    "designation": "Technical ",
+    "image": "/assets/Execom 2024-2025/tech1.png",
+    "year": "2024-2025"
+  },
+  {
+    "name": "Zuhair Ahmed Khan Taha",
+    "designation": "Technical ",
+    "image": "/assets/Execom 2024-2025/tech2.jpg",
+    "year": "2024-2025"
+  },
+  {
+    "name": "Mohammed Salman",
+    "designation": "Technical ",
+    "image": "/assets/Execom 2024-2025/tech3.jpg",
+    "year": "2024-2025"
+  },
+  {
+    "name": "Humera Tabassum",
+    "designation": "Design Head",
+    "image": "/assets/Execom 2024-2025/design.jpg",
+    "year": "2024-2025"
+  },
+  {
+    "name": "Ali Mohammed Lalani",
+    "designation": "Design Head",
+    "image": "/assets/Execom 2024-2025/design2.jpg",
+    "year": "2024-2025"
+  },
+  {
+    "name": "Raniya Farhan Shaikh",
+    "designation": "Documentation ",
+    "image": "/assets/Execom 2024-2025/doc1.jpeg",
+    "year": "2024-2025"
+  },
+  {
+    "name": "Saifuddin Syed",
+    "designation": "Documentation ",
+    "image": "/assets/Execom 2024-2025/doc2.jpg",
+    "year": "2024-2025"
+  },
+  {
+    "name": "Afrah Ayesha",
+    "designation": "Events Coordinator",
+    "image": "/assets/Execom 2024-2025/event1.png",
+    "year": "2024-2025"
+  },
+  {
+    "name": "Samiya Fatima",
+    "designation": "Events Coordinator",
+    "image": "/assets/Execom 2024-2025/event2.jpeg",
+    "year": "2024-2025"
+  },
+  {
+    "name": "Mohammed Anasullah Shareef",
+    "designation": "Events Coordinator",
+    "image": "/assets/Execom 2024-2025/event3.jpg",
+    "year": "2024-2025"
+  },
+  {
+    "name": "Ayesha Saniya",
+    "designation": "HR ",
+    "image": "/assets/Execom 2024-2025/hr1.jpg",
+    "year": "2024-2025"
+  },
+  {
+    "name": "Syeda Afifa Altaf",
+    "designation": "HR ",
+    "image": "/assets/Execom 2024-2025/hr2.jpeg",
+    "year": "2024-2025"
+  },
+  {
+    "name": "Raza Mohammed",
+    "designation": "Marketing ",
+    "image": "/assets/Execom 2024-2025/mar1.jpeg",
+    "year": "2024-2025"
+  },
+  {
+    "name": "Haseeb Al Salafi",
+    "designation": "Marketing ",
+    "image": "/assets/Execom 2024-2025/mar2.png",
+    "year": "2024-2025"
+  },
+  {
+    "name": "Shaheer Ahmed Qadeer",
+    "designation": "Marketing ",
+    "image": "/assets/Execom 2024-2025/mar3.jpg",
+    "year": "2024-2025"
+  },
+  {
+    "name": "Salman Ahmed Ansari",
+    "designation": "Media ",
+    "image": "/assets/Execom 2024-2025/media1.jpg",
+    "year": "2024-2025"
+  },
+  {
+    "name": "Abdul Quader Furqan",
+    "designation": "Media ",
+    "image": "/assets/Execom 2024-2025/media2.jpg",
+    "year": "2024-2025"
+  },
+  {
+    "name": "Qhuba Tarannum",
+    "designation": "Media ",
+    "image": "/assets/Execom 2024-2025/media3.jpg",
+    "year": "2024-2025"
+  },
+  {
+    "name": "Riyan Ozair",
+    "designation": "Operations Manager",
+    "image": "/assets/Execom 2024-2025/ops1.jpg",
+    "year": "2024-2025"
+  },
+  {
+    "name": "Mohammed Nabeel Rizwan",
+    "designation": "Operations Manager",
+    "image": "/assets/Execom 2024-2025/ops2.jpg",
+    "year": "2024-2025"
+  },
+  {
+    "name": "Mohammed Abid Nafi",
+    "designation": "Technical ",
+    "image": "/assets/Execom 2023-2024/abid.jpeg",
+    "year": "2023-2024"
+  },
+  {
+    "name": "Abdul Shafey Malik",
+    "designation": "Technical ",
+    "image": "/assets/Execom 2023-2024/shafey.jpg",
+    "year": "2023-2024"
+  },
+  {
+    "name": "Aman Khan",
+    "designation": "Digital Management ",
+    "image": "/assets/Execom 2023-2024/aman.jpeg",
+    "year": "2023-2024"
+  },
+  {
+    "name": "Syed Farooq Mohiuddin",
+    "designation": "Digital Management ",
+    "image": "/assets/Execom 2023-2024/farooq.jpg",
+    "year": "2023-2024"
+  },
+  {
+    "name": "AAryaRaj Saxena",
+    "designation": "Documentation ",
+    "image": "/assets/Execom 2023-2024/aryaraj.jpg",
+    "year": "2023-2024"
+  },
+  {
+    "name": "Syed Ashfaque Hussain",
+    "designation": "Documentation ",
+    "image": "/assets/Execom 2023-2024/ashfaque.jpg",
+    "year": "2023-2024"
+  },
+  {
+    "name": "Madiha Wahed",
+    "designation": "HR ",
+    "image": "/assets/Execom 2023-2024/madiha.jpeg",
+    "year": "2023-2024"
+  },
+  {
+    "name": "Mohammed Omer Waheed Khan",
+    "designation": "HR ",
+    "image": "/assets/Execom 2023-2024/omer.JPEG",
+    "year": "2023-2024"
+  },
+  {
+    "name": "Wassiuddin Siqqiui",
+    "designation": "Logistics ",
+    "image": "/assets/Execom 2023-2024/wassiuddin.jpeg",
+    "year": "2023-2024"
+  },
+  {
+    "name": "Mohammed Faizullah Shareef",
+    "designation": "Marketing ",
+    "image": "/assets/Execom 2023-2024/faizullah.jpg",
+    "year": "2023-2024"
+  },
+  {
+    "name": "Poorvi Reddy",
+    "designation": "Marketing ",
+    "image": "/assets/Execom 2023-2024/poorvi2.jpg",
+    "year": "2023-2024"
+  },
+  {
+    "name": "Syed Amer Sha",
+    "designation": "Media ",
+    "image": "/assets/Execom 2023-2024/amer.jpeg",
+    "year": "2023-2024"
+  },
+  {
+    "name": "Samiya Fatima",
+    "designation": "Media ",
+    "image": "/assets/Execom 2023-2024/samiya2.jpeg",
+    "year": "2023-2024"
+  },
+  {
+    "name": "Saima Qudrath Khan",
+    "designation": "Design ",
+    "image": "/assets/Execom 2023-2024/saima.jpeg",
+    "year": "2023-2024"
+  },
+  {
+    "name": "Aaqeb Ahmed Nawaz",
+    "designation": "Technical ",
+    "image": "/assets/Execom 2022-2023/aaqeb2.jpeg",
+    "year": "2022-2023"
+  },
+  {
+    "name": "Mohammed Abdul Basith",
+    "designation": "Technical ",
+    "image": "/assets/Execom 2022-2023/ab.jpg",
+    "year": "2022-2023"
+  },
+  {
+    "name": "Mohammed Asrar Ahmed",
+    "designation": "Technical ",
+    "image": "/assets/Execom 2022-2023/asrar.jpeg",
+    "year": "2022-2023"
+  },
+  {
+    "name": "Syed Zain Hussain",
+    "designation": "Content Creation",
+    "image": "/assets/Execom 2022-2023/zain.jpeg",
+    "year": "2022-2023"
+  },
+  {
+    "name": "Uzma Begum",
+    "designation": "Design Head",
+    "image": "/assets/Execom 2022-2023/uzma1.jpeg",
+    "year": "2022-2023"
+  },
+  {
+    "name": "Juwairia Baig",
+    "designation": "Documentation ",
+    "image": "/assets/Execom 2022-2023/baig.jpeg",
+    "year": "2022-2023"
+  },
+  {
+    "name": "Abdul Hadi",
+    "designation": "Documentation ",
+    "image": "/assets/Execom 2022-2023/hadi.jpg",
+    "year": "2022-2023"
+  },
+  {
+    "name": "Quazi Affan Ahmad",
+    "designation": "Logistics ",
+    "image": "/assets/Execom 2022-2023/affan.jpg",
+    "year": "2022-2023"
+  },
+  {
+    "name": "Masood Ahmed Mohiuddin",
+    "designation": "Logistics ",
+    "image": "/assets/Execom 2022-2023/masood.jpg",
+    "year": "2022-2023"
+  },
+  {
+    "name": "Anum Rida",
+    "designation": "Marketing and Media ",
+    "image": "/assets/Execom 2022-2023/anum.jpg",
+    "year": "2022-2023"
+  },
+  {
+    "name": "Yasir Hussain",
+    "designation": "Marketing and Media ",
+    "image": "/assets/Execom 2022-2023/yasir.jpeg",
+    "year": "2022-2023"
+  },
+  {
+    "name": "Waqas Faraz",
+    "designation": "Social Media ",
+    "image": "/assets/Execom 2022-2023/far.jpg",
+    "year": "2022-2023"
+  }
+]

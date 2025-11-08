@@ -1,7 +1,6 @@
 "use client";
 import { useEffect } from "react";
 import { API_ENDPOINTS } from '@acm/api-endpoints';
-import Navbar from "@/components/Navbar"
 
 export default function Index() {
   useEffect(()=>{
@@ -9,8 +8,6 @@ export default function Index() {
   })
   
   return (
-    <div>
-      <Navbar/>
     <div className="wrapper">
       <div className="container">
         <div id="welcome">
@@ -454,8 +451,6 @@ export default function Index() {
           </svg>
         </p>
       </div>
-    </div>
-  
     </div>
   );
 };

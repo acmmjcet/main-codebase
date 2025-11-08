@@ -1,0 +1,110 @@
+[
+  {
+    "name": "Syed Anas",
+    "role": "CHAIRPERSON",
+    "image": "/assets/GB 2024-2025/chair.png",
+    "year": "2024-2025"
+  },
+  {
+    "name": "Poorvi Reddy",
+    "role": "VICE CHAIR",
+    "image": "/assets/GB 2024-2025/vc.jpg",
+    "year": "2024-2025"
+  },
+  {
+    "name": "Mohammed Abdullah Shareef ",
+    "role": "SECRETARY",
+    "image": "/assets/GB 2024-2025/Gs.jpg",
+    "year": "2024-2025"
+  },
+  {
+    "name": "Syed Farooq Mohiuddin",
+    "role": "CHEIF REPRESENTATIVE",
+    "image": "/assets/GB 2024-2025/cr.jpg",
+    "year": "2024-2025"
+  },
+  {
+    "name": "Waasiuddin Siddiqui",
+    "role": "TREASURER",
+    "image": "/assets/GB 2024-2025/treasurer.png",
+    "year": "2024-2025"
+  },
+  {
+    "name": "Shaik Niyaz Ahmed",
+    "role": "TECH CAPTAIN",
+    "image": "/assets/GB 2024-2025/techcaptain.jpg",
+    "year": "2024-2025"
+  },
+  {
+    "name": "Mohammed Faizullah Shareef",
+    "role": "ADVISOR",
+    "image": "/assets/GB 2024-2025/advisor.jpg",
+    "year": "2024-2025"
+  },
+  {
+    "name": "Syeda Maheen",
+    "role": "CHAIR",
+    "image": "/assets/GB 2023-2024/maheen2.jpg",
+    "year": "2023-2024"
+  },
+  {
+    "name": "Maleha Ansari",
+    "role": "VICE CHAIR",
+    "image": "/assets/GB 2023-2024/maleha.png",
+    "year": "2023-2024"
+  },
+  {
+    "name": "Syed Zain",
+    "role": "TREASURER",
+    "image": "/assets/GB 2023-2024/zain.jpeg",
+    "year": "2023-2024"
+  },
+  {
+    "name": "Syed Abdul Rahman",
+    "role": "TECH CAPTAIN",
+    "image": "/assets/GB 2023-2024/ar.jpg",
+    "year": "2023-2024"
+  },
+  {
+    "name": "Aaqeb Ahmed Nawaz",
+    "role": "VICE TECH CAPTAIN",
+    "image": "/assets/GB 2023-2024/aaqeb2.jpeg",
+    "year": "2023-2024"
+  },
+  {
+    "name": "Madiha Siddiqui",
+    "role": "CHAIR",
+    "image": "/assets/GB 2022-2023/madiha.jpg",
+    "year": "2022-2023"
+  },
+  {
+    "name": "Haseeb Khan",
+    "role": "VICE CHAIR",
+    "image": "/assets/GB 2022-2023/has.webp",
+    "year": "2022-2023"
+  },
+  { 
+    "name": "Maleha Ansari",
+    "role": "SECRETARY",
+    "image": "/assets/GB 2022-2023/maleha.png",
+    "year": "2022-2023"
+  },
+  {
+    "name": "Syeda Maheen",
+    "role": "TREASURER",
+    "image": "/assets/GB 2022-2023/maheen.png",
+    "year": "2022-2023"
+  },
+  {
+    "name": "Maryum Urooj",
+    "role": "INTERNAL AFFAIRS",
+    "image": "/assets/GB 2022-2023/urooj.jpeg",
+    "year": "2022-2023"
+  },
+  {
+    "name": "Syed Abdul Rahman",
+    "role": "TECH CAPTAIN",
+    "image": "/assets/GB 2022-2023/ar.jpg",
+    "year": "2022-2023"
+  }
+]
