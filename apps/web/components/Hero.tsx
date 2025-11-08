@@ -427,8 +427,8 @@ const Hero = () => {
         const wave = elapsedTime * 0.5 + index * 0.05;
         const hue = (wave % 1);
         const color = new THREE.Color().setHSL(hue, 1, 0.5);
-        keyData.underglow.material.color = color;
-        keyData.sideGlow.material.color = color;
+        (keyData.underglow.material as THREE.MeshBasicMaterial).color = color;
+        (keyData.sideGlow.material as THREE.MeshBasicMaterial).color = color;
         keyData.baseColor = color;
       });
 
@@ -464,17 +464,17 @@ const Hero = () => {
             if (keyData.targetIndex === currentTyping) {
               const press = Math.sin(pressProgress * Math.PI * 4) * 0.5 + 0.5;
               keyData.keyCap.position.y = keyData.baseY - press * 0.3;
-              keyData.underglow.material.opacity = 0.8 + press * 0.2;
-              keyData.sideGlow.material.opacity = 0.8 + press * 0.2;
+              (keyData.underglow.material as THREE.MeshBasicMaterial).opacity = 0.8 + press * 0.2;
+              (keyData.sideGlow.material as THREE.MeshBasicMaterial).opacity = 0.8 + press * 0.2;
               
-              keyData.underglow.material.color.set(0x00ffff);
-              keyData.sideGlow.material.color.set(0x00ffff);
+              (keyData.underglow.material as THREE.MeshBasicMaterial).color.set(0x00ffff);
+              (keyData.sideGlow.material as THREE.MeshBasicMaterial).color.set(0x00ffff);
             } else {
               keyData.keyCap.position.y = keyData.baseY;
-              keyData.underglow.material.color.set(0x0088aa);
-              keyData.sideGlow.material.color.set(0x0088aa);
-              keyData.underglow.material.opacity = 0.5;
-              keyData.sideGlow.material.opacity = 0.5;
+              (keyData.underglow.material as THREE.MeshBasicMaterial).color.set(0x0088aa);
+              (keyData.sideGlow.material as THREE.MeshBasicMaterial).color.set(0x0088aa);
+              (keyData.underglow.material as THREE.MeshBasicMaterial).opacity = 0.5;
+              (keyData.sideGlow.material as THREE.MeshBasicMaterial).opacity = 0.5;
             }
           } else {
             keyData.keyCap.position.y = keyData.baseY;
@@ -494,10 +494,10 @@ const Hero = () => {
         
         keyboard.keys.forEach((keyData) => {
           if (keyData.isTarget && keyData.letter !== 'ENTER') {
-            keyData.underglow.material.color.set(0x0088aa);
-            keyData.sideGlow.material.color.set(0x0088aa);
-            keyData.underglow.material.opacity = 0.5;
-            keyData.sideGlow.material.opacity = 0.5;
+            (keyData.underglow.material as THREE.MeshBasicMaterial).color.set(0x0088aa);
+            (keyData.sideGlow.material as THREE.MeshBasicMaterial).color.set(0x0088aa);
+            (keyData.underglow.material as THREE.MeshBasicMaterial).opacity = 0.5;
+            (keyData.sideGlow.material as THREE.MeshBasicMaterial).opacity = 0.5;
           }
         });
       }
@@ -509,10 +509,10 @@ const Hero = () => {
           const pressProgress = Math.min(progress * 3, 1);
           const press = Math.sin(pressProgress * Math.PI) * 0.5;
           enterKey.keyCap.position.y = enterKey.baseY - press * 0.4;
-          enterKey.underglow.material.color.set(0xff00ff);
-          enterKey.sideGlow.material.color.set(0xff00ff);
-          enterKey.underglow.material.opacity = 0.9;
-          enterKey.sideGlow.material.opacity = 0.9;
+          (enterKey.underglow.material as THREE.MeshBasicMaterial).color.set(0xff00ff);
+          (enterKey.sideGlow.material as THREE.MeshBasicMaterial).color.set(0xff00ff);
+          (enterKey.underglow.material as THREE.MeshBasicMaterial).opacity = 0.9;
+          (enterKey.sideGlow.material as THREE.MeshBasicMaterial).opacity = 0.9;
         }
         
         const zoomEased = progress * progress * progress;
@@ -530,8 +530,8 @@ const Hero = () => {
         logo.logoGroup.visible = true;
         
         keyboard.keys.forEach((keyData) => {
-          keyData.underglow.material.opacity *= (1 - eased * 0.7);
-          keyData.sideGlow.material.opacity *= (1 - eased * 0.7);
+          (keyData.underglow.material as THREE.MeshBasicMaterial).opacity *= (1 - eased * 0.7);
+          (keyData.sideGlow.material as THREE.MeshBasicMaterial).opacity *= (1 - eased * 0.7);
         });
         
         logo.hexagon.material.opacity = eased * 0.8;
