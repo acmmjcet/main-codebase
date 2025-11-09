@@ -5,6 +5,7 @@ import { motion, useMotionValue, useAnimationFrame } from "framer-motion";
 import TeamCard from "@/components/TeamCard";
 import ExecomSection from "@/components/ExecomSection";
 import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
 
 interface TeamMember {
   name: string;
@@ -201,6 +202,7 @@ const TeamPage: React.FC = () => {
       {/* Execom Members Section */}
       <ExecomSection selectedYear={selectedYear} />
     </div>
+    <Footer/>
     </>
   );
 };
