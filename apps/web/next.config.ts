@@ -4,6 +4,10 @@ import path from 'path';
 import { initOpenNextCloudflareForDev } from '@opennextjs/cloudflare';
 
 const nextConfig: NextConfig = {
+  images:{
+    domains: ["images.unsplash.com"]
+  },
+  
   reactStrictMode: true,
   transpilePackages: ['@acm/api-endpoints'],
   experimental: {
