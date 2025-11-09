@@ -9,7 +9,7 @@
 </div>
 
 <div align="center">
-<img src="./apps/web/public/logo.png" alt="ACM Logo" width="200"/>
+<img src="./apps/web/public/logo_without_bg.png" alt="ACM Logo" width="200"/>
 
 
 **A Modern, Scalable System Architecture with the Edge compute power**

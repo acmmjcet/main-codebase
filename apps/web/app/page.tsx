@@ -3,6 +3,8 @@ import { useEffect, useState } from "react";
 import { API_ENDPOINTS } from '@acm/api-endpoints';
 import Hero from "@/components/Hero";
 import DummyPage from "@/components/LandingPage/Dummy-trial-2";
+import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
 
 export default function Index() {
   useEffect(()=>{
@@ -17,6 +19,7 @@ export default function Index() {
   
   return (
     <>
+      <Navbar/>
       <Hero/>
       <div
         className={`fixed z-50 h-screen w-full ${
@@ -25,7 +28,7 @@ export default function Index() {
           >
         <DummyPage handleLoading={handleLoading} />
       </div>
-  
+      <Footer/>
     </>
   );
 };

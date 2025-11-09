@@ -3,6 +3,8 @@ import { useGSAP } from '@gsap/react'
 import { gsap } from 'gsap'
 import React, { useRef, useEffect, useState } from 'react'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import Navbar from '@/components/Navbar'
+import Footer from '@/components/Footer'
 gsap.registerPlugin(ScrollTrigger)
 
 // Define spacing constants (in pixels) for the timeline layout
@@ -370,7 +372,7 @@ export default function About() {
 
     return (
         <>
-        
+        <Navbar/>
     <div ref={containerRef} className="relative w-full h-screen overflow-hidden bg-gradient-to-br from-gray-950 via-gray-900 to-gray-950">
             
             {/* HERO SECTION */}
@@ -487,6 +489,7 @@ export default function About() {
             .animate-scroll:hover {animation-play-state: paused; cursor: pointer; will-change: transform;}
             
         `}</style>
+        <Footer/>
         </>
     )
 }

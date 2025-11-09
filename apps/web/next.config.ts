@@ -5,7 +5,7 @@ import { initOpenNextCloudflareForDev } from '@opennextjs/cloudflare';
 
 const nextConfig: NextConfig = {
   images:{
-    domains: ["images.unsplash.com"]
+    domains: ["images.unsplash.com","avatars.githubusercontent.com"]
   },
   
   reactStrictMode: true,
