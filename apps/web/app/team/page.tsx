@@ -4,6 +4,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { motion, useMotionValue, useAnimationFrame } from "framer-motion";
 import TeamCard from "@/components/TeamCard";
 import ExecomSection from "@/components/ExecomSection";
+import Navbar from "@/components/Navbar";
 
 interface TeamMember {
   name: string;
@@ -88,7 +89,9 @@ const TeamPage: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-black text-white overflow-hidden">
+    <>
+    <Navbar/>
+    <div className="min-h-screen bg-black text-white overflow-hidden py-8">
       <div className="fixed top-0 left-1/4 w-96 h-96 bg-blue-900/10 rounded-full blur-3xl pointer-events-none" />
       <div className="fixed bottom-0 right-1/4 w-96 h-96 bg-blue-900/5 rounded-full blur-3xl pointer-events-none" />
 
@@ -198,6 +201,7 @@ const TeamPage: React.FC = () => {
       {/* Execom Members Section */}
       <ExecomSection selectedYear={selectedYear} />
     </div>
+    </>
   );
 };
 
