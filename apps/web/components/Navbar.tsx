@@ -40,7 +40,7 @@ const Navbar: React.FC<NavbarProps> = ({ className = "" }) => {
   const navLinks = [
     { href: "/about", label: "ABOUT" },
     { href: "/contact", label: "CONTACT" },
-    { href: "/teams", label: "TEAMS" },
+    { href: "/team", label: "TEAMS" },
     { href: "/events", label: "EVENTS" },
     { href: "/blogs", label: "BLOGS" },
   ];
