@@ -242,7 +242,7 @@ const Footer: React.FC = () => {
         <div className="relative mx-auto w-full max-w-7xl px-4 py-8 sm:px-6 lg:px-10 lg:py-10">
           <div className="mb-6 text-center">
             <h3 className="mb-2 text-sm font-semibold text-white/80 sm:text-base">Developed By</h3>
-            <p className="text-xs text-white/50">Open Source Contributors</p>
+            <p className="text-xs text-white/50">ACM Tech Team</p>
           </div>
           {isLoading ? (
             <div className="flex justify-center">

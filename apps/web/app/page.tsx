@@ -5,6 +5,7 @@ import Hero from "@/components/Hero";
 import DummyPage from "@/components/LandingPage/Dummy-trial-2";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import AboutSection from "@/components/LandingPage/About";
 
 export default function Index() {
   useEffect(()=>{
@@ -28,6 +29,7 @@ export default function Index() {
           >
         <DummyPage handleLoading={handleLoading} />
       </div>
+      <AboutSection/>
       <Footer/>
     </>
   );
