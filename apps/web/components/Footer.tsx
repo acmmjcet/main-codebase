@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { Facebook, Github, Instagram, Linkedin, Mail, MapPin, Phone } from 'lucide-react';
+import { Facebook, Github, Instagram, Linkedin, Mail, MapPin, Phone, GitCommit, Users } from 'lucide-react';
 import { FaXTwitter } from 'react-icons/fa6';
 
 interface FooterLink {
@@ -15,10 +15,37 @@ interface SocialLink {
   label: string;
 }
 
+interface Contributor {
+  login: string;
+  avatar_url: string;
+  html_url: string;
+  contributions: number;
+}
+
 const Footer: React.FC = () => {
   const [email, setEmail] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [message, setMessage] = useState('');
+  const [contributors, setContributors] = useState<Contributor[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [totalContributions, setTotalContributions] = useState(0);
+
+  useEffect(() => {
+    const fetchContributors = async () => {
+      try {
+        const response = await fetch('https://api.github.com/repos/acmmjcet/main-codebase/contributors');
+        const data = await response.json();
+        setContributors(data);
+        const total = data.reduce((sum: number, contributor: Contributor) => sum + contributor.contributions, 0);
+        setTotalContributions(total);
+      } catch (error) {
+        console.error('Error fetching contributors:', error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    fetchContributors();
+  }, []);
 
   const handleNewsletterSubmit = async () => {
     if (!email || isSubmitting) return;
@@ -113,7 +140,7 @@ const Footer: React.FC = () => {
                 <Mail className="mt-0.5 h-4 w-4 flex-shrink-0 text-white/60" />
                 <Link
                   className="group break-all text-sm text-white/80 transition-colors duration-300 hover:text-white"
-                  href="mailto:acm@mjcet.ac.in"
+                  href="mailto:whoislookup@acmmjcet.com"
                 >
                   <span className="bg-gradient-to-r from-white via-white to-white bg-[length:200%_100%] bg-clip-text transition-all duration-300 group-hover:animate-shine">
                     whoislookup@acmmjcet.com
@@ -124,10 +151,10 @@ const Footer: React.FC = () => {
                 <Phone className="mt-0.5 h-4 w-4 flex-shrink-0 text-white/60" />
                 <Link
                   className="group text-sm text-white/80 transition-colors duration-300 hover:text-white"
-                  href="tel:+911234567890"
+                  href="tel:+919123120913"
                 >
                   <span className="bg-gradient-to-r from-white via-white to-white bg-[length:200%_100%] bg-clip-text transition-all duration-300 group-hover:animate-shine">
-                    +91 912 312 0913 
+                    +91 912 312 0913
                   </span>
                 </Link>
               </div>
@@ -208,6 +235,66 @@ const Footer: React.FC = () => {
               ))}
             </div>
           </div>
+        </div>
+      </div>
+      <div className="relative overflow-hidden border-t border-white/[0.05] bg-gradient-to-b from-[#070b14] via-[#090d18] to-[#0a0e1a]">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(255,255,255,0.02),transparent_70%)]" />
+        <div className="relative mx-auto w-full max-w-7xl px-4 py-8 sm:px-6 lg:px-10 lg:py-10">
+          <div className="mb-6 text-center">
+            <h3 className="mb-2 text-sm font-semibold text-white/80 sm:text-base">Developed By</h3>
+            <p className="text-xs text-white/50">Open Source Contributors</p>
+          </div>
+          {isLoading ? (
+            <div className="flex justify-center">
+              <div className="h-8 w-8 animate-spin rounded-full border-2 border-white/20 border-t-white/80" />
+            </div>
+          ) : (
+            <div className="space-y-6">
+              <div className="flex flex-wrap items-center justify-center gap-4 sm:gap-6">
+                <div className="flex items-center gap-2 rounded-lg border border-white/10 bg-white/5 px-4 py-2 backdrop-blur-sm">
+                  <Users className="h-4 w-4 text-white/60" />
+                  <span className="text-sm text-white/80">
+                    <span className="font-semibold text-white">{contributors.length}</span> Contributors
+                  </span>
+                </div>
+                <div className="flex items-center gap-2 rounded-lg border border-white/10 bg-white/5 px-4 py-2 backdrop-blur-sm">
+                  <GitCommit className="h-4 w-4 text-white/60" />
+                  <span className="text-sm text-white/80">
+                    <span className="font-semibold text-white">{totalContributions}</span> Commits
+                  </span>
+                </div>
+              </div>
+              <div className="flex flex-wrap justify-center gap-4 sm:gap-6">
+                {contributors.map((contributor) => (
+                  <a
+                    key={contributor.login}
+                    className="group flex flex-col items-center gap-2 transition-transform duration-300 hover:scale-105"
+                    href={contributor.html_url}
+                    rel="noopener noreferrer"
+                    target="_blank"
+                  >
+                    <div className="relative">
+                      <div className="absolute -inset-1 rounded-full bg-gradient-to-r from-white/20 to-white/5 opacity-0 blur transition-opacity duration-300 group-hover:opacity-100" />
+                      <img
+                        alt={contributor.login}
+                        className="relative h-14 w-14 rounded-full border-2 border-white/20 object-cover transition-all duration-300 group-hover:border-white/40 sm:h-16 sm:w-16"
+                        src={contributor.avatar_url}
+                      />
+                    </div>
+                    <div className="flex flex-col items-center gap-0.5">
+                      <p className="text-xs font-medium text-white/90 transition-colors duration-300 group-hover:text-white sm:text-sm">
+                        {contributor.login}
+                      </p>
+                      <div className="flex items-center gap-1 rounded-full bg-white/5 px-2 py-0.5">
+                        <GitCommit className="h-3 w-3 text-white/50" />
+                        <span className="text-xs text-white/60">{contributor.contributions}</span>
+                      </div>
+                    </div>
+                  </a>
+                ))}
+              </div>
+            </div>
+          )}
         </div>
       </div>
       <style jsx>{`
