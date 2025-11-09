@@ -40,7 +40,7 @@ const Navbar: React.FC<NavbarProps> = ({ className = "" }) => {
   const navLinks = [
     { href: "/about", label: "ABOUT" },
     { href: "/contact", label: "CONTACT" },
-    { href: "/team", label: "TEAMS" },
+    { href: "/teams", label: "TEAMS" },
     { href: "/events", label: "EVENTS" },
     { href: "/blogs", label: "BLOGS" },
   ];
@@ -172,11 +172,11 @@ const Navbar: React.FC<NavbarProps> = ({ className = "" }) => {
         }`}
         onClick={() => setIsMenuOpen(false)}
       >
-        <div className="flex h-full w-full items-center justify-center overflow-y-auto px-3 py-16 sm:px-4 sm:py-20 md:px-6 md:py-24 lg:px-8">
+        <div className="flex h-full w-full items-center justify-center overflow-y-auto px-4 py-24 sm:px-4 sm:py-20 md:px-6 md:py-24 lg:px-8">
           <div className="relative w-full max-w-5xl">
-            <div className="pointer-events-none absolute left-1/2 top-1/2 h-[200px] w-[200px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-gradient-to-r from-[#100C08]/30 to-transparent blur-3xl sm:h-[300px] sm:w-[300px] md:h-[400px] md:w-[400px] lg:h-[500px] lg:w-[500px]" />
+            <div className="pointer-events-none absolute left-1/2 top-1/2 h-[250px] w-[250px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-gradient-to-r from-[#100C08]/40 to-transparent blur-3xl sm:h-[300px] sm:w-[300px] md:h-[400px] md:w-[400px] lg:h-[500px] lg:w-[500px]" />
 
-            <ul className="relative space-y-1.5 sm:space-y-2 md:space-y-3 lg:space-y-4 xl:space-y-6">
+            <ul className="relative space-y-4 sm:space-y-2 md:space-y-3 lg:space-y-4 xl:space-y-6">
               {navLinks.map((link, index) => (
                 <li
                   key={link.href}
@@ -194,18 +194,18 @@ const Navbar: React.FC<NavbarProps> = ({ className = "" }) => {
                   }}
                 >
                   <Link
-                    className="group relative block overflow-hidden py-0.5 sm:py-1 md:py-1.5 lg:py-2"
+                    className="group relative block overflow-hidden py-2 sm:py-1 md:py-1.5 lg:py-2"
                     href={link.href}
                     onClick={handleLinkClick}
                   >
-                    <div className="flex items-center justify-start space-x-1.5 sm:space-x-2 md:space-x-3 lg:justify-center lg:space-x-4">
-                      <div className="flex items-center space-x-1 sm:space-x-1.5 md:space-x-2 lg:space-x-3">
+                    <div className="flex items-center justify-center space-x-2 sm:justify-start sm:space-x-2 md:space-x-3 lg:justify-center lg:space-x-4">
+                      <div className="flex items-center space-x-2 sm:space-x-1.5 md:space-x-2 lg:space-x-3">
                         <div className="relative flex flex-shrink-0 items-center">
-                          <div className="h-1 w-1 animate-pulse rounded-full bg-white/50 sm:h-1.5 sm:w-1.5 md:h-2 md:w-2 lg:h-2.5 lg:w-2.5" />
+                          <div className="h-2 w-2 animate-pulse rounded-full bg-white/50 sm:h-1.5 sm:w-1.5 md:h-2 md:w-2 lg:h-2.5 lg:w-2.5" />
                           <div
                             className={`h-0.5 bg-gradient-to-r from-white/50 to-transparent transition-all duration-500 ${
                               isMenuOpen
-                                ? "w-3 sm:w-4 md:w-6 lg:w-8 xl:w-12"
+                                ? "w-6 sm:w-4 md:w-6 lg:w-8 xl:w-12"
                                 : "w-0"
                             }`}
                             style={{
@@ -213,10 +213,10 @@ const Navbar: React.FC<NavbarProps> = ({ className = "" }) => {
                             }}
                           />
                         </div>
-                        <span className="relative text-lg font-black tracking-wider text-white transition-all duration-300 group-hover:tracking-widest group-hover:text-white/90 sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl">
+                        <span className="relative text-3xl font-black tracking-wider text-white transition-all duration-300 group-hover:tracking-widest group-hover:text-white/90 sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl">
                           {link.label}
                           <span className="absolute inset-0 -z-10 bg-gradient-to-r from-transparent via-white/20 to-transparent opacity-0 blur-xl transition-opacity duration-300 group-hover:opacity-100" />
-                          <span className="absolute -bottom-0.5 left-0 h-0.5 w-0 bg-gradient-to-r from-white via-white/50 to-transparent transition-all duration-500 group-hover:w-full sm:-bottom-1 sm:h-0.5 md:h-1" />
+                          <span className="absolute -bottom-1 left-0 h-1 w-0 bg-gradient-to-r from-white via-white/50 to-transparent transition-all duration-500 group-hover:w-full sm:-bottom-0.5 sm:h-0.5 md:h-1" />
                         </span>
                       </div>
                       <div
@@ -229,7 +229,7 @@ const Navbar: React.FC<NavbarProps> = ({ className = "" }) => {
                       />
                     </div>
 
-                    <div className="absolute right-1 top-1/2 flex -translate-y-1/2 items-center space-x-0.5 opacity-0 transition-all duration-300 group-hover:opacity-100 sm:right-2 sm:space-x-1 md:right-4">
+                    <div className="absolute right-2 top-1/2 hidden -translate-y-1/2 items-center space-x-0.5 opacity-0 transition-all duration-300 group-hover:opacity-100 sm:right-2 sm:flex sm:space-x-1 md:right-4">
                       <div className="h-px w-1.5 bg-white/50 sm:w-2 md:w-4 lg:w-6" />
                       <svg
                         className="h-2.5 w-2.5 flex-shrink-0 text-white/50 sm:h-3 sm:w-3 md:h-4 md:w-4 lg:h-5 lg:w-5"
@@ -250,7 +250,7 @@ const Navbar: React.FC<NavbarProps> = ({ className = "" }) => {
             </ul>
 
             <div
-              className={`mt-4 flex justify-center transition-all duration-700 sm:mt-6 md:mt-8 lg:mt-10 xl:mt-12 ${
+              className={`mt-8 flex justify-center transition-all duration-700 sm:mt-6 md:mt-8 lg:mt-10 xl:mt-12 ${
                 isMenuOpen
                   ? "translate-y-0 opacity-100"
                   : "translate-y-10 opacity-0"
@@ -262,13 +262,13 @@ const Navbar: React.FC<NavbarProps> = ({ className = "" }) => {
               }}
             >
               <Link
-                className="group relative flex items-center space-x-1.5 overflow-hidden rounded-full border-2 border-white/30 bg-white/5 px-5 py-2.5 text-xs font-bold tracking-widest text-white backdrop-blur-sm transition-all duration-500 hover:scale-105 hover:border-white hover:bg-white hover:text-[#100C08] focus:outline-none focus:ring-2 focus:ring-white/50 sm:px-6 sm:py-3 sm:text-sm md:space-x-2 md:px-8 md:py-3.5 md:text-base lg:px-10 lg:py-4 lg:text-lg xl:space-x-3 xl:px-12 xl:py-5 xl:text-xl"
+                className="group relative flex items-center space-x-2 overflow-hidden rounded-full border-2 border-white/30 bg-white/5 px-8 py-4 text-base font-bold tracking-widest text-white backdrop-blur-sm transition-all duration-500 hover:scale-105 hover:border-white hover:bg-white hover:text-[#100C08] focus:outline-none focus:ring-2 focus:ring-white/50 sm:px-6 sm:py-3 sm:text-sm md:space-x-2 md:px-8 md:py-3.5 md:text-base lg:px-10 lg:py-4 lg:text-lg xl:space-x-3 xl:px-12 xl:py-5 xl:text-xl"
                 href="/signup"
                 onClick={handleLinkClick}
               >
-                <span className="relative z-10 flex items-center space-x-1.5 md:space-x-2 xl:space-x-3">
+                <span className="relative z-10 flex items-center space-x-2 md:space-x-2 xl:space-x-3">
                   <svg
-                    className="h-3.5 w-3.5 flex-shrink-0 sm:h-4 sm:w-4 md:h-5 md:w-5 lg:h-6 lg:w-6 xl:h-7 xl:w-7"
+                    className="h-5 w-5 flex-shrink-0 sm:h-4 sm:w-4 md:h-5 md:w-5 lg:h-6 lg:w-6 xl:h-7 xl:w-7"
                     fill="none"
                     stroke="currentColor"
                     strokeLinecap="round"
@@ -284,8 +284,8 @@ const Navbar: React.FC<NavbarProps> = ({ className = "" }) => {
               </Link>
             </div>
 
-            <div className="pointer-events-none absolute -left-4 top-1/2 h-20 w-20 -translate-y-1/2 animate-pulse rounded-full bg-white/5 blur-2xl sm:h-24 sm:w-24 md:-left-8 md:h-32 md:w-32 lg:h-40 lg:w-40 xl:h-48 xl:w-48" />
-            <div className="pointer-events-none absolute -right-4 top-1/4 h-16 w-16 animate-pulse rounded-full bg-white/5 blur-2xl sm:h-20 sm:w-20 md:-right-8 md:h-24 md:w-24 lg:h-32 lg:w-32 xl:h-40 xl:w-40" />
+            <div className="pointer-events-none absolute -left-6 top-1/2 h-32 w-32 -translate-y-1/2 animate-pulse rounded-full bg-white/5 blur-2xl sm:h-24 sm:w-24 md:-left-8 md:h-32 md:w-32 lg:h-40 lg:w-40 xl:h-48 xl:w-48" />
+            <div className="pointer-events-none absolute -right-6 top-1/4 h-24 w-24 animate-pulse rounded-full bg-white/5 blur-2xl sm:h-20 sm:w-20 md:-right-8 md:h-24 md:w-24 lg:h-32 lg:w-32 xl:h-40 xl:w-40" />
           </div>
         </div>
       </div>
