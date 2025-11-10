@@ -319,7 +319,7 @@ useGSAP(() => {
 
           {upcomingEvents.map((event) => (
               <div
-                className="upcomingEventsGridItems relative h-96 w-80 rounded-2xl shadow-lg bg-gray-950 overflow-hidden backdrop-blur-sm cursor-pointer"
+                className="upcomingEventsGridItems relative h-96 w-80 rounded-2xl shadow-lg bg-gray-950 overflow-hidden backdrop-blur-sm cursor-pointer duration-300"
                 onClick={() => router.push(`/events/${event.id}?upcoming=${event.upcoming}`)}
                 key={event.id}
               >
@@ -346,7 +346,7 @@ useGSAP(() => {
 
           {pastEvents.map((event) => (
             <div
-                className="pastEventsGridItems relative h-96 w-80 rounded-2xl shadow-lg bg-gray-950 overflow-hidden backdrop-blur-sm cursor-pointer"
+                className="pastEventsGridItems relative h-96 w-80 rounded-2xl shadow-lg bg-gray-950 overflow-hidden backdrop-blur-sm cursor-pointer duration-300"
                 onClick={() => router.push(`/events/${event.id}?upcoming=${event.upcoming}`)}
                 key={event.id}
               >
