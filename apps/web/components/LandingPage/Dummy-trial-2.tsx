@@ -22,6 +22,9 @@ const DummyPage: React.FC<DummyPageProps> = ({ handleLoading }) => {
     formationProgress: 0,
     dispersing: false,
     animationFrame: 0,
+    disperseStartMs: 0,
+    disperseProgress: 0,
+    fadeStarted: false,
   });
 
   useEffect(() => {
@@ -162,6 +165,22 @@ const DummyPage: React.FC<DummyPageProps> = ({ handleLoading }) => {
       if (!state.dispersing) {
         state.formationProgress = Math.min(state.formationProgress + 0.007, 1);
       }
+      // Synchronize text fade with dispersal
+      if (state.dispersing) {
+        if (state.disperseStartMs === 0) {
+          state.disperseStartMs = currentTime;
+        }
+        const elapsed = Math.max(0, currentTime - state.disperseStartMs);
+        const raw = Math.min(1, elapsed / 1800);
+        // easeInOutCubic
+        state.disperseProgress =
+          raw < 0.5 ? 4 * raw * raw * raw : 1 - Math.pow(-2 * raw + 2, 3) / 2;
+        if (textRef.current) {
+          const p = Math.max(0, Math.min(1, 1 - state.disperseProgress));
+          textRef.current.style.opacity = String(p);
+          textRef.current.style.transform = `translate(-50%, 0) translateY(${(1 - p) * -8}px) scale(${0.98 + p * 0.02})`;
+        }
+      }
 
       // Use cached gradient
       ctx.fillStyle = bgGradient;
@@ -251,7 +270,8 @@ const DummyPage: React.FC<DummyPageProps> = ({ handleLoading }) => {
           p.x += p.vx;
           p.y += p.vy;
           p.z += p.vz;
-          p.alpha = Math.max(p.alpha - 0.02, 0);
+          const extraFade = (animationStateRef.current.disperseProgress || 0) > 0.6 ? 0.03 : 0.02;
+          p.alpha = Math.max(p.alpha - extraFade, 0);
         } else {
           // Stronger attraction to form text more clearly
           const ease = 0.08 * easeInOutCubic(state.formationProgress);
@@ -275,7 +295,7 @@ const DummyPage: React.FC<DummyPageProps> = ({ handleLoading }) => {
         }
 
         const depthFactor = Math.max(0, Math.min(1, (z3d + 400) / 800));
-        const size = p.size * scale * (0.5 + state.formationProgress * 0.5);
+        let size = p.size * scale * (0.5 + state.formationProgress * 0.5);
 
         // Skip particles that are behind the camera or would cause negative radius
         if (
@@ -301,26 +321,80 @@ const DummyPage: React.FC<DummyPageProps> = ({ handleLoading }) => {
           b = Math.floor(59 + depthFactor * 60);
         }
 
-        // Optimized particle rendering - simplified gradients for performance
-        if (size > 0.5) {
-          // Glow effect - only for larger particles
-          (ctx as CanvasRenderingContext2D).globalAlpha = p.alpha * 0.3;
+        // Formation emphasis: make letters darker/crisper as they form
+        const formationEmphasis = state.formationProgress;
+        if (formationEmphasis > 0.6) {
+          size *= 1.1;
+        }
+
+        // Optimized particle rendering - minimal glow for performance
+        if (size > 0.6 && formationEmphasis < 0.85) {
+          ctx.globalAlpha = p.alpha * 0.25;
           ctx.fillStyle = `rgba(${r}, ${g}, ${b}, 1)`;
           ctx.beginPath();
-          ctx.arc(x2d, y2d, size * 2, 0, Math.PI * 2);
+          ctx.arc(x2d, y2d, size * 1.7, 0, Math.PI * 2);
           ctx.fill();
         }
 
-        // Core particle
-        ctx.globalAlpha = p.alpha;
-        ctx.fillStyle = `rgba(${Math.min(255, r + 20)}, ${Math.min(255, g + 20)}, ${
-          Math.min(255, b + 20)
-        }, 1)`;
+        // Core particle (crisper and slightly brighter during formation)
+        const alphaBoost = formationEmphasis > 0.6 ? 1.2 : 1.0;
+        ctx.globalAlpha = Math.min(1, p.alpha * alphaBoost);
+        ctx.fillStyle = `rgba(${Math.min(255, r + 30)}, ${Math.min(255, g + 30)}, ${Math.min(255, b + 30)}, 1)`;
         ctx.beginPath();
         ctx.arc(x2d, y2d, size, 0, Math.PI * 2);
         ctx.fill();
+
+        // Crisp highlight dot when almost fully formed
+        if (formationEmphasis > 0.85) {
+          ctx.globalAlpha = Math.min(1, p.alpha * 1.4);
+          ctx.fillStyle = "rgba(255,255,255,0.9)";
+          ctx.beginPath();
+          ctx.arc(x2d, y2d, Math.max(0.6, size * 0.6), 0, Math.PI * 2);
+          ctx.fill();
+        }
         ctx.globalAlpha = 1;
       });
+
+      // Crisp text overlay once particles are mostly formed; fade it with dispersal
+      if (state.formationProgress > 0.55) {
+        const base = Math.min(1, (state.formationProgress - 0.55) * 1.6);
+        const fade = state.dispersing ? Math.max(0, 1 - (state.disperseProgress || 0)) : 1;
+        const overlayAlpha = Math.max(0, Math.min(1, base * fade));
+        ctx.save();
+        ctx.globalAlpha = overlayAlpha;
+        const scaleFactor = getScaleFactor();
+        const fontSize = Math.round(160 * scaleFactor);
+        ctx.font = `600 ${fontSize}px "Poppins", "Arial", sans-serif`;
+        ctx.textAlign = "center";
+        ctx.textBaseline = "middle";
+        ctx.fillStyle = "rgba(245, 246, 255, 0.92)";
+        ctx.fillText("ACM MJCET", width / 2, height / 2);
+        ctx.lineWidth = Math.max(2, fontSize * 0.05);
+        ctx.strokeStyle = "rgba(130, 130, 170, 0.35)";
+        ctx.strokeText("ACM MJCET", width / 2, height / 2);
+        ctx.restore();
+      }
+
+      // When dispersal is effectively done, fade out container and finish
+      if (animationStateRef.current.dispersing && (animationStateRef.current.disperseProgress || 0) >= 0.98 && !animationStateRef.current.fadeStarted) {
+        animationStateRef.current.fadeStarted = true;
+        const fadeOutDuration = 900;
+        const start = performance.now();
+        const step = (t: number) => {
+          const elapsed = t - start;
+          const progress = Math.min(1, elapsed / fadeOutDuration);
+          const ease = progress < 0.5 ? 4 * progress * progress * progress : 1 - Math.pow(-2 * progress + 2, 3) / 2;
+          if (containerRef.current) {
+            containerRef.current.style.opacity = String(1 - ease);
+          }
+          if (progress < 1) {
+            requestAnimationFrame(step);
+          } else {
+            if (handleLoading) handleLoading();
+          }
+        };
+        requestAnimationFrame(step);
+      }
 
       state.animationFrame = requestAnimationFrame(draw);
     };
@@ -370,30 +444,10 @@ const DummyPage: React.FC<DummyPageProps> = ({ handleLoading }) => {
     const phase3Timer = setTimeout(() => {
       setPhase(3);
       animationStateRef.current.dispersing = true;
+      animationStateRef.current.disperseStartMs = performance.now();
+      animationStateRef.current.disperseProgress = 0;
+      animationStateRef.current.fadeStarted = false;
     }, 8000);
-
-    const fadeTimer = setTimeout(() => {
-      const fadeOutDuration = 2000;
-      const fadeStartTime = Date.now();
-
-      const fadeOut = () => {
-        const elapsed = Date.now() - fadeStartTime;
-        const progress = Math.min(elapsed / fadeOutDuration, 1);
-        const easeProgress = easeInOutCubic(progress);
-
-        if (containerRef.current) {
-          containerRef.current.style.opacity = String(1 - easeProgress);
-        }
-
-        if (progress < 1) {
-          requestAnimationFrame(fadeOut);
-        } else {
-          if (handleLoading) handleLoading();
-        }
-      };
-
-      fadeOut();
-    }, 10000);
 
     // Resize handling
     const onResize = () => {
@@ -407,7 +461,6 @@ const DummyPage: React.FC<DummyPageProps> = ({ handleLoading }) => {
       clearTimeout(textTimer);
       clearTimeout(phase2Timer);
       clearTimeout(phase3Timer);
-      clearTimeout(fadeTimer);
     };
   }, [handleLoading]);
 

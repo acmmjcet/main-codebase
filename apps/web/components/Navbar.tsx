@@ -39,6 +39,7 @@ const Navbar: React.FC<NavbarProps> = ({ className = "" }) => {
 
   const navLinks = [
     { href: "/about", label: "ABOUT" },
+    { href: "/join", label: "JOIN" },
     { href: "/contact", label: "CONTACT" },
     { href: "/team", label: "TEAMS" },
     { href: "/events", label: "EVENTS" },
@@ -52,14 +53,14 @@ const Navbar: React.FC<NavbarProps> = ({ className = "" }) => {
   return (
     <>
       <nav
-        className={`fixed left-0 right-0 top-0 z-50 px-2 transition-all duration-700 ease-in-out sm:px-3 md:px-4 lg:px-6 ${className}`}
+        className={`fixed left-0 right-0 top-0 z-50 px-3 transition-all duration-300 ease-out sm:px-4 md:px-6 lg:px-8 ${className}`}
         role="navigation"
       >
         <div
-          className={`relative mx-auto mt-2 flex items-center transition-all duration-700 ease-in-out sm:mt-3 md:mt-4 ${
+          className={`relative mx-auto mt-3 flex items-center transition-all duration-300 ease-out sm:mt-4 md:mt-5 ${
             isMenuOpen
-              ? "h-14 w-full max-w-[calc(100%-1rem)] justify-between rounded-2xl bg-[#100C08]/98 px-3 py-2.5 shadow-2xl backdrop-blur-xl sm:h-16 sm:max-w-[calc(100%-1.5rem)] sm:rounded-3xl sm:px-4 sm:py-3 md:h-20 md:max-w-[96%] md:rounded-[40px] md:px-6 md:py-4 lg:h-24 lg:max-w-[94%] lg:rounded-[50px] lg:px-8 lg:py-5 xl:max-w-[92%] xl:rounded-[60px] xl:px-10 xl:py-6"
-              : "w-fit justify-between rounded-full bg-[#100C08]/98 px-2.5 py-2 shadow-xl backdrop-blur-xl sm:px-3 sm:py-2.5 md:px-4 md:py-3 lg:px-6 lg:py-3.5 xl:px-8 xl:py-4"
+              ? "h-16 w-full max-w-[calc(100%-1rem)] justify-between rounded-2xl bg-[#100C08]/95 px-4 py-3 shadow-xl backdrop-blur-md sm:h-18 sm:max-w-[calc(100%-1.5rem)] sm:rounded-3xl sm:px-5 sm:py-3.5 md:h-20 md:max-w-[96%] md:rounded-[40px] md:px-7 md:py-4 lg:h-24 lg:max-w-[94%] lg:rounded-[50px] lg:px-9 lg:py-5 xl:max-w-[92%] xl:rounded-[60px] xl:px-12 xl:py-6"
+              : "w-fit justify-between rounded-full bg-[#100C08]/90 px-3 py-2.5 shadow-lg backdrop-blur-md sm:px-3.5 sm:py-3 md:px-5 md:py-3.5 lg:px-7 lg:py-4 xl:px-9 xl:py-4.5"
           }`}
         >
           <Link
@@ -97,7 +98,7 @@ const Navbar: React.FC<NavbarProps> = ({ className = "" }) => {
           </Link>
 
           <div
-            className={`flex flex-shrink-0 items-center gap-1 transition-all duration-500 sm:gap-1.5 md:gap-2 lg:gap-2.5 ${
+            className={`flex flex-shrink-0 items-center gap-1 transition-opacity duration-300 sm:gap-1.5 md:gap-2 lg:gap-2.5 ${
               isMenuOpen ? "opacity-0" : "opacity-100"
             }`}
           >
@@ -121,7 +122,7 @@ const Navbar: React.FC<NavbarProps> = ({ className = "" }) => {
 
             <Link
               className="z-20 flex flex-shrink-0 items-center gap-0.5 whitespace-nowrap rounded-full bg-white px-2 py-1.5 text-[8px] font-bold leading-none tracking-wider text-[#100C08] transition-all duration-300 hover:scale-105 hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-white/50 sm:gap-1 sm:px-2.5 sm:py-1.5 sm:text-[9px] md:gap-1.5 md:px-3 md:py-2 md:text-[10px] lg:px-4 lg:py-2.5 lg:text-xs xl:px-5 xl:py-3 xl:text-sm"
-              href="/signup"
+              href="/join"
             >
               <svg
                 className="h-2 w-2 flex-shrink-0 sm:h-2.5 sm:w-2.5 md:h-3 md:w-3 lg:h-3.5 lg:w-3.5 xl:h-4 xl:w-4"
@@ -165,7 +166,7 @@ const Navbar: React.FC<NavbarProps> = ({ className = "" }) => {
       </nav>
 
       <div
-        className={`fixed inset-0 z-40 overflow-hidden bg-[#0a0806]/97 backdrop-blur-lg transition-all duration-700 ${
+        className={`fixed inset-0 z-40 overflow-hidden bg-[#0a0806]/90 backdrop-blur-md transition-opacity duration-300 ${
           isMenuOpen
             ? "pointer-events-auto opacity-100"
             : "pointer-events-none opacity-0"
@@ -174,7 +175,7 @@ const Navbar: React.FC<NavbarProps> = ({ className = "" }) => {
       >
         <div className="flex h-full w-full items-center justify-center overflow-y-auto px-4 py-24 sm:px-4 sm:py-20 md:px-6 md:py-24 lg:px-8">
           <div className="relative w-full max-w-5xl">
-            <div className="pointer-events-none absolute left-1/2 top-1/2 h-[250px] w-[250px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-gradient-to-r from-[#100C08]/40 to-transparent blur-3xl sm:h-[300px] sm:w-[300px] md:h-[400px] md:w-[400px] lg:h-[500px] lg:w-[500px]" />
+            <div className="pointer-events-none absolute left-1/2 top-1/2 h-[200px] w-[200px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-gradient-to-r from-[#100C08]/30 to-transparent blur-2xl sm:h-[260px] sm:w-[260px] md:h-[320px] md:w-[320px] lg:h-[380px] lg:w-[380px]" />
 
             <ul className="relative space-y-4 sm:space-y-2 md:space-y-3 lg:space-y-4 xl:space-y-6">
               {navLinks.map((link, index) => (
@@ -213,7 +214,7 @@ const Navbar: React.FC<NavbarProps> = ({ className = "" }) => {
                             }}
                           />
                         </div>
-                        <span className="relative text-3xl font-black tracking-wider text-white transition-all duration-300 group-hover:tracking-widest group-hover:text-white/90 sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl">
+                <span className="relative text-3xl font-black tracking-wider text-white transition-all duration-200 group-hover:tracking-widest group-hover:text-white/90 sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl">
                           {link.label}
                           <span className="absolute inset-0 -z-10 bg-gradient-to-r from-transparent via-white/20 to-transparent opacity-0 blur-xl transition-opacity duration-300 group-hover:opacity-100" />
                           <span className="absolute -bottom-1 left-0 h-1 w-0 bg-gradient-to-r from-white via-white/50 to-transparent transition-all duration-500 group-hover:w-full sm:-bottom-0.5 sm:h-0.5 md:h-1" />
@@ -263,7 +264,7 @@ const Navbar: React.FC<NavbarProps> = ({ className = "" }) => {
             >
               <Link
                 className="group relative flex items-center space-x-2 overflow-hidden rounded-full border-2 border-white/30 bg-white/5 px-8 py-4 text-base font-bold tracking-widest text-white backdrop-blur-sm transition-all duration-500 hover:scale-105 hover:border-white hover:bg-white hover:text-[#100C08] focus:outline-none focus:ring-2 focus:ring-white/50 sm:px-6 sm:py-3 sm:text-sm md:space-x-2 md:px-8 md:py-3.5 md:text-base lg:px-10 lg:py-4 lg:text-lg xl:space-x-3 xl:px-12 xl:py-5 xl:text-xl"
-                href="/signup"
+                href="/join"
                 onClick={handleLinkClick}
               >
                 <span className="relative z-10 flex items-center space-x-2 md:space-x-2 xl:space-x-3">
