@@ -175,6 +175,103 @@ function TextArea({
 	);
 }
 
+// Cool loading overlay component
+function LoadingOverlay({ isVisible }: { isVisible: boolean }) {
+	const [mounted, setMounted] = React.useState(false);
+
+	React.useEffect(() => {
+		if (isVisible) {
+			setMounted(true);
+			return;
+		}
+		const timer = setTimeout(() => setMounted(false), 300);
+		return () => {
+			clearTimeout(timer);
+		};
+	}, [isVisible]);
+
+	if (!mounted) return null;
+
+	return (
+		<div
+			className={cn(
+				"fixed inset-0 z-[100] flex items-center justify-center",
+				"bg-black/85 backdrop-blur-md",
+				"transition-all duration-300 ease-out",
+				isVisible
+					? "opacity-100 scale-100"
+					: "opacity-0 scale-95 pointer-events-none"
+			)}
+		>
+			{/* Animated grid overlay */}
+			<div
+				aria-hidden="true"
+				className={cn(
+					"pointer-events-none absolute inset-0 select-none",
+					"[background-size:40px_40px] opacity-20",
+					"[background-image:linear-gradient(to_right,#333_1px,transparent_1px),linear-gradient(to_bottom,#333_1px,transparent_1px)]"
+				)}
+			/>
+
+			{/* Centered content */}
+			<div
+				className={cn(
+					"relative z-10 flex flex-col items-center justify-center space-y-6",
+					"transition-all duration-500",
+					isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
+				)}
+			>
+				{/* Spinning ring with dual animation */}
+				<div className="relative">
+					<div className="h-20 w-20 animate-spin rounded-full border-[3px] border-neutral-800 border-t-white" />
+					<div
+						className="absolute inset-0 h-20 w-20 animate-spin rounded-full border-[3px] border-transparent border-r-purple-500/70"
+						style={{
+							animationDirection: "reverse",
+							animationDuration: "0.9s",
+						}}
+					/>
+					{/* Inner pulsing dot */}
+					<div className="absolute inset-0 flex items-center justify-center">
+						<div className="h-2 w-2 animate-pulse rounded-full bg-white/80" />
+					</div>
+				</div>
+
+				{/* Pulsing dots with staggered animation */}
+				<div className="flex space-x-2.5">
+					<div
+						className="h-2.5 w-2.5 animate-pulse rounded-full bg-white/90"
+						style={{ animationDelay: "0s", animationDuration: "1.4s" }}
+					/>
+					<div
+						className="h-2.5 w-2.5 animate-pulse rounded-full bg-white/90"
+						style={{ animationDelay: "0.2s", animationDuration: "1.4s" }}
+					/>
+					<div
+						className="h-2.5 w-2.5 animate-pulse rounded-full bg-white/90"
+						style={{ animationDelay: "0.4s", animationDuration: "1.4s" }}
+					/>
+				</div>
+
+				{/* Text with subtle animation */}
+				<p className="text-lg font-medium text-neutral-200 tracking-wide">
+					Sending your message...
+				</p>
+			</div>
+
+			{/* Subtle gradient orbs with smooth movement */}
+			<div
+				className="pointer-events-none absolute left-1/4 top-1/4 h-72 w-72 animate-pulse rounded-full bg-purple-500/8 blur-3xl"
+				style={{ animationDuration: "3s" }}
+			/>
+			<div
+				className="pointer-events-none absolute right-1/4 bottom-1/4 h-72 w-72 animate-pulse rounded-full bg-blue-500/8 blur-3xl"
+				style={{ animationDelay: "1.5s", animationDuration: "3s" }}
+			/>
+		</div>
+	);
+}
+
 export default function ContactPage() {
 	const [status, setStatus] = React.useState<"idle" | "success" | "error">(
 		"idle"
@@ -187,7 +284,7 @@ export default function ContactPage() {
 		setStatus("idle");
 		try {
 			// For now, we just simulate a send. Replace with your API/email later.
-			await new Promise((r) => setTimeout(r, 800));
+			await new Promise((r) => setTimeout(r, 1200));
 			setStatus("success");
 			(e.currentTarget as HTMLFormElement).reset();
 		} catch {
@@ -199,6 +296,7 @@ export default function ContactPage() {
 
 	return (
 		<main className="min-h-screen bg-black text-neutral-100">
+			<LoadingOverlay isVisible={submitting} />
 			<SpotlightBackground>
 				<Navbar />
 				<section className="mx-auto grid min-h-[78vh] w-full max-w-7xl grid-cols-1 place-items-center gap-16 pb-28 pt-36 md:grid-cols-2 md:gap-24 md:pb-32 md:pt-40">
@@ -289,38 +387,78 @@ export default function ContactPage() {
 								required
 								rows={8}
 							/>
-							<div className="flex items-center justify-between pt-2">
-								<p className="text-xs text-neutral-500">
-									By sending, you agree to our{" "}
-									<Link
-										href="/about"
-										className="underline underline-offset-4 hover:text-neutral-300"
+							<div className="space-y-4 pt-2">
+								{status === "success" ? (
+									<div
+										role="status"
+										className={cn(
+											"flex items-center gap-2 rounded-lg border border-emerald-500/30 bg-emerald-500/10 px-4 py-3",
+											"text-sm font-medium text-emerald-400"
+										)}
 									>
-										terms
-									</Link>
-									.
-								</p>
-								<button
-									type="submit"
-									disabled={submitting}
-									className={cn(
-										"rounded-md bg-white px-4 py-2 text-sm font-semibold text-black",
-										"hover:bg-neutral-200 active:bg-neutral-300 transition disabled:opacity-60"
-									)}
-								>
-									{submitting ? "Sending..." : "Send message"}
-								</button>
+										<svg
+											className="h-5 w-5"
+											fill="none"
+											viewBox="0 0 24 24"
+											stroke="currentColor"
+										>
+											<path
+												strokeLinecap="round"
+												strokeLinejoin="round"
+												strokeWidth={2}
+												d="M5 13l4 4L19 7"
+											/>
+										</svg>
+										Thanks! Your message has been sent successfully.
+									</div>
+								) : null}
+								{status === "error" ? (
+									<div
+										role="status"
+										className={cn(
+											"flex items-center gap-2 rounded-lg border border-red-500/30 bg-red-500/10 px-4 py-3",
+											"text-sm font-medium text-red-400"
+										)}
+									>
+										<svg
+											className="h-5 w-5"
+											fill="none"
+											viewBox="0 0 24 24"
+											stroke="currentColor"
+										>
+											<path
+												strokeLinecap="round"
+												strokeLinejoin="round"
+												strokeWidth={2}
+												d="M6 18L18 6M6 6l12 12"
+											/>
+										</svg>
+										Something went wrong. Please try again.
+									</div>
+								) : null}
+								<div className="flex items-center justify-between">
+									<p className="text-xs text-neutral-500">
+										By sending, you agree to our{" "}
+										<Link
+											href="/about"
+											className="underline underline-offset-4 hover:text-neutral-300"
+										>
+											terms
+										</Link>
+										.
+									</p>
+									<button
+										type="submit"
+										disabled={submitting}
+										className={cn(
+											"rounded-md bg-white px-6 py-2.5 text-sm font-semibold text-black",
+											"hover:bg-neutral-200 active:bg-neutral-300 transition disabled:opacity-60 disabled:cursor-not-allowed"
+										)}
+									>
+										Send message
+									</button>
+								</div>
 							</div>
-							{status === "success" ? (
-								<p role="status" className="text-sm text-emerald-400">
-									Thanks! Your message has been sent.
-								</p>
-							) : null}
-							{status === "error" ? (
-								<p role="status" className="text-sm text-red-400">
-									Something went wrong. Please try again.
-								</p>
-							) : null}
 						</form>
 					</div>
 				</section>
