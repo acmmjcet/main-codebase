@@ -299,7 +299,7 @@ export default function ContactPage() {
 			<LoadingOverlay isVisible={submitting} />
 			<SpotlightBackground>
 				<Navbar />
-				<section className="mx-auto grid min-h-[78vh] w-full max-w-7xl grid-cols-1 place-items-center gap-16 pb-28 pt-36 md:grid-cols-2 md:gap-24 md:pb-32 md:pt-40">
+				<section className="mx-auto grid min-h-screen w-full max-w-7xl grid-cols-1 place-items-center gap-16 pb-24 pt-28 md:grid-cols-2 md:gap-24 md:pb-28 md:pt-32">
 					<div className="flex w-full max-w-xl flex-col items-center justify-center space-y-6 text-center md:max-w-2xl">
 						<h1 className="bg-gradient-to-b from-neutral-50 to-neutral-400 bg-clip-text text-4xl font-bold leading-tight text-transparent md:text-6xl">
 							Let&apos;s build something great.

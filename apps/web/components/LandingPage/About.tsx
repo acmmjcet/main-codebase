@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import { motion, useReducedMotion, type Variants } from "framer-motion";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -76,7 +76,7 @@ const AboutSection = ({ className = "" }: AboutSectionProps) => {
   const sectionRef = useRef<HTMLElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
   const gridRef = useRef<HTMLDivElement>(null);
-  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
+  // Avoid re-renders on hover; use pure CSS for hover effects instead of state
 
   useEffect(() => {
     if (shouldReduceMotion || !sectionRef.current || !contentRef.current) {
@@ -92,65 +92,37 @@ const AboutSection = ({ className = "" }: AboutSectionProps) => {
             trigger: sectionRef.current,
             start: "top bottom",
             end: "bottom top",
-            scrub: 1
+            scrub: 0.5
           }
         });
       }
 
-      const elements = contentRef.current?.querySelectorAll('[data-animate]');
-      
-      if (elements) {
-        elements.forEach((el) => {
+      // Batch animations to reduce ScrollTrigger instances
+      ScrollTrigger.batch('[data-animate]', {
+        start: 'top 85%',
+        end: 'top 60%',
+        onEnter: (batch) => {
           gsap.fromTo(
-            el,
-            {
-              opacity: 0,
-              y: 80
-            },
-            {
-              opacity: 1,
-              y: 0,
-              duration: 1.2,
-              ease: "power3.out",
-              scrollTrigger: {
-                trigger: el,
-                start: "top 90%",
-                end: "top 60%",
-                scrub: 0.8
-              }
-            }
+            batch,
+            { opacity: 0, y: 60 },
+            { opacity: 1, y: 0, duration: 0.8, ease: 'power3.out', stagger: 0.08 }
           );
-        });
-      }
+        },
+        once: true
+      });
 
-      const milestoneCards = contentRef.current?.querySelectorAll('[data-milestone]');
-      
-      if (milestoneCards) {
-        milestoneCards.forEach((card, index) => {
+      ScrollTrigger.batch('[data-milestone]', {
+        start: 'top 90%',
+        end: 'top 65%',
+        onEnter: (batch) => {
           gsap.fromTo(
-            card,
-            {
-              opacity: 0,
-              y: 100,
-              rotateX: -15
-            },
-            {
-              opacity: 1,
-              y: 0,
-              rotateX: 0,
-              duration: 1,
-              ease: "power3.out",
-              scrollTrigger: {
-                trigger: card,
-                start: "top 92%",
-                end: "top 65%",
-                scrub: 1
-              },
-              delay: index * 0.05
-            }
+            batch,
+            { opacity: 0, y: 80, rotateX: -10 },
+            { opacity: 1, y: 0, rotateX: 0, duration: 0.7, ease: 'power3.out', stagger: 0.06 }
           );
-        });
-      }
+        },
+        once: true
+      });
     }, sectionRef);
 
     return () => {
@@ -358,19 +330,16 @@ const AboutSection = ({ className = "" }: AboutSectionProps) => {
             </span>
           </h3>
         </div>
-        <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3 lg:gap-6 xl:grid-cols-5">
+        <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3 lg:gap-6 xl:grid-cols-5 will-change-transform">
           {milestones.map((milestone, index) => (
             <motion.div
               key={milestone.year}
               className="group relative"
               data-milestone
               style={{ perspective: "1000px" }}
-              whileHover={{ y: -8 }}
-              onMouseEnter={() => setHoveredIndex(index)}
-              onMouseLeave={() => setHoveredIndex(null)}
             >
               <div 
-                className="relative h-full overflow-hidden rounded-lg border border-gray-800 bg-gradient-to-br from-gray-950 via-slate-950 to-black p-6 shadow-2xl transition-all duration-500 hover:border-gray-600 hover:shadow-gray-800/50"
+                className="relative h-full overflow-hidden rounded-lg border border-gray-800 bg-gradient-to-br from-gray-950 via-slate-950 to-black p-6 shadow-xl transition-transform duration-300 hover:-translate-y-2 hover:border-gray-600 hover:shadow-gray-800/40"
                 style={{
                   backgroundImage: `
                     linear-gradient(to right, rgba(75, 85, 99, 0.03) 1px, transparent 1px),
@@ -379,24 +348,22 @@ const AboutSection = ({ className = "" }: AboutSectionProps) => {
                   backgroundSize: "30px 30px"
                 }}
               >
-                <div className="absolute left-0 right-0 top-0 h-px bg-gradient-to-r from-transparent via-gray-600 to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
-                <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-gray-600 to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
-                <motion.div
-                  animate={{ scale: hoveredIndex === index ? 1.05 : 1 }}
-                  className="mb-4 inline-block border border-gray-700 bg-gradient-to-br from-gray-900 to-black px-4 py-2"
-                  transition={{ duration: 0.3 }}
+                <div className="absolute left-0 right-0 top-0 h-px bg-gradient-to-r from-transparent via-gray-700 to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
+                <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-gray-700 to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
+                <div
+                  className="mb-4 inline-block border border-gray-700 bg-gradient-to-br from-gray-900 to-black px-4 py-2 transition-transform duration-300 group-hover:scale-105"
                 >
                   <span className="text-2xl font-black text-white">
                     {milestone.year}
                   </span>
-                </motion.div>
+                </div>
                 <h4 className="mb-3 text-xl font-bold text-white transition-colors duration-300 group-hover:text-gray-300">
                   {milestone.title}
                 </h4>
                 <p className="text-sm leading-relaxed text-gray-400">
                   {milestone.description}
                 </p>
-                <div className="absolute -bottom-8 -right-8 h-24 w-24 rounded-full bg-gradient-to-br from-gray-800/20 to-transparent blur-2xl opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
+                <div className="absolute -bottom-8 -right-8 h-24 w-24 rounded-full bg-gradient-to-br from-gray-800/20 to-transparent blur-xl opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
               </div>
             </motion.div>
           ))}

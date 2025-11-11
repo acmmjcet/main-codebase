@@ -204,23 +204,23 @@ const Scene = ({ scrollProgress, isMobile }: { scrollProgress: number; isMobile:
 
   const imageSets = [
     [
-      { url: "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=800&q=80", row: 0, col: 0 },
-      { url: "https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=800&q=80", row: 0, col: 2 },
-      { url: "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=800&q=80", row: 1, col: 1 }
+      { url: "https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&auto=format&fit=crop&w=1600", row: 0, col: 0 },
+      { url: "https://images.unsplash.com/photo-1542831371-29b0f74f9713?q=80&auto=format&fit=crop&w=1600", row: 0, col: 2 },
+      { url: "https://images.unsplash.com/photo-1526378722484-bd91ca387e72?q=80&auto=format&fit=crop&w=1600", row: 1, col: 1 }
     ],
     [
-      { url: "https://images.unsplash.com/photo-1488590728505-1b78ea2829f6?w=800&q=80", row: 0, col: 1 },
-      { url: "https://images.unsplash.com/photo-1518770660439-4636190af475?w=800&q=80", row: 1, col: 0 },
-      { url: "https://images.unsplash.com/photo-1484417894907-623942c8ee29?w=800&q=80", row: 1, col: 2 }
+      { url: "https://images.unsplash.com/photo-1504639725590-34d0984388bd?q=80&auto=format&fit=crop&w=1600", row: 0, col: 1 },
+      { url: "https://images.unsplash.com/photo-1521737604893-d14cc237f11d?q=80&auto=format&fit=crop&w=1600", row: 1, col: 0 },
+      { url: "https://images.unsplash.com/photo-1519389950473-47ba0277781c?q=80&auto=format&fit=crop&w=1600", row: 1, col: 2 }
     ],
     [
-      { url: "https://images.unsplash.com/photo-1504639725590-34d0984388bd?w=800&q=80", row: 0, col: 2 },
-      { url: "https://images.unsplash.com/photo-1522199755839-a2bacb67c546?w=800&q=80", row: 1, col: 0 }
+      { url: "https://images.unsplash.com/photo-1522199710521-72d69614c702?q=80&auto=format&fit=crop&w=1600", row: 0, col: 2 },
+      { url: "https://images.unsplash.com/photo-1515378791036-0648a3ef77b2?q=80&auto=format&fit=crop&w=1600", row: 1, col: 0 }
     ],
     [
-      { url: "https://images.unsplash.com/photo-1531297484001-80022131f5a1?w=800&q=80", row: 0, col: 0 },
-      { url: "https://images.unsplash.com/photo-1550439062-609e1531270e?w=800&q=80", row: 0, col: 1 },
-      { url: "https://images.unsplash.com/photo-1517433456452-f9633a875f6f?w=800&q=80", row: 1, col: 2 }
+      { url: "https://images.unsplash.com/photo-1526378722484-bd91ca387e72?q=80&auto=format&fit=crop&w=1600", row: 0, col: 0 },
+      { url: "https://images.unsplash.com/photo-1448932223592-d1fc686e76ea?q=80&auto=format&fit=crop&w=1600", row: 0, col: 1 },
+      { url: "https://images.unsplash.com/photo-1542831371-29b0f74f9713?q=80&auto=format&fit=crop&w=1600", row: 1, col: 2 }
     ]
   ];
 
@@ -458,8 +458,9 @@ const Hero = () => {
     <div 
       ref={containerRef} 
       className="relative h-[500vh]"
-      style={{ 
-        background: "linear-gradient(to bottom, #0a0806 0%, #1a1410 50%, #0a0806 100%)"
+      style={{
+        background:
+          "radial-gradient(1200px 600px at 20% -10%, rgba(99,102,241,0.16), transparent 60%), radial-gradient(1200px 600px at 80% -10%, rgba(236,72,153,0.14), transparent 60%), linear-gradient(to bottom, #0a0806 0%, #141016 50%, #0a0806 100%)",
       }}
     >
       <div className="gallery-content sticky top-0 h-screen w-full overflow-hidden">
@@ -498,23 +499,19 @@ const Hero = () => {
         >
           <div className="flex w-full max-w-6xl flex-col items-center">
             <h1
-              className="text-center text-3xl font-bold uppercase leading-tight tracking-wider sm:text-4xl md:text-6xl lg:text-7xl xl:text-8xl"
+              className="text-center text-3xl font-extrabold uppercase leading-tight tracking-wider sm:text-4xl md:text-6xl lg:text-7xl xl:text-8xl"
               style={{
                 fontFamily: "'Arial Black', 'Arial', sans-serif",
                 fontWeight: 900,
                 color: "transparent",
                 WebkitTextFillColor: "transparent",
-                WebkitTextStroke: isMobile ? "1px rgba(224, 242, 254, 0.8)" : "1.5px rgba(224, 242, 254, 0.8)",
-                background: "linear-gradient(180deg, rgba(224, 242, 254, 0.1) 0%, rgba(186, 230, 253, 0.15) 50%, rgba(224, 242, 254, 0.05) 100%)",
+                WebkitTextStroke: isMobile ? "1.2px rgba(224, 242, 254, 0.95)" : "2px rgba(224, 242, 254, 0.9)",
+                background: "linear-gradient(180deg, rgba(224, 242, 254, 0.35) 0%, rgba(186, 230, 253, 0.25) 60%, rgba(224, 242, 254, 0.15) 100%)",
                 WebkitBackgroundClip: "text",
                 backgroundClip: "text",
-                textShadow: `
-                  0 0 1px rgba(224, 242, 254, 0.5),
-                  0 2px 4px rgba(0, 0, 0, 0.3),
-                  0 0 20px rgba(96, 165, 250, 0.2)
-                `,
-                letterSpacing: "0.05em",
-                filter: "drop-shadow(0 1px 2px rgba(0, 0, 0, 0.5))"
+                textShadow: "0 2px 8px rgba(96, 165, 250, 0.25)",
+                letterSpacing: "0.06em",
+                filter: "drop-shadow(0 2px 4px rgba(0, 0, 0, 0.55))"
               }}
             >
               Fueling future with innovation
