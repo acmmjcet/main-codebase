@@ -4,6 +4,7 @@ import React from "react";
 import Link from "next/link";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import { GlowingEffect } from "@/components/ui/glowing-effect";
 
 // Local utility to avoid touching shared libs
 function cn(...classes: Array<string | undefined | false>) {
@@ -311,7 +312,17 @@ export default function ContactPage() {
 						</p>
 
 						<div className="mt-8 grid w-full grid-cols-1 gap-5 sm:grid-cols-2">
-							<div className="rounded-xl border border-neutral-800 bg-neutral-900/40 p-6">
+							<div className="relative rounded-xl border border-neutral-800 bg-neutral-900/40 p-6">
+								<GlowingEffect
+									blur={0}
+									borderWidth={3}
+									spread={80}
+									glow={true}
+									disabled={false}
+									proximity={64}
+									inactiveZone={0.01}
+									className="z-20"
+								/>
 								<p className="text-sm text-neutral-400">Email</p>
 								<a
 									href="mailto:contact@acm.example"
@@ -320,7 +331,17 @@ export default function ContactPage() {
 									contact@acm.example
 								</a>
 							</div>
-							<div className="rounded-xl border border-neutral-800 bg-neutral-900/40 p-6">
+							<div className="relative rounded-xl border border-neutral-800 bg-neutral-900/40 p-6">
+								<GlowingEffect
+									blur={0}
+									borderWidth={3}
+									spread={80}
+									glow={true}
+									disabled={false}
+									proximity={64}
+									inactiveZone={0.01}
+									className="z-20"
+								/>
 								<p className="text-sm text-neutral-400">Headquarters</p>
 								<p className="mt-1 text-lg font-medium text-neutral-100">
 									Your Campus • CS Dept
@@ -340,7 +361,7 @@ export default function ContactPage() {
 								Twitter/X
 							</Link>
 							<Link
-								href="https://instagram.com"
+								href="https://www.instagram.com/mjcet_acm/"
 								target="_blank"
 								className={cn(
 									"rounded-md border border-neutral-800 bg-neutral-900/40 px-4 py-2 text-sm text-neutral-200",
@@ -350,7 +371,7 @@ export default function ContactPage() {
 								Instagram
 							</Link>
 							<Link
-								href="https://linkedin.com"
+								href="https://www.linkedin.com/company/acmmjcet/"
 								target="_blank"
 								className={cn(
 									"rounded-md border border-neutral-800 bg-neutral-900/40 px-4 py-2 text-sm text-neutral-200",
@@ -366,8 +387,18 @@ export default function ContactPage() {
 						<div className="absolute inset-0 rounded-xl bg-gradient-to-b from-white/10 to-transparent blur-3xl" />
 						<form
 							onSubmit={onSubmit}
-							className="relative space-y-7 rounded-2xl border border-neutral-800 bg-neutral-950/60 p-7 backdrop-blur md:space-y-8 md:p-10"
+							className="relative z-10 space-y-7 rounded-2xl border border-neutral-800 bg-neutral-950/60 p-7 backdrop-blur md:space-y-8 md:p-10"
 						>
+							<GlowingEffect
+								blur={0}
+								borderWidth={3}
+								spread={80}
+								glow={true}
+								disabled={false}
+								proximity={64}
+								inactiveZone={0.01}
+								className="z-20"
+							/>
 							<div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
 								<Field id="firstName" label="First name" placeholder="Ada" required />
 								<Field id="lastName" label="Last name" placeholder="Lovelace" required />
