@@ -23,7 +23,7 @@ const CheckpointItem = ({ title, description, side, index }: { title: string, de
             data-index={index}
         >
             <div className={`timeline-circle absolute w-6 h-6 bg-gray-200 rounded-full border-4 border-gray-700 z-10 top-1/2 -mt-3 transform ${side === 'left' ? 'right-[-12px]' : 'left-[-12px]'}`}></div>
-            <div className="timeline-box p-4 rounded-lg bg-gray-900/60 border border-gray-700 shadow-lg transition-transform duration-300 ease-out transform-gpu will-change-transform cursor-pointer hover:scale-105 hover:-translate-y-1 hover:shadow-2xl hover:bg-gray-800/70 motion-safe:transition-transform">
+            <div className="timeline-box p-4 rounded-lg bg-gray-900/60 border border-gray-500 shadow-lg transition-transform duration-300 ease-out transform-gpu will-change-transform cursor-pointer hover:scale-105 hover:-translate-y-1 hover:border-gray-800/70 hover:bg-gray-950/70 motion-safe:transition-transform">
                 <h2 className="text-xl font-bold mb-1 text-white">{title}</h2>
                 <p className="text-sm text-gray-200">{description}</p>
             </div>
@@ -174,12 +174,12 @@ export default function About() {
 
         
         // Calculate scroll distances in pixels
-        const heroScrollDuration = 2000
-        const historySlideInDuration = 1500
+        const heroScrollDuration = 1000
+        const historySlideInDuration = 1000
         // Ensure a minimum scroll duration for the animation to be visible
         const historyInternalScrollDuration = effectiveScrollHeight > 0 ? effectiveScrollHeight + 1000 : 1500;
-        const workSlideDuration = 1500
-        const achievementsAndCollaborationsScrollDuration = 1500
+        const workSlideDuration = 1000
+        const achievementsAndCollaborationsScrollDuration = 1000
         const totalScrollDistance = heroScrollDuration + historySlideInDuration + historyInternalScrollDuration + workSlideDuration + achievementsAndCollaborationsScrollDuration
 
         // Master timeline
@@ -213,17 +213,17 @@ export default function About() {
             .to(overlayRef.current, { backgroundColor: 'rgba(0,0,0,1)', opacity: 0.42, ease: 'none' }, 'heroStart')
             .to(weRef.current, { y: -20, opacity: 0, scale: 0.98, duration: 0.1, ease: 'power1.out' }, 'heroStart')
             // reveal main heading and description with a gentle stagger and nicer easing
-            .fromTo(whoRef.current, { y: 48, opacity: 0 }, { y: 0, opacity: 1, ease: 'power2.out', duration: 0.45 }, 'heroStart')
-            .fromTo(descRef.current, { y: 30, opacity: 0 }, { y: 0, opacity: 1, ease: 'power2.out', duration: 0.45 }, 'heroStart')
+            .fromTo(whoRef.current, { y: 48, opacity: 0 }, { y: 0, opacity: 1, ease: 'power2.out', duration: 0.1 }, 'heroStart')
+            .fromTo(descRef.current, { y: 30, opacity: 0 }, { y: 0, opacity: 1, ease: 'power2.out', duration: 0.1 }, 'heroStart')
 
         // Parallax 
-            .to(heroRef.current, {y: viewportHeight, ease: 'power2.inOut', duration: historySlideInDuration / totalScrollDistance}, 'heroEnd')
+            .to(heroRef.current, {y: -viewportHeight, ease: 'power2.inOut', duration: historySlideInDuration / totalScrollDistance}, 'heroEnd')
 
         // ============ HISTORY SECTION - SLIDE IN & SCROLL ============
         
         // 1. Slide In the History Container
         masterTl.fromTo(historyRef.current,
-            {yPercent: -100},{ yPercent: 0, ease: 'power2.inOut', duration: historySlideInDuration / totalScrollDistance, },
+            {yPercent: 100},{ yPercent: 0, ease: 'power2.inOut', duration: historySlideInDuration / totalScrollDistance, },
             'heroEnd' 
         )
 
@@ -235,7 +235,7 @@ export default function About() {
         
         masterTl.addLabel('historySlideEnd', '>')
 
-        masterTl.fromTo(historyTitleRef.current, { y: 30, opacity: 0 }, { y: 0, scale: 2, opacity: 1, ease: 'power3.out', duration: 0.1, }, 'historySlideEnd-=0.1')
+        masterTl.fromTo(historyTitleRef.current, { y: 100, opacity: 0 }, { y: 0, scale: 1.2, opacity: 1, ease: 'power3.out', duration: 0.5, }, 'heroEnd')
         
         // 3. LINE ANIMATION - Draw the full line over the whole scroll duration
         .to(timelineLineRef.current, {
@@ -303,43 +303,32 @@ export default function About() {
         masterTl.add('achievementsStart', 'historyScrollEnd')
 
         const achievementCards = gsap.utils.toArray('.achievement-card');
-        
-        const achievementDurationNormalized = achievementsAndCollaborationsScrollDuration / totalScrollDistance;
-        const staggerAchievementCards = achievementDurationNormalized / (achievementCards.length + 1); // Calculate stagger based on section duration
-
+    
         masterTl
             // Slide in the Achievements section container
             .fromTo(achievementsAndCollaborationsRef.current, 
                 {yPercent: 100}, // Corrected initial state to 100% since it's sliding *up* from below
                 { yPercent: 0, ease: 'power2.inOut', duration: workSlideDuration / totalScrollDistance, }, 
-                'achievementsStart'
+                'historyScrollEnd'
             )
             // Parallax 
             .to(historyRef.current, {y: -viewportHeight, ease: 'power2.inOut', duration: workSlideDuration / totalScrollDistance}, '<') // 
 
             // Fade in Titles
-            .fromTo(achievementsTitleRef.current, { y: 30, opacity: 0 }, { y: 0, scale: 2, opacity: 1, ease: 'power3.out', duration: 0.1, }, 'achievementsStart+=0.05')
-            
-            // Staggered reveal of achievement cards
+            .fromTo(achievementsTitleRef.current, { y: 100, opacity: 0 }, { y: 0, scale: 1.2, opacity: 1, ease: 'power3.out', duration: 0.1, }, 'historyScrollEnd+=0.05')
             .fromTo(
             achievementCards,
             {
-                y: () => Math.random() * 1000 - 750, // random Y offset
-                x: () => Math.random() * 500 - 250,  // random X offset
+                y: 100,
                 opacity: 0,
             },
             {
                 y: 0,
-                x: 0,
                 opacity: 1,
-                stagger: {
-                each: staggerAchievementCards,
-                from: 'start',
-                },
                 ease: 'power3.out',
-                duration: achievementDurationNormalized,
+                duration: 0.1,
             },
-            'achievementsStart+=0.1'
+            'historyScrollEnd+=0.1'
             );
 
                     // Trigger countUp for all achievement numbers reliably when the achievements section begins
@@ -362,8 +351,43 @@ export default function About() {
             duration: 0.1,
         }, 'achievementsStart')
 
+        // HOVER ANIMATION
+          const timelineBoxes = gsap.utils.toArray<HTMLDivElement>(".timeline-box");
+          const allEventCards = [...timelineBoxes, ...achievementCards];
+          
+          const handleMouseEnter = (item: HTMLDivElement) => {
+            gsap.to(item, {
+              scale: 1.1,
+              y: -10,
+              boxShadow: "0 0 60px rgba(110, 120, 140, 1)",
+              duration: 0.05,
+              ease: "power2.out",
+            });
+          };
+        
+          const handleMouseLeave = (item: HTMLDivElement) => {
+            gsap.to(item, {
+              scale: 1,
+              y: 0,
+              boxShadow: "0 0 0 rgba(0, 0, 0, 0)",
+              duration: 0.05,
+              ease: "power2.inOut",
+            });
+          };
+        
+          allEventCards.forEach((item) => {
+            const el = item as HTMLDivElement;
+            el.addEventListener("mouseenter", () => handleMouseEnter(el));
+            el.addEventListener("mouseleave", () => handleMouseLeave(el));
+          });
             
         return () => {
+            // Remove hover listeners
+            allEventCards.forEach((item) => {
+            const el = item as HTMLDivElement;
+            el.removeEventListener("mouseenter", () => handleMouseEnter(el));
+            el.removeEventListener("mouseleave", () => handleMouseLeave(el));
+            });
             masterTl.scrollTrigger?.kill()
             masterTl.kill()
             ScrollTrigger.getAll().forEach(st => st.kill())
@@ -382,7 +406,7 @@ export default function About() {
                 <div className="relative z-0 flex items-center justify-center h-full">
                     <div className="max-w-4xl mx-auto px-6 text-center">
                         <h1 ref={weRef} className="text-5xl md:text-7xl font-bold leading-tight text-white opacity-1">We Create the Future</h1>
-                        <h1 ref={whoRef} className="text-5xl md:text-7xl font-bold leading-tight text-white opacity-0">Who we are</h1>
+                        <h1 ref={whoRef} className="text-5xl md:text-7xl font-bold leading-tight text-white opacity-0">WHO WE ARE</h1>
                         <p ref={descRef} className="mt-6 text-gray-200 max-w-3xl mx-auto text-lg md:text-xl opacity-0">ACM@MJCET is MJCET's student chapter of the Association for Computing Machinery — we promote interdisciplinary computing and professional development on campus.</p>
                     </div>
                 </div>
@@ -442,12 +466,12 @@ export default function About() {
                     {ACHIEVEMENTS.map(({ key, value }, index) => (
                         <div
                             key={index}
-                            className="achievement-card flex flex-col gap-4 items-center justify-center w-48 h-48  bg-gray-900/60 border border-gray-700 rounded-full shadow-xl opacity-0 transition-transform duration-300 ease-out transform-gpu will-change-transform cursor-pointer hover:scale-105 hover:-translate-y-1 hover:shadow-2xl hover:bg-gray-800/70 motion-safe:transition-transform focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-600 focus-visible:ring-offset-2 focus-visible:ring-offset-gray-950"
+                            className="achievement-card flex flex-col gap-4 items-center justify-center w-48 h-36  bg-gray-900/60 border border-gray-500 rounded-2xl shadow-xl opacity-0 transition-transform duration-300 ease-out transform-gpu will-change-transform cursor-pointer hover:scale-105 hover:-translate-y-1 hover:border-gray-800/70 hover:bg-gray-950/70 hover:rounded-2xl motion-safe:transition-transform focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-600 focus-visible:ring-offset-2 focus-visible:ring-offset-gray-950"
                         >
-                            <h3 className="achievement-number text-3xl sm:text-4xl md:text-5xl font-extrabold text-gray-200">
+                            <h3 className="achievement-number text-3xl sm:text-4xl md:text-5xl font-extrabold text-gray-200 ">
                                 {value}
                             </h3>
-                            <p>{key}</p>
+                            <p className='bg-gray-800 rounded-xl p-2'>{key}</p>
                         </div>
                     ))}
                 </div>
