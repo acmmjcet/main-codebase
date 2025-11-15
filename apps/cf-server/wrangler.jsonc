@@ -13,7 +13,43 @@
 	},
 	"observability": {
 		"enabled": true
-	}
+	},
+	"d1_databases": [  // Optional: keep dev config here
+    {
+      "binding": "DB",
+      "database_name": "acm-main-db",
+      "database_id": "dskd0ae2df8-a3cd-4ea4-9b9b-e7d81172",
+      "migrations_dir": "./drizzle"
+    }
+  ],
+  "env": {
+    "production": {
+      "vars": {
+        "ENVIRONMENT": "production"
+      },
+      "d1_databases": [
+        {
+          "binding": "DB",
+          "database_name": "acm-main-db",
+          "database_id": "dskd0ae2df8-a3cd-4ea4-9b9b-e7d81172",
+          "migrations_dir": "./drizzle"
+        }
+      ]
+    },
+    "staging": {
+      "vars": {
+        "ENVIRONMENT": "staging"
+      },
+      "d1_databases": [
+        {
+          "binding": "DB",
+          "database_name": "acm-main-db",
+          "database_id": "dskd0ae2df8-a3cd-4ea4-9b9b-e7d81172",
+          "migrations_dir": "./drizzle"
+        }
+      ]
+    }
+  }
 	/**
 	 * Smart Placement
 	 * Docs: https://developers.cloudflare.com/workers/configuration/smart-placement/#smart-placement

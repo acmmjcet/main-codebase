@@ -1,0 +1,32 @@
+interface BlogData {
+  title: string;
+  slug?: string;
+  content: string;
+  excerpt?: string;
+  category: string;
+  tags?: string | string[] | any;
+  authorName: string;
+  authorId?: string;
+  authorBio?: string;
+  authorProfileImage?: string;
+  authorTwitter?: string;
+  authorLinkedIn?: string;
+  featuredImage?: string;
+  featuredImageAltText?: string;
+  featuredImageWidth?: number;
+  featuredImageHeight?: number;
+  isFeatured?: boolean;
+  isPublished?: boolean;
+  isApproved?: boolean;
+  seoTitle?: string;
+  seoDescription?: string;
+  postType?: string;
+  relatedBlogs?: string | string[];
+  status?: string;
+  externalUrl?: string;
+  translatedBlogs?: string | string[];
+  publishedAt?: string;
+  scheduledAt?: string;
+  estimatedReadTime?: number;
+}
+export type { BlogData };
