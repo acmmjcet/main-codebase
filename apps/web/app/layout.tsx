@@ -1,4 +1,5 @@
 import './global.css';
+import LenisProvider from '@/components/LenisProvider';
 
 export const metadata = {
   title: 'Welcome to acm-web',
@@ -12,7 +13,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body>
+        <LenisProvider>{children}</LenisProvider>
+      </body>
     </html>
   )
 }
