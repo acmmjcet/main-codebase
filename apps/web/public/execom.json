@@ -1,5 +1,125 @@
 [
   {
+    "name": "Syed Adnan Ali",
+    "role": "TECHNICAL",
+    "image": "/assets/Execom 2025-2026/IMG-20251003-WA0004 - Syed Adnan Ali.jpg",
+    "year": "2025-2026"
+  },
+  {
+    "name": "Arshil Ali Abbas",
+    "role": "TECHNICAL",
+    "image": "/assets/Execom 2025-2026/43eecf34-7122-4c9e-9a47-931325adedaa_Original - Arshil Ali Abbas.jpeg",
+    "year": "2025-2026"
+  },
+  {
+    "name": "Mohammed Affan Sakhib",
+    "role": "TECHNICAL",
+    "image": "/assets/Execom 2025-2026/20250614_182452(1) - Mohammed Affan Sakhib.jpg",
+    "year": "2025-2026"
+  },
+  {
+    "name": "Afzal Hashmi",
+    "role": "DESIGN",
+    "image": "/assets/Execom 2025-2026/IMG_7486 - AFZAL HASHMI SYED 160424733014.jpeg",
+    "year": "2025-2026"
+  },
+  {
+    "name": "Ali Mohammed Lalani",
+    "role": "DESIGN",
+    "image": "/assets/Execom 2025-2026/20251002_125245 - ALI MOHAMMED LALANI 160423754057.jpg",
+    "year": "2025-2026"
+  },
+  {
+    "name": "Haseeb Al Salafi",
+    "role": "DOCUMENTATION",
+    "image": "/assets/Execom 2025-2026/IMG_2604 - HASEEB UR RAHMAN 160424736040.jpg",
+    "year": "2025-2026"
+  },
+  {
+    "name": "Saleh Mohiuddin",
+    "role": "DOCUMENTATION",
+    "image": "/assets/Execom 2025-2026/IMG_20251001_212952 - SYED SALEH MOHI UDDIN QUADRI 160422737021.png",
+    "year": "2025-2026"
+  },
+  {
+    "name": "Ahmed Azeem",
+    "role": "EVENTS",
+    "image": "/assets/Execom 2025-2026/IMG_0560 - Ahmed.jpeg",
+    "year": "2025-2026"
+  },
+  {
+    "name": "Juveria Sadaf",
+    "role": "EVENTS",
+    "image": "/assets/Execom 2025-2026/20251002_155537 - JUVERIA SADAF 160424733006.jpg",
+    "year": "2025-2026"
+  },
+  {
+    "name": "Afrah Ahmed",
+    "role": "EVENTS",
+    "image": "/assets/Execom 2025-2026/IMG_7117 - AFRA AHMED 160423747073.jpeg",
+    "year": "2025-2026"
+  },
+  {
+    "name": "Neha Anjum",
+    "role": "HR",
+    "image": "/assets/Execom 2025-2026/n - NEHA ANJUM 160422737003.jpg",
+    "year": "2025-2026"
+  },
+  {
+    "name": "Maliha Firdous",
+    "role": "HR",
+    "image": "/assets/Execom 2025-2026/IMG_3521 - MALIHA FIRDOUS 160424733243.jpeg",
+    "year": "2025-2026"
+  },
+  {
+    "name": "Amena Kouser",
+    "role": "MARKETING",
+    "image": "/assets/Execom 2025-2026/IMG-20250927-WA0075 - Amena Kouser.jpg",
+    "year": "2025-2026"
+  },
+  {
+    "name": "Luqman Khan",
+    "role": "MARKETING",
+    "image": "/assets/Execom 2025-2026/IMG_8454 - Luqman Khan.png",
+    "year": "2025-2026"
+  },
+  {
+    "name": "Abu Bakar Hussain",
+    "role": "MARKETING",
+    "image": "/assets/Execom 2025-2026/IMG_6386 - x cale.png",
+    "year": "2025-2026"
+  },
+  {
+    "name": "Hassaan Ghayas",
+    "role": "MEDIA",
+    "image": "/assets/Execom 2025-2026/IMG_20250923_195421 - Mohammed Hassaan.jpg",
+    "year": "2025-2026"
+  },
+  {
+    "name": "Ammar Bin Hussain",
+    "role": "MEDIA",
+    "image": "/assets/Execom 2025-2026/image-4 - AMMAR BIN HUSSAIN 160424733118.png",
+    "year": "2025-2026"
+  },
+  {
+    "name": "Qhuba Tarannum",
+    "role": "MEDIA",
+    "image": "/assets/Execom 2025-2026/Screenshot_20251002_161100_WhatsApp - Hina Iram.png",
+    "year": "2025-2026"
+  },
+  {
+    "name": "Mohammed Saad Uddin",
+    "role": "LOGISTICS",
+    "image": "/assets/Execom 2025-2026/ecf31532-c606-422b-b7d1-a3b9b0cbfa79 - Saad.w3b.jpeg",
+    "year": "2025-2026"
+  },
+  {
+    "name": "Shaik Abdus Salam",
+    "role": "LOGISTICS",
+    "image": "/assets/Execom 2025-2026/20251002_125220 - Abdus salam.jpg",
+    "year": "2025-2026"
+  },
+  {
     "name": "Patan Ahmed Khan",
     "designation": "Technical ",
     "image": "/assets/Execom 2024-2025/tech1.png",
