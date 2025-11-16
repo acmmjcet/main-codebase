@@ -12,7 +12,7 @@ export default function LoadingScreen({ onComplete }: LoadingScreenProps) {
   const [isComplete, setIsComplete] = useState(false);
   const [logoOpacity, setLogoOpacity] = useState(0);
   const [sideElementsOpacity, setSideElementsOpacity] = useState(0);
-  const rafRef = useRef<number>();
+  const rafRef = useRef<number | null>(null);
 
   useEffect(() => {
     // Fade in logo and side elements
@@ -52,7 +52,7 @@ export default function LoadingScreen({ onComplete }: LoadingScreenProps) {
     rafRef.current = requestAnimationFrame(animate);
 
     return () => {
-      if (rafRef.current) {
+      if (rafRef.current != null) {
         cancelAnimationFrame(rafRef.current);
       }
     };
