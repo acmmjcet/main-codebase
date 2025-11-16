@@ -370,3 +370,10 @@ Exports the resulting Next.js configuration
 ```
 nx g @nx/js:lib api-endpoints --importPath=@acm/api-endpoints
 ```
+
+```
+nx g @nx/react:library packages/portfolio-components \
+  --bundler=vite \
+  --publishable=false \
+  --importPath=@acm/portfolio-components
+```
