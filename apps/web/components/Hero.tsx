@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, useMemo } from "react";
+import { useEffect, useRef, useState, useMemo, useCallback } from "react";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import * as THREE from "three";
 import gsap from "gsap";
@@ -12,12 +12,12 @@ gsap.registerPlugin(ScrollTrigger);
 // ========================
 
 const ANIMATION_CONFIG = {
-  PHASE_1_END: 0.40,
-  PHASE_2_END: 0.70,
+  PHASE_1_END: 0.35,
+  PHASE_2_END: 0.65,
   PHASE_3_END: 1.0,
-  LERP_SPEED: 0.12,
-  SCROLL_SCRUB: 2,
-};
+  LERP_SPEED: 0.15,
+  SCROLL_SCRUB: 1.5,
+} as const;
 
 const MOBILE_BREAKPOINT = 768;
 
@@ -41,17 +41,50 @@ const IMAGE_SETS = [
     { url: "assets/hero_section_images/Ethnic_4.jpg", row: 0, col: 1 },
     { url: "assets/hero_section_images/Ethnic_6.jpg", row: 1, col: 2 }
   ]
-];
+] as const;
+
+const PLANE_CONFIG = {
+  mobile: {
+    width: 7,
+    height: 5.25,
+    spacing: 2,
+    verticalOffset: -2,
+  },
+  desktop: {
+    width: 10,
+    height: 7.5,
+    spacing: 3,
+    verticalOffset: 0,
+  }
+} as const;
+
+const CAMERA_CONFIG = {
+  mobile: {
+    initial: 450,
+    phase1End: 220,
+    phase2End: 80,
+    phase3End: 650,
+    fov: 55,
+  },
+  desktop: {
+    initial: 600,
+    phase1End: 300,
+    phase2End: 120,
+    phase3End: 900,
+    fov: 48,
+  }
+} as const;
 
 // ========================
 // UTILITY FUNCTIONS
 // ========================
 
-const createFallbackTexture = () => {
+const createFallbackTexture = (): THREE.Texture => {
   const canvas = document.createElement('canvas');
   canvas.width = 512;
   canvas.height = 384;
   const ctx = canvas.getContext('2d');
+  
   if (ctx) {
     const gradient = ctx.createLinearGradient(0, 0, 512, 384);
     gradient.addColorStop(0, '#1e3a8a');
@@ -59,23 +92,29 @@ const createFallbackTexture = () => {
     ctx.fillStyle = gradient;
     ctx.fillRect(0, 0, 512, 384);
   }
+  
   const texture = new THREE.CanvasTexture(canvas);
   texture.minFilter = THREE.LinearFilter;
   texture.magFilter = THREE.LinearFilter;
   return texture;
 };
 
-const easeInOutCubic = (t: number) => t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
-const easeOutCubic = (t: number) => 1 - Math.pow(1 - t, 3);
-const smoothstep = (t: number) => t * t * (3 - 2 * t);
+const easeInOutCubic = (t: number): number => 
+  t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+
+const easeOutCubic = (t: number): number => 
+  1 - Math.pow(1 - t, 3);
+
+const smoothstep = (t: number): number => 
+  t * t * (3 - 2 * t);
 
 // ========================
 // ANIMATION CALCULATIONS
 // ========================
 
-const calculatePhaseProgress = (scrollProgress: number, setIndex: number) => {
-  const setStartProgress = setIndex * 0.18;
-  const setDuration = 0.82;
+const calculatePhaseProgress = (scrollProgress: number, setIndex: number): number => {
+  const setStartProgress = setIndex * 0.15;
+  const setDuration = 0.85;
   const setEndProgress = Math.min(1, setStartProgress + setDuration);
   
   if (scrollProgress < setStartProgress) return 0;
@@ -83,61 +122,72 @@ const calculatePhaseProgress = (scrollProgress: number, setIndex: number) => {
   return (scrollProgress - setStartProgress) / setDuration;
 };
 
+interface GridPosition {
+  row: number;
+  col: number;
+}
+
+interface TransformResult {
+  position: THREE.Vector3;
+  scale: number;
+  opacity: number;
+  rotation: number;
+}
+
 const calculateImageTransform = (
   localProgress: number,
-  gridPosition: { row: number; col: number },
+  gridPosition: GridPosition,
   setIndex: number,
   isMobile: boolean
-) => {
-  // Pseudo-random offsets based on grid position
+): TransformResult => {
+  // Pseudo-random offsets for natural distribution
   const seed1 = gridPosition.row * 123.456 + gridPosition.col * 789.123 + setIndex * 456.789;
   const seed2 = gridPosition.row * 456.789 + gridPosition.col * 321.654 + setIndex * 234.567;
   
-  const randomOffsetX = isMobile ? (Math.sin(seed1) * 12) - 6 : (Math.sin(seed1) * 18) - 9;
-  const randomOffsetY = isMobile ? (Math.cos(seed2) * 35) - 17.5 : (Math.cos(seed2) * 25) - 12.5;
+  const randomOffsetX = isMobile ? (Math.sin(seed1) * 8) - 4 : (Math.sin(seed1) * 12) - 6;
+  const randomOffsetY = isMobile ? (Math.cos(seed2) * 22) - 11 : (Math.cos(seed2) * 18) - 9;
   
-  // Grid calculations
-  const planeWidth = isMobile ? 5.5 : 8.5;
-  const planeHeight = isMobile ? 4.125 : 6.375;
-  const spacing = isMobile ? 1.5 : 2.5;
+  // Grid configuration
+  const config = isMobile ? PLANE_CONFIG.mobile : PLANE_CONFIG.desktop;
+  const { width: planeWidth, height: planeHeight, spacing, verticalOffset } = config;
   const gridCols = 3;
   const gridRows = 2;
   
   const totalWidth = (planeWidth + spacing) * gridCols - spacing;
   const totalHeight = (planeHeight + spacing) * gridRows - spacing;
-  const verticalOffset = isMobile ? -1 : 0;
   
   const gridX = -totalWidth / 2 + gridPosition.col * (planeWidth + spacing) + planeWidth / 2;
   const gridY = totalHeight / 2 - gridPosition.row * (planeHeight + spacing) - planeHeight / 2 + verticalOffset;
 
-  let position = new THREE.Vector3();
+  const position = new THREE.Vector3();
   let scale = 1;
   let opacity = 0;
   let rotation = 0;
 
-  // Phase 1: Fade in and approach
+  // Phase 1: Fade in and approach (0 - 0.35)
   if (localProgress <= ANIMATION_CONFIG.PHASE_1_END) {
     const t = localProgress / ANIMATION_CONFIG.PHASE_1_END;
     const eased = easeOutCubic(t);
     
-    const startZ = isMobile ? -700 - (setIndex * 90) : -1000 - (setIndex * 110);
-    const midZ = isMobile ? -50 : -70;
-    const startScale = isMobile ? 1.1 : 1.3;
-    const midScale = isMobile ? 1.4 : 1.7;
+    const startZ = isMobile ? -500 - (setIndex * 70) : -700 - (setIndex * 90);
+    const midZ = isMobile ? 20 : 10;
+    const startScale = isMobile ? 1.6 : 1.8;
+    const midScale = isMobile ? 1.8 : 2.1;
     
     position.set(randomOffsetX, randomOffsetY, THREE.MathUtils.lerp(startZ, midZ, eased));
     scale = THREE.MathUtils.lerp(startScale, midScale, eased);
-    opacity = Math.min(1, eased * 2);
+    opacity = Math.min(1, eased * 1.8);
   }
-  // Phase 2: Move to grid and zoom
+  // Phase 2: Move to grid and zoom (0.35 - 0.65)
   else if (localProgress <= ANIMATION_CONFIG.PHASE_2_END) {
-    const t = (localProgress - ANIMATION_CONFIG.PHASE_1_END) / (ANIMATION_CONFIG.PHASE_2_END - ANIMATION_CONFIG.PHASE_1_END);
+    const t = (localProgress - ANIMATION_CONFIG.PHASE_1_END) / 
+              (ANIMATION_CONFIG.PHASE_2_END - ANIMATION_CONFIG.PHASE_1_END);
     const eased = smoothstep(t);
     
-    const midZ = isMobile ? -50 : -70;
-    const peakZ = isMobile ? 160 : 220;
-    const midScale = isMobile ? 1.4 : 1.7;
-    const peakScale = isMobile ? 2.6 : 3.5;
+    const midZ = isMobile ? 20 : 10;
+    const peakZ = isMobile ? 200 : 280;
+    const midScale = isMobile ? 1.8 : 2.1;
+    const peakScale = isMobile ? 2.2 : 2.8;
     
     const targetX = THREE.MathUtils.lerp(randomOffsetX, gridX, eased);
     const targetY = THREE.MathUtils.lerp(randomOffsetY, gridY, eased);
@@ -147,17 +197,18 @@ const calculateImageTransform = (
     scale = THREE.MathUtils.lerp(midScale, peakScale, eased);
     opacity = 1;
   }
-  // Phase 3: Spread and fade out
+  // Phase 3: Spread and fade out (0.65 - 1.0)
   else {
-    const t = (localProgress - ANIMATION_CONFIG.PHASE_2_END) / (ANIMATION_CONFIG.PHASE_3_END - ANIMATION_CONFIG.PHASE_2_END);
+    const t = (localProgress - ANIMATION_CONFIG.PHASE_2_END) / 
+              (ANIMATION_CONFIG.PHASE_3_END - ANIMATION_CONFIG.PHASE_2_END);
     const eased = easeInOutCubic(t);
     
-    const peakZ = isMobile ? 160 : 220;
-    const endZ = isMobile ? 800 : 1100;
-    const peakScale = isMobile ? 2.6 : 3.5;
-    const endScale = 0.2;
+    const peakZ = isMobile ? 200 : 280;
+    const endZ = isMobile ? 900 : 1200;
+    const peakScale = isMobile ? 2.2 : 2.8;
+    const endScale = 0.3;
     
-    const spreadMultiplier = isMobile ? 20 : 28;
+    const spreadMultiplier = isMobile ? 24 : 32;
     const spreadX = gridX + (gridPosition.col - 1) * spreadMultiplier;
     const spreadY = gridY + (1 - gridPosition.row) * spreadMultiplier;
     
@@ -167,10 +218,10 @@ const calculateImageTransform = (
     
     position.set(targetX, targetY, targetZ);
     scale = THREE.MathUtils.lerp(peakScale, endScale, eased);
-    opacity = Math.max(0, 1 - (eased * 1.5));
+    opacity = Math.max(0, 1 - (eased * 1.3));
     
     const rotationAmount = (gridPosition.row + gridPosition.col) % 2 === 0 ? 1 : -1;
-    rotation = eased * rotationAmount * 1.5;
+    rotation = eased * rotationAmount * 1.2;
   }
 
   return { position, scale, opacity, rotation };
@@ -182,13 +233,19 @@ const calculateImageTransform = (
 
 interface ImagePlaneProps {
   imageUrl: string;
-  gridPosition: { row: number; col: number };
+  gridPosition: GridPosition;
   setIndex: number;
   scrollProgress: number;
   isMobile: boolean;
 }
 
-const ImagePlane = ({ imageUrl, gridPosition, setIndex, scrollProgress, isMobile }: ImagePlaneProps) => {
+const ImagePlane = ({ 
+  imageUrl, 
+  gridPosition, 
+  setIndex, 
+  scrollProgress, 
+  isMobile 
+}: ImagePlaneProps) => {
   const meshRef = useRef<THREE.Mesh>(null);
   const materialRef = useRef<THREE.MeshBasicMaterial>(null);
   const [texture, setTexture] = useState<THREE.Texture | null>(null);
@@ -215,6 +272,12 @@ const ImagePlane = ({ imageUrl, gridPosition, setIndex, scrollProgress, isMobile
         setTexture(createFallbackTexture());
       }
     );
+
+    return () => {
+      if (texture) {
+        texture.dispose();
+      }
+    };
   }, [imageUrl]);
 
   useFrame(() => {
@@ -238,12 +301,11 @@ const ImagePlane = ({ imageUrl, gridPosition, setIndex, scrollProgress, isMobile
 
   if (!texture) return null;
 
-  const planeWidth = isMobile ? 5.5 : 8.5;
-  const planeHeight = isMobile ? 4.125 : 6.375;
+  const config = isMobile ? PLANE_CONFIG.mobile : PLANE_CONFIG.desktop;
 
   return (
     <mesh ref={meshRef}>
-      <planeGeometry args={[planeWidth, planeHeight]} />
+      <planeGeometry args={[config.width, config.height]} />
       <meshBasicMaterial
         ref={materialRef}
         map={texture}
@@ -255,10 +317,17 @@ const ImagePlane = ({ imageUrl, gridPosition, setIndex, scrollProgress, isMobile
   );
 };
 
-const Scene = ({ scrollProgress, isMobile }: { scrollProgress: number; isMobile: boolean }) => {
+interface SceneProps {
+  scrollProgress: number;
+  isMobile: boolean;
+}
+
+const Scene = ({ scrollProgress, isMobile }: SceneProps) => {
   const { camera } = useThree();
-  const cameraTargetRef = useRef({ z: isMobile ? 500 : 680, y: 0 });
-  const cameraCurrentRef = useRef({ z: isMobile ? 500 : 680, y: 0 });
+  const camConfig = isMobile ? CAMERA_CONFIG.mobile : CAMERA_CONFIG.desktop;
+  
+  const cameraTargetRef = useRef<{ z: number; y: number }>({ z: camConfig.initial, y: 0 });
+  const cameraCurrentRef = useRef<{ z: number; y: number }>({ z: camConfig.initial, y: 0 });
 
   const allImages = useMemo(() => 
     IMAGE_SETS.flatMap((set, setIdx) =>
@@ -267,31 +336,31 @@ const Scene = ({ scrollProgress, isMobile }: { scrollProgress: number; isMobile:
   );
 
   useFrame(() => {
+    // Phase 1: Initial approach
     if (scrollProgress <= ANIMATION_CONFIG.PHASE_1_END) {
       const t = scrollProgress / ANIMATION_CONFIG.PHASE_1_END;
       const eased = smoothstep(t);
-      cameraTargetRef.current.z = isMobile 
-        ? THREE.MathUtils.lerp(500, 260, eased)
-        : THREE.MathUtils.lerp(680, 350, eased);
+      cameraTargetRef.current.z = THREE.MathUtils.lerp(camConfig.initial, camConfig.phase1End, eased);
       cameraTargetRef.current.y = 0;
-    } else if (scrollProgress <= ANIMATION_CONFIG.PHASE_2_END) {
-      const t = (scrollProgress - ANIMATION_CONFIG.PHASE_1_END) / (ANIMATION_CONFIG.PHASE_2_END - ANIMATION_CONFIG.PHASE_1_END);
+    } 
+    // Phase 2: Focus on grid
+    else if (scrollProgress <= ANIMATION_CONFIG.PHASE_2_END) {
+      const t = (scrollProgress - ANIMATION_CONFIG.PHASE_1_END) / 
+                (ANIMATION_CONFIG.PHASE_2_END - ANIMATION_CONFIG.PHASE_1_END);
       const eased = smoothstep(t);
-      cameraTargetRef.current.z = isMobile
-        ? THREE.MathUtils.lerp(260, 100, eased)
-        : THREE.MathUtils.lerp(350, 140, eased);
+      cameraTargetRef.current.z = THREE.MathUtils.lerp(camConfig.phase1End, camConfig.phase2End, eased);
       cameraTargetRef.current.y = 0;
-    } else {
-      const t = (scrollProgress - ANIMATION_CONFIG.PHASE_2_END) / (ANIMATION_CONFIG.PHASE_3_END - ANIMATION_CONFIG.PHASE_2_END);
+    } 
+    // Phase 3: Pull back
+    else {
+      const t = (scrollProgress - ANIMATION_CONFIG.PHASE_2_END) / 
+                (ANIMATION_CONFIG.PHASE_3_END - ANIMATION_CONFIG.PHASE_2_END);
       const eased = t * t;
-      cameraTargetRef.current.z = isMobile
-        ? THREE.MathUtils.lerp(100, 600, eased)
-        : THREE.MathUtils.lerp(140, 800, eased);
-      cameraTargetRef.current.y = isMobile
-        ? THREE.MathUtils.lerp(0, 30, eased)
-        : THREE.MathUtils.lerp(0, 40, eased);
+      cameraTargetRef.current.z = THREE.MathUtils.lerp(camConfig.phase2End, camConfig.phase3End, eased);
+      cameraTargetRef.current.y = THREE.MathUtils.lerp(0, isMobile ? 35 : 45, eased);
     }
 
+    // Smooth camera movement
     cameraCurrentRef.current.z += (cameraTargetRef.current.z - cameraCurrentRef.current.z) * ANIMATION_CONFIG.LERP_SPEED;
     cameraCurrentRef.current.y += (cameraTargetRef.current.y - cameraCurrentRef.current.y) * ANIMATION_CONFIG.LERP_SPEED;
 
@@ -307,7 +376,7 @@ const Scene = ({ scrollProgress, isMobile }: { scrollProgress: number; isMobile:
       <directionalLight intensity={0.9} position={[-10, -10, 15]} />
       {allImages.map((data, idx) => (
         <ImagePlane
-          key={`${data.setIdx}-${data.row}-${data.col}`}
+          key={`${data.setIdx}-${data.row}-${data.col}-${idx}`}
           imageUrl={data.url}
           gridPosition={{ row: data.row, col: data.col }}
           setIndex={data.setIdx}
@@ -319,7 +388,11 @@ const Scene = ({ scrollProgress, isMobile }: { scrollProgress: number; isMobile:
   );
 };
 
-const ScrollIndicator = ({ opacity }: { opacity: number }) => (
+interface ScrollIndicatorProps {
+  opacity: number;
+}
+
+const ScrollIndicator = ({ opacity }: ScrollIndicatorProps) => (
   <div 
     className="pointer-events-none absolute bottom-12 left-1/2 z-20 -translate-x-1/2"
     style={{ opacity }}
@@ -351,7 +424,7 @@ const ScrollIndicator = ({ opacity }: { opacity: number }) => (
         />
       </div>
     </div>
-    <style jsx>{`
+    <style>{`
       @keyframes bounce {
         0%, 100% { transform: translateY(0); }
         50% { transform: translateY(-12px); }
@@ -397,7 +470,12 @@ const MeshBackground = () => (
   </div>
 );
 
-const HeroText = ({ opacity, scale }: { opacity: number; scale: number }) => {
+interface HeroTextProps {
+  opacity: number;
+  scale: number;
+}
+
+const HeroText = ({ opacity, scale }: HeroTextProps) => {
   const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
@@ -459,8 +537,8 @@ const HeroText = ({ opacity, scale }: { opacity: number; scale: number }) => {
 const Hero = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const [scrollProgress, setScrollProgress] = useState(0);
-  const [textOpacity, setTextOpacity] = useState(1); // Start visible
-  const [textScale, setTextScale] = useState(1); // Start at full scale
+  const [textOpacity, setTextOpacity] = useState(1);
+  const [textScale, setTextScale] = useState(1);
   const [canvasOpacity, setCanvasOpacity] = useState(1);
   const [scrollIndicatorOpacity, setScrollIndicatorOpacity] = useState(1);
   const [isMobile, setIsMobile] = useState(false);
@@ -472,56 +550,51 @@ const Hero = () => {
     return () => window.removeEventListener('resize', checkMobile);
   }, []);
 
+  const updateAnimationState = useCallback((progress: number) => {
+    setScrollProgress(progress);
+
+    // Scroll indicator fade
+    if (progress === 0) {
+      setScrollIndicatorOpacity(1);
+    } else if (progress <= 0.08) {
+      setScrollIndicatorOpacity(Math.max(0, 1 - (progress / 0.08)));
+    } else {
+      setScrollIndicatorOpacity(0);
+    }
+
+    // Text animation
+    if (progress <= 0.03) {
+      setTextOpacity(1);
+      setTextScale(1);
+    } else if (progress <= 0.12) {
+      const fadeAmount = (progress - 0.03) / 0.09;
+      setTextOpacity(Math.max(0.7, 1 - fadeAmount * 0.3));
+      setTextScale(1 - fadeAmount * 0.05);
+    } else if (progress <= 0.18) {
+      const fadeIn = (progress - 0.12) / 0.06;
+      const eased = smoothstep(fadeIn);
+      setTextOpacity(0.7 + eased * 0.3);
+      setTextScale(0.95 + eased * 0.05);
+    } else if (progress >= 0.75) {
+      const fadeOut = (progress - 0.75) / 0.25;
+      setTextOpacity(Math.max(0, 1 - fadeOut));
+      setTextScale(1 + fadeOut * 0.15);
+    } else {
+      setTextOpacity(1);
+      setTextScale(1);
+    }
+
+    // Canvas fade at end
+    if (progress >= 0.92) {
+      setCanvasOpacity(Math.max(0, 1 - ((progress - 0.92) / 0.08)));
+    } else {
+      setCanvasOpacity(1);
+    }
+  }, []);
+
   useEffect(() => {
     const container = containerRef.current;
     if (!container) return;
-
-    const updateAnimationState = (progress: number) => {
-      setScrollProgress(progress);
-
-      // Scroll indicator fade
-      if (progress === 0) {
-        setScrollIndicatorOpacity(1);
-      } else if (progress <= 0.08) {
-        setScrollIndicatorOpacity(Math.max(0, 1 - (progress / 0.08)));
-      } else {
-        setScrollIndicatorOpacity(0);
-      }
-
-      // Text animation - starts visible, then fades slightly before coming back
-      if (progress <= 0.03) {
-        // Initial state - fully visible
-        setTextOpacity(1);
-        setTextScale(1);
-      } else if (progress <= 0.12) {
-        // Slight fade for transition effect
-        const fadeAmount = (progress - 0.03) / 0.09;
-        setTextOpacity(Math.max(0.7, 1 - fadeAmount * 0.3));
-        setTextScale(1 - fadeAmount * 0.05);
-      } else if (progress <= 0.18) {
-        // Fade back in stronger
-        const fadeIn = (progress - 0.12) / 0.06;
-        const eased = smoothstep(fadeIn);
-        setTextOpacity(0.7 + eased * 0.3);
-        setTextScale(0.95 + eased * 0.05);
-      } else if (progress >= 0.75) {
-        // Final fade out
-        const fadeOut = (progress - 0.75) / 0.25;
-        setTextOpacity(Math.max(0, 1 - fadeOut));
-        setTextScale(1 + fadeOut * 0.15);
-      } else {
-        // Middle section - fully visible
-        setTextOpacity(1);
-        setTextScale(1);
-      }
-
-      // Canvas fade at end
-      if (progress >= 0.92) {
-        setCanvasOpacity(Math.max(0, 1 - ((progress - 0.92) / 0.08)));
-      } else {
-        setCanvasOpacity(1);
-      }
-    };
 
     const ctx = gsap.context(() => {
       ScrollTrigger.create({
@@ -536,7 +609,9 @@ const Hero = () => {
     }, container);
 
     return () => ctx.revert();
-  }, []);
+  }, [updateAnimationState]);
+
+  const camConfig = isMobile ? CAMERA_CONFIG.mobile : CAMERA_CONFIG.desktop;
 
   return (
     <div 
@@ -556,8 +631,8 @@ const Hero = () => {
         >
           <Canvas
             camera={{ 
-              position: [0, 0, isMobile ? 500 : 680], 
-              fov: isMobile ? 55 : 48, 
+              position: [0, 0, camConfig.initial], 
+              fov: camConfig.fov, 
               near: 0.1, 
               far: 2500 
             }}
