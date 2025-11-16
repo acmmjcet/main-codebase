@@ -18,7 +18,7 @@
     {
       "binding": "DB",
       "database_name": "acm-main-db",
-      "database_id": "dskd0ae2df8-a3cd-4ea4-9b9b-e7d81172",
+      "database_id": "f6f662d8-0696-47c2-bf61-bdc1f8e00b4b",
       "migrations_dir": "./drizzle"
     }
   ],
@@ -31,7 +31,7 @@
         {
           "binding": "DB",
           "database_name": "acm-main-db",
-          "database_id": "dskd0ae2df8-a3cd-4ea4-9b9b-e7d81172",
+          "database_id": "f6f662d8-0696-47c2-bf61-bdc1f8e00b4b",
           "migrations_dir": "./drizzle"
         }
       ]
@@ -44,7 +44,7 @@
         {
           "binding": "DB",
           "database_name": "acm-main-db",
-          "database_id": "dskd0ae2df8-a3cd-4ea4-9b9b-e7d81172",
+          "database_id": "f6f662d8-0696-47c2-bf61-bdc1f8e00b4b",
           "migrations_dir": "./drizzle"
         }
       ]
