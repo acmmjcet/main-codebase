@@ -222,39 +222,62 @@ export const pastEvents: Event[] = [
 
 const EventsLandingPage = () => {
     const router = useRouter();
+    const containerRef = useRef<HTMLDivElement>(null);
     const upcomingEventsTitle = useRef<HTMLHeadingElement>(null);
     const pastEventsTitle = useRef<HTMLHeadingElement>(null);
+    const imageRef = useRef<HTMLImageElement>(null);
 
 useGSAP(() => {
-  // ===== Scroll Animations =====
-  gsap.to(upcomingEventsTitle.current, {
-    scale: 1.3,
-    duration: 10,
-    ease: "none",
-    scrollTrigger: {
-      trigger: upcomingEventsTitle.current,
-      start: "top 70%",
-      end: "bottom center",
-      scrub: true,
-    },
-  });
-
-  gsap.to(pastEventsTitle.current, {
-    scale: 1.3,
-    duration: 10,
-    ease: "none",
-    scrollTrigger: {
-      trigger: pastEventsTitle.current,
-      start: "top 80%",
-      end: "bottom center",
-      scrub: true,
-    },
-  });
-
-  // ===== Hover Animations =====
   const UpcomingEventGridItems = gsap.utils.toArray<HTMLDivElement>(".upcomingEventsGridItems");
   const pastEventsGridItems = gsap.utils.toArray<HTMLDivElement>(".pastEventsGridItems");
   const allEventCards = [...UpcomingEventGridItems, ...pastEventsGridItems];
+
+  // ===== Scroll Animations =====
+  // Master timeline
+    const masterTl = gsap.timeline({
+      scrollTrigger: {
+        trigger: containerRef.current,
+        start: 'top top',
+        end: 'bottom 90%',
+        scrub: true,
+        }
+        })
+
+  // Image Animation
+  masterTl.to(imageRef.current, {
+    scale: 0.8,
+    duration: 1,
+    ease: "none",
+  });
+
+  // Upcoming Events Title Animation
+  masterTl.fromTo(upcomingEventsTitle.current, {
+    y: 100,
+    ease: "none",
+  }, {y: 0, opacity: 1, ease: "none"}, '0');
+
+  // Events Cards Animation
+  masterTl.fromTo(UpcomingEventGridItems, {
+    y: 100,
+    ease: "none"
+  }, {y: 0, opacity: 1, ease: "none", stagger: 0.2}, '0.1');
+
+  masterTl.addLabel('upcomingEventsEnd', '>');
+
+  // Upcoming Events Title Animation
+  masterTl.fromTo(pastEventsTitle.current, {
+    y: 100,
+    ease: "none",
+  }, {y: 0, opacity: 1, ease: "none"}, 'upcomingEventsEnd');
+
+    // Events Cards Animation
+  masterTl.fromTo(pastEventsGridItems, {
+    y: 100,
+    opacity: 0,
+    ease: "none",
+  }, {y: 0, opacity: 1, ease: "none", stagger: 0.2}, 'upcomingEventsEnd'); // Start after 0.1 seconds
+
+  // ===== Hover Animations =====
 
   const handleMouseEnter = (item: HTMLDivElement) => {
     gsap.to(item, {
@@ -300,11 +323,11 @@ useGSAP(() => {
   return (
     <>
     <Navbar />
-      <div className="min-h-screen w-full overflow-hidden bg-gradient-to-br from-gray-950 via-gray-900 to-gray-950 text-white">
+      <div ref={containerRef} className="min-h-screen w-full overflow-hidden bg-gradient-to-br from-gray-950 via-gray-900 to-gray-950 text-white">
         <section className="h-[80vh] my-12 p-2 flex justify-center">
-        <div className="relative w-full h-full overflow-hidden rounded-lg shadow-lg">
-            <img className='object-cover blur-sm w-full h-full' src="assets/Events/Team.png" alt="Cover Image" />
-            <div className='absolute bottom-0 top-0 left-0 right-0 flex flex-col justify-center items-center text-center text-white bg-black bg-opacity-60'>
+        <div ref={imageRef} className="relative w-full h-full overflow-hidden rounded-lg shadow-lg">
+            <img id='coverImage' className='object-cover blur-sm w-full h-full' src="assets/Events/Team.png" alt="Cover Image" />
+            <div className='absolute bottom-0 top-0 left-0 right-0 flex flex-col justify-center items-center text-center text-white bg-opacity-60'>
               <h1 className="text-9xl font-bold">Tech &</h1>
               <h1 className="text-8xl font-bold">Fun</h1>
             </div>
@@ -312,14 +335,14 @@ useGSAP(() => {
         </section>
     <section className="text-center flex flex-col items-center justify-center px-6 mb-16">
       <div>
-        <h1 ref={upcomingEventsTitle} className="text-4xl font-bold mb-12">Upcoming Events</h1>
+        <h1 ref={upcomingEventsTitle} className="opacity-0 text-4xl font-bold mb-12">Upcoming Events</h1>
 
         {/* ✅ Upcoming Event Cards Grid */}
         <div className="grid gap-6 w-full sm:grid-cols-2 lg:grid-cols-3">
 
           {upcomingEvents.map((event) => (
               <div
-                className="upcomingEventsGridItems relative h-96 w-80 rounded-2xl shadow-lg bg-gray-950 overflow-hidden backdrop-blur-sm cursor-pointer duration-300"
+                className="upcomingEventsGridItems opacity-0 relative h-96 w-80 rounded-2xl shadow-lg bg-gray-950 overflow-hidden backdrop-blur-sm cursor-pointer duration-300"
                 onClick={() => router.push(`/events/${event.id}?upcoming=${event.upcoming}`)}
                 key={event.id}
               >
@@ -339,14 +362,14 @@ useGSAP(() => {
         {/* Past Events */}
             <section className="text-center flex flex-col items-center justify-center px-6 mb-16">
       <div>
-        <h1 ref={pastEventsTitle} className="text-4xl font-bold mb-12">Past Events</h1>
+        <h1 ref={pastEventsTitle} className="opacity-0 text-4xl font-bold mb-12">Past Events</h1>
 
         {/* ✅ Event Cards Grid */}
         <div className="grid gap-6 w-full sm:grid-cols-2 lg:grid-cols-3">
 
           {pastEvents.map((event) => (
             <div
-                className="pastEventsGridItems relative h-96 w-80 rounded-2xl shadow-lg bg-gray-950 overflow-hidden backdrop-blur-sm cursor-pointer duration-300"
+                className="pastEventsGridItems opacity-0 relative h-96 w-80 rounded-2xl shadow-lg bg-gray-950 overflow-hidden backdrop-blur-sm cursor-pointer duration-300"
                 onClick={() => router.push(`/events/${event.id}?upcoming=${event.upcoming}`)}
                 key={event.id}
               >

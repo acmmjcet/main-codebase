@@ -217,13 +217,13 @@ export default function About() {
             .fromTo(descRef.current, { y: 30, opacity: 0 }, { y: 0, opacity: 1, ease: 'power2.out', duration: 0.1 }, 'heroStart')
 
         // Parallax 
-            .to(heroRef.current, {y: -viewportHeight, ease: 'power2.inOut', duration: historySlideInDuration / totalScrollDistance}, 'heroEnd')
+            .to(heroRef.current, {y: viewportHeight, ease: 'power2.inOut', duration: historySlideInDuration / totalScrollDistance}, 'heroEnd')
 
         // ============ HISTORY SECTION - SLIDE IN & SCROLL ============
         
         // 1. Slide In the History Container
         masterTl.fromTo(historyRef.current,
-            {yPercent: 100},{ yPercent: 0, ease: 'power2.inOut', duration: historySlideInDuration / totalScrollDistance, },
+            {yPercent: -100},{ yPercent: 0, ease: 'power2.inOut', duration: historySlideInDuration / totalScrollDistance, },
             'heroEnd' 
         )
 
@@ -307,15 +307,15 @@ export default function About() {
         masterTl
             // Slide in the Achievements section container
             .fromTo(achievementsAndCollaborationsRef.current, 
-                {yPercent: 100}, // Corrected initial state to 100% since it's sliding *up* from below
+                {yPercent: -100}, // Corrected initial state to 100% since it's sliding *up* from below
                 { yPercent: 0, ease: 'power2.inOut', duration: workSlideDuration / totalScrollDistance, }, 
                 'historyScrollEnd'
             )
             // Parallax 
-            .to(historyRef.current, {y: -viewportHeight, ease: 'power2.inOut', duration: workSlideDuration / totalScrollDistance}, '<') // 
+            .to(historyRef.current, {y: viewportHeight, ease: 'power2.inOut', duration: workSlideDuration / totalScrollDistance}, '<') // 
 
             // Fade in Titles
-            .fromTo(achievementsTitleRef.current, { y: 100, opacity: 0 }, { y: 0, scale: 1.2, opacity: 1, ease: 'power3.out', duration: 0.1, }, 'historyScrollEnd+=0.05')
+            .fromTo(achievementsTitleRef.current, { y: -100, opacity: 0 }, { y: 0, scale: 1.2, opacity: 1, ease: 'power3.out', duration: 0.5, }, 'historyScrollEnd+=0.05')
             .fromTo(
             achievementCards,
             {
@@ -326,7 +326,7 @@ export default function About() {
                 y: 0,
                 opacity: 1,
                 ease: 'power3.out',
-                duration: 0.1,
+                duration: 0.5,
             },
             'historyScrollEnd+=0.1'
             );
@@ -421,7 +421,7 @@ export default function About() {
                     ref={historyContentRef} 
                     className="relative z-10 w-full text-gray-200 pt-24 pb-24 px-6 opacity-0 will-change-transform"
                 >
-                    <div className="max-w-4xl mx-auto space-y-16">
+                    <div className="max-w-4xl mx-auto my-8 space-y-16">
                         <h2 ref={historyTitleRef} className="text-4xl md:text-6xl font-bold text-center mb-20">Our History</h2>
                         
                         {/* Timeline Container - Relative for absolute children positioning */}
@@ -446,7 +446,7 @@ export default function About() {
                             ))}
                         </div>
                     </div>
-                    <div className="pt-24 text-center text-gray-400">--- End ---</div>
+                    <div className="text-center text-gray-400">--- End ---</div>
                 </div>
             </section>
 

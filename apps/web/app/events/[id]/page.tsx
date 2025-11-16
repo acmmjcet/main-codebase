@@ -74,7 +74,7 @@ const EventPage = ({params}: {params: Promise<{id: string}>}) => {
           </div>
         ) : (
           event ? (
-        <div className='flex flex-col items-center justify-center gap-10 py-10'>
+        <div className='flex flex-col items-center justify-center gap-10 py-10 md:my-12'>
           {/* Event Image Card */}
           <div ref={eventCardRef} className="relative h-96 w-80 rounded-2xl shadow-lg bg-gray-950 overflow-hidden backdrop-blur-sm cursor-pointer duration-300">
             <a href={event.imageUrl}>
