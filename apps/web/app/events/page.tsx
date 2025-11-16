@@ -34,7 +34,7 @@ export const upcomingEvents: Event[] = [
     upcoming: true,
     title: "Huntopia",
     description: "The Ultimate Treasure Hunt",
-    date: "November 4th",
+    date: "November 17th",
     location: "Ghulam Ahmed Hall",
     imageUrl: "/assets/Events/Huntopia.png",
     About: {
@@ -83,6 +83,29 @@ export const pastEvents: Event[] = [
   {
     id: 1,
     upcoming: false,
+    title: "HELLO WORLD 4.0",
+    date: "September 23rd",
+    location: "Seminar Hall, Block 4",
+    description: "Flagship Tech Exploration Event",
+    imageUrl: "/assets/Events/HelloWorld25.jpg",
+    About: {
+      introduction:
+        "Hello World 4.0 was ACM MJCET’s signature event designed to help students explore modern technologies, career paths, and real-world applications.",
+      proceeding:
+        "Sessions covered diverse domains including Web Development, AI/ML, Cybersecurity, Game Development, AR/VR, Blockchain, Cloud, and DevOps.",
+      highlights:
+        "Featured hands-on Gemini Workshop led by Google Student Ambassador, giving students real exposure to AI tools and chatbot creation.",
+      closing:
+        "Participants received certificates, Google swags, and GitHub cheat sheets. Organizers expressed gratitude for active participation.",
+      impactAndBenefits:
+        "Empowered students through multi-domain exposure, practical workshops, and career mentorship. Encouraged exploration beyond traditional tech boundaries.",
+      conclusion:
+        "Hello World 4.0 successfully inspired a new wave of learners to innovate, collaborate, and stand out in technology.",
+    },
+  },
+  {
+    id: 2,
+    upcoming: false,
     title: "DESIGNVERSE",
     date: "June 24, 2025",
     location: "Seminar Hall",
@@ -104,28 +127,30 @@ export const pastEvents: Event[] = [
     },
   },
   {
-    id: 2,
+    id: 3,
     upcoming: false,
-    title: "SOFIVERSE",
-    date: "December 28, 2023",
-    location: "Seminar Hall",
-    description: "Inspiring Entrepreneurial Tech Session",
-    imageUrl: "/assets/Events/SofiVerse.png",
+    title: "AI UNLOCKED",
+    date: "December 23rd",
+    location: "Seminar Hall & Caci/AI Labs",
+    description: "Hands-On AI Workshop",
+    imageUrl: "/assets/Events/AI_Unlocked.png",
     About: {
       introduction:
-        "SoFiVerse was an inspiring knowledge-sharing event by ACM MJCET focused on innovation and entrepreneurship in the tech world.",
+        "AI Unlocked was a hands-on workshop and competition organized by ACM MJCET, focusing on simplifying Artificial Intelligence for students.",
       proceeding:
-        "Speakers shared their startup journeys, product-building experiences, and lessons from failures and successes in the evolving digital market.",
+        "The event consisted of a morning workshop followed by a practical competition, guiding participants through AI tool usage and implementation.",
       highlights:
-        "Students learned about idea validation, fundraising, and scaling through real entrepreneurial case studies.",
+        "Students explored real-world AI tools, automation, and creative AI use cases to enhance productivity.",
+      closing:
+        "Top performers were rewarded and recognized for their innovative AI-driven solutions.",
       impactAndBenefits:
-        "Encouraged students to pursue entrepreneurship and apply problem-solving in real-world scenarios.",
+        "Provided practical exposure to AI concepts, problem-solving using automation, and collaboration through learning.",
       conclusion:
-        "SoFiVerse empowered participants with motivation and direction to turn tech ideas into impactful ventures.",
+        "AI Unlocked successfully demystified AI and encouraged participants to apply it in everyday tasks and academic projects.",
     },
   },
   {
-    id: 3,
+    id: 4,
     upcoming: false,
     title: "Trials of Triumph",
     date: "November 19, 2024",
@@ -150,7 +175,7 @@ export const pastEvents: Event[] = [
     },
   },
   {
-    id: 4,
+    id: 5,
     upcoming: false,
     title: "HELLO WORLD",
     date: "October 5th, 2024",
@@ -173,49 +198,24 @@ export const pastEvents: Event[] = [
     },
   },
   {
-    id: 5,
-    upcoming: false,
-    title: "HELLO WORLD 4.0",
-    date: "September 23rd",
-    location: "Seminar Hall, Block 4",
-    description: "Flagship Tech Exploration Event",
-    imageUrl: "/assets/Events/HelloWorld25.jpg",
-    About: {
-      introduction:
-        "Hello World 4.0 was ACM MJCET’s signature event designed to help students explore modern technologies, career paths, and real-world applications.",
-      proceeding:
-        "Sessions covered diverse domains including Web Development, AI/ML, Cybersecurity, Game Development, AR/VR, Blockchain, Cloud, and DevOps.",
-      highlights:
-        "Featured hands-on Gemini Workshop led by Google Student Ambassador, giving students real exposure to AI tools and chatbot creation.",
-      closing:
-        "Participants received certificates, Google swags, and GitHub cheat sheets. Organizers expressed gratitude for active participation.",
-      impactAndBenefits:
-        "Empowered students through multi-domain exposure, practical workshops, and career mentorship. Encouraged exploration beyond traditional tech boundaries.",
-      conclusion:
-        "Hello World 4.0 successfully inspired a new wave of learners to innovate, collaborate, and stand out in technology.",
-    },
-  },
-  {
     id: 6,
     upcoming: false,
-    title: "AI UNLOCKED",
-    date: "December 23rd",
-    location: "Seminar Hall & Caci/AI Labs",
-    description: "Hands-On AI Workshop",
-    imageUrl: "/assets/Events/AI_Unlocked.png",
+    title: "SOFIVERSE",
+    date: "December 28, 2023",
+    location: "Seminar Hall",
+    description: "Inspiring Entrepreneurial Tech Session",
+    imageUrl: "/assets/Events/SofiVerse.png",
     About: {
       introduction:
-        "AI Unlocked was a hands-on workshop and competition organized by ACM MJCET, focusing on simplifying Artificial Intelligence for students.",
+        "SoFiVerse was an inspiring knowledge-sharing event by ACM MJCET focused on innovation and entrepreneurship in the tech world.",
       proceeding:
-        "The event consisted of a morning workshop followed by a practical competition, guiding participants through AI tool usage and implementation.",
+        "Speakers shared their startup journeys, product-building experiences, and lessons from failures and successes in the evolving digital market.",
       highlights:
-        "Students explored real-world AI tools, automation, and creative AI use cases to enhance productivity.",
-      closing:
-        "Top performers were rewarded and recognized for their innovative AI-driven solutions.",
+        "Students learned about idea validation, fundraising, and scaling through real entrepreneurial case studies.",
       impactAndBenefits:
-        "Provided practical exposure to AI concepts, problem-solving using automation, and collaboration through learning.",
+        "Encouraged students to pursue entrepreneurship and apply problem-solving in real-world scenarios.",
       conclusion:
-        "AI Unlocked successfully demystified AI and encouraged participants to apply it in everyday tasks and academic projects.",
+        "SoFiVerse empowered participants with motivation and direction to turn tech ideas into impactful ventures.",
     },
   },
 ];
@@ -328,8 +328,18 @@ useGSAP(() => {
         <div ref={imageRef} className="relative w-full h-full overflow-hidden rounded-lg shadow-lg">
             <img id='coverImage' className='object-cover blur-sm w-full h-full' src="assets/Events/Team.png" alt="Cover Image" />
             <div className='absolute bottom-0 top-0 left-0 right-0 flex flex-col justify-center items-center text-center text-white bg-opacity-60'>
-              <h1 className="text-9xl font-bold">Tech &</h1>
-              <h1 className="text-8xl font-bold">Fun</h1>
+          <h1 className="mb-8 text-5xl font-black uppercase tracking-tight text-white text-8xl">
+            <span
+              className="bg-gradient-to-b from-neutral-50 to-neutral-400 bg-clip-text text-transparent"
+              style={{
+                textShadow: "0 0 60px rgba(255, 255, 255, 0.1)",
+              }}
+            >
+              Tech &
+            </span>
+            <br />
+            <span className="bg-gradient-to-b from-neutral-50 to-neutral-400 bg-clip-text text-transparent">Fun</span>
+          </h1>
             </div>
           </div>
         </section>

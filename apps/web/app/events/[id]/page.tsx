@@ -74,20 +74,8 @@ const EventPage = ({params}: {params: Promise<{id: string}>}) => {
           </div>
         ) : (
           event ? (
-        <div className='flex flex-col items-center justify-center gap-10 py-10 md:my-12'>
-          {/* Event Image Card */}
-          <div ref={eventCardRef} className="relative h-96 w-80 rounded-2xl shadow-lg bg-gray-950 overflow-hidden backdrop-blur-sm cursor-pointer duration-300">
-            <a href={event.imageUrl}>
-              <img
-                src={event.imageUrl}
-                alt={event.title}
-                className="absolute inset-0 object-cover h-full w-full"
-              />
-            </a>
-            <div className='absolute bottom-0 flex flex-col bg-gradient-to-t from-black/100 via-black/90 to-black/10 w-full p-4'>
-              <h2 className="text-3xl font-bold mb-2">{event.title}</h2>
-            </div>
-          </div>
+        <div className='flex flex-col items-center justify-center py-10 md:my-12'>
+          {/* Event Image Card - This has been moved inside the report below */}
 
           {/* Event Details Documentation */}
           <div className="w-full max-w-7xl rounded-xl shadow-2xl bg-gray-900 overflow-hidden border border-gray-700">
@@ -99,16 +87,37 @@ const EventPage = ({params}: {params: Promise<{id: string}>}) => {
 
             {/* Event Details Section */}
             <div className="p-8 space-y-6">
-              {/* Basic Details */}
-              <div className="border-l-4 border-cyan-500 pl-4 bg-slate-800/50 p-4 rounded-r-lg">
-                <h2 className="text-xl font-bold text-white mb-3">EVENT DETAILS</h2>
-                <div className="space-y-2 text-gray-300">
-                  <p><span className="font-semibold text-cyan-400">Event Name:</span> {event.title}</p>
-                  <p><span className="font-semibold text-cyan-400">Date:</span> {event.date}</p>
-                  <p><span className="font-semibold text-cyan-400">Venue:</span> {event.location}</p>
-                  <p><span className="font-semibold text-cyan-400">Description:</span> {event.description}</p>
+
+              {/* --- NEW RESPONSIVE CONTAINER --- */}
+              <div className="flex flex-col lg:flex-row gap-8 items-start">
+
+                {/* --- MOVED: Event Image Card (Left Side on LG) --- */}
+                <div ref={eventCardRef} className="relative h-96 w-80 rounded-2xl shadow-lg bg-gray-950 overflow-hidden backdrop-blur-sm cursor-pointer duration-300 flex-shrink-0 mx-auto lg:mx-0">
+                  <a href={event.imageUrl}>
+                    <img
+                      src={event.imageUrl}
+                      alt={event.title}
+                      className="absolute inset-0 object-cover h-full w-full"
+                    />
+                  </a>
+                  <div className='absolute bottom-0 flex flex-col bg-gradient-to-t from-black/100 via-black/90 to-black/10 w-full p-4'>
+                    <h2 className="text-3xl font-bold mb-2">{event.title}</h2>
+                  </div>
+                </div>
+
+                {/* --- MOVED: Basic Details (Right Side on LG) --- */}
+                <div className="border-l-4 border-cyan-500 pl-4 bg-slate-800/50 p-4 rounded-r-lg w-full lg:flex-1">
+                  <h2 className="text-xl font-bold text-white mb-3">EVENT DETAILS</h2>
+                  <div className="space-y-2 text-gray-300">
+                    <p><span className="font-semibold text-cyan-400">Event Name:</span> {event.title}</p>
+                    <p><span className="font-semibold text-cyan-400">Date:</span> {event.date}</p>
+                    <p><span className="font-semibold text-cyan-400">Venue:</span> {event.location}</p>
+                    <p><span className="font-semibold text-cyan-400">Description:</span> {event.description}</p>
+                  </div>
                 </div>
               </div>
+              {/* --- END NEW RESPONSIVE CONTAINER --- */}
+
 
               {/* Introduction */}
               {event.About.introduction && (
@@ -117,6 +126,7 @@ const EventPage = ({params}: {params: Promise<{id: string}>}) => {
                     Introduction
                   </h2>
                   <p className="text-gray-300 leading-relaxed">{event.About.introduction}</p>
+
                 </div>
               )}
 
@@ -191,21 +201,21 @@ const EventPage = ({params}: {params: Promise<{id: string}>}) => {
             </div>
           </div>
         </div>
-          
-        ) : (
+        
+      ) : (
 
-        <div className='flex flex-col items-center justify-center min-h-screen'>
-          <h1 className="text-4xl font-bold mb-8">Brain Storming Events</h1>
-          <div className="relative h-96 w-80 rounded-2xl shadow-lg bg-gray-950 overflow-hidden hover:shadow-xl transition-shadow duration-300">
-            <img src="/assets/Events/logo.png" alt="logo" className="absolute inset-0 object-cover h-full w-full"/>
-            <div className='absolute bottom-0 flex flex-col bg-gradient-to-t from-black/80 to-transparent w-full p-4'>
-              <h2 className="text-xl font-semibold mb-2">On it...</h2>
-            </div>
+      <div className='flex flex-col items-center justify-center min-h-screen'>
+        <h1 className="text-4xl font-bold mb-8">Brain Storming Events</h1>
+        <div className="relative h-96 w-80 rounded-2xl shadow-lg bg-gray-950 overflow-hidden hover:shadow-xl transition-shadow duration-300">
+          <img src="/assets/Events/logo.png" alt="logo" className="absolute inset-0 object-cover h-full w-full"/>
+          <div className='absolute bottom-0 flex flex-col bg-gradient-to-t from-black/80 to-transparent w-full p-4'>
+            <h2 className="text-xl font-semibold mb-2">On it...</h2>
           </div>
         </div>
-        )
-        )
-        }
+      </div>
+      )
+      )
+      }
       </div>
     </div>
     <Footer />
