@@ -264,6 +264,26 @@ const ImagePlane = ({
       (loadedTexture) => {
         loadedTexture.minFilter = THREE.LinearFilter;
         loadedTexture.magFilter = THREE.LinearFilter;
+        
+        // Get the image aspect ratio
+        const img = loadedTexture.image;
+        const imageAspect = img.width / img.height;
+        const config = isMobile ? PLANE_CONFIG.mobile : PLANE_CONFIG.desktop;
+        const planeAspect = config.width / config.height;
+        
+        // Calculate scale to cover the plane (object-cover behavior)
+        if (imageAspect > planeAspect) {
+          // Image is wider than plane - fit height and crop sides
+          const scale = planeAspect / imageAspect;
+          loadedTexture.repeat.set(scale, 1);
+          loadedTexture.offset.set((1 - scale) / 2, 0);
+        } else {
+          // Image is taller than plane - fit width and crop top/bottom
+          const scale = imageAspect / planeAspect;
+          loadedTexture.repeat.set(1, scale);
+          loadedTexture.offset.set(0, (1 - scale) / 2);
+        }
+        
         setTexture(loadedTexture);
       },
       undefined,
@@ -278,7 +298,7 @@ const ImagePlane = ({
         texture.dispose();
       }
     };
-  }, [imageUrl]);
+  }, [imageUrl, isMobile]);
 
   useFrame(() => {
     if (!meshRef.current || !materialRef.current) return;
