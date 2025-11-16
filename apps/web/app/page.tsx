@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 import { API_ENDPOINTS } from '@acm/api-endpoints';
 import Hero from "@/components/Hero";
-import DummyPage from "@/components/LandingPage/Dummy-trial-2";
+import LoadingScreen from "@/components/LoadingScreen";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import AboutSection from "@/components/LandingPage/About";
@@ -22,13 +22,7 @@ export default function Index() {
     <>
       <Navbar/>
       <Hero/>
-      <div
-        className={`fixed z-50 h-screen w-full ${
-          loading ? "block" : "hidden"
-          } `}
-          >
-        <DummyPage handleLoading={handleLoading} />
-      </div>
+      {loading && <LoadingScreen onComplete={handleLoading} />}
       <AboutSection/>
       <Footer/>
     </>
