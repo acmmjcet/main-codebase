@@ -300,8 +300,8 @@ export default function ContactPage() {
 			<LoadingOverlay isVisible={submitting} />
 			<SpotlightBackground>
 				<Navbar />
-				<section className="mx-auto grid min-h-screen w-full max-w-7xl grid-cols-1 place-items-center gap-16 pb-24 pt-28 md:grid-cols-2 md:gap-24 md:pb-28 md:pt-32">
-					<div className="flex w-full max-w-xl flex-col items-center justify-center space-y-6 text-center md:max-w-2xl">
+				<section className="mx-auto grid min-h-screen w-full max-w-7xl grid-cols-1 place-items-center gap-16 pb-24 pt-28 lg:grid-cols-2 lg:gap-24 lg:pb-28 lg:pt-32">
+					<div className="flex w-full max-w-xl flex-col items-center justify-center space-y-6 text-center lg:max-w-2xl">
 						<h1 className="bg-gradient-to-b from-neutral-50 to-neutral-400 bg-clip-text text-4xl font-bold leading-tight text-transparent md:text-6xl">
 							Let&apos;s build something great.
 						</h1>
@@ -342,24 +342,13 @@ export default function ContactPage() {
 									inactiveZone={0.01}
 									className="z-20"
 								/>
-								<p className="text-sm text-neutral-400">Headquarters</p>
-								<p className="mt-1 text-lg font-medium text-neutral-100">
-									Your Campus • CS Dept
+								<p className="text-lg font-medium text-neutral-100">
+									Muffakham Jah College of Engineering and Technology
 								</p>
 							</div>
 						</div>
 
 						<div className="mt-6 flex flex-wrap justify-center gap-4">
-							<Link
-								href="https://x.com"
-								target="_blank"
-								className={cn(
-									"rounded-md border border-neutral-800 bg-neutral-900/40 px-4 py-2 text-sm text-neutral-200",
-									"hover:border-neutral-700 hover:bg-neutral-900 transition"
-								)}
-							>
-								Twitter/X
-							</Link>
 							<Link
 								href="https://www.instagram.com/mjcet_acm/"
 								target="_blank"
@@ -381,9 +370,52 @@ export default function ContactPage() {
 								LinkedIn
 							</Link>
 						</div>
+
+						{/* Phone Numbers */}
+						<div className="mt-8 grid w-full grid-cols-1 gap-5 sm:grid-cols-2">
+							<div className="relative rounded-xl border border-neutral-800 bg-neutral-900/40 p-6">
+								<GlowingEffect
+									blur={0}
+									borderWidth={3}
+									spread={80}
+									glow={true}
+									disabled={false}
+									proximity={64}
+									inactiveZone={0.01}
+									className="z-20"
+								/>
+								<p className="text-sm text-neutral-400">Chair</p>
+								<a
+									href="tel:+917799005866"
+									className="mt-1 block text-lg font-medium text-neutral-100 underline-offset-4 hover:underline"
+								>
+									Waasi: +91 77990 05866
+								</a>
+							</div>
+							<div className="relative rounded-xl border border-neutral-800 bg-neutral-900/40 p-6">
+								<GlowingEffect
+									blur={0}
+									borderWidth={3}
+									spread={80}
+									glow={true}
+									disabled={false}
+									proximity={64}
+									inactiveZone={0.01}
+									className="z-20"
+								/>
+								<p className="text-sm text-neutral-400">Vice Chair</p>
+								<a
+									href="tel:+918978868781"
+									className="mt-1 block text-lg font-medium text-neutral-100 underline-offset-4 hover:underline"
+								>
+									Faaroq: +91 89788 68781
+								</a>
+							</div>
+						</div>
+
 					</div>
 
-					<div className="relative mt-6 w-full max-w-xl md:mt-2 md:max-w-2xl">
+					<div className="relative mt-6 w-full max-w-xl lg:mt-2 lg:max-w-2xl">
 						<div className="absolute inset-0 rounded-xl bg-gradient-to-b from-white/10 to-transparent blur-3xl" />
 						<form
 							onSubmit={onSubmit}
@@ -397,28 +429,34 @@ export default function ContactPage() {
 								disabled={false}
 								proximity={64}
 								inactiveZone={0.01}
-								className="z-20"
+								className="absolute inset-0 rounded-2xl"
 							/>
-							<div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
+							<div className="relative z-10 grid grid-cols-1 gap-6 sm:grid-cols-2">
 								<Field id="firstName" label="First name" placeholder="Ada" required />
 								<Field id="lastName" label="Last name" placeholder="Lovelace" required />
 							</div>
-							<Field
-								id="email"
-								type="email"
-								label="Email"
-								placeholder="you@university.edu"
-								required
-							/>
-							<Field id="subject" label="Subject" placeholder="Collaboration, sponsorship, ..." />
-							<TextArea
-								id="message"
-								label="Message"
-								placeholder="Tell us about your idea or inquiry..."
-								required
-								rows={8}
-							/>
-							<div className="space-y-4 pt-2">
+							<div className="relative z-10">
+								<Field
+									id="email"
+									type="email"
+									label="Email"
+									placeholder="you@university.edu"
+									required
+								/>
+							</div>
+							<div className="relative z-10">
+								<Field id="subject" label="Subject" placeholder="Collaboration, sponsorship, ..." />
+							</div>
+							<div className="relative z-10">
+								<TextArea
+									id="message"
+									label="Message"
+									placeholder="Tell us about your idea or inquiry..."
+									required
+									rows={8}
+								/>
+							</div>
+							<div className="relative z-10 space-y-4 pt-2">
 								{status === "success" ? (
 									<div
 										role="status"
@@ -493,6 +531,38 @@ export default function ContactPage() {
 						</form>
 					</div>
 				</section>
+
+				{/* Motivational Section */}
+				<section className="mx-auto w-full max-w-7xl px-4 py-16 md:py-24">
+					<div className="mx-auto max-w-4xl space-y-4 text-left">
+						<h2 className="mb-8 bg-gradient-to-b from-neutral-50 to-neutral-400 bg-clip-text text-left text-3xl font-bold text-transparent md:text-4xl">
+							Kickstart Your Journey
+						</h2>
+						<div className="space-y-4 text-base text-neutral-300 md:text-lg">
+							<p className="flex items-start gap-3">
+								<span className="mt-1 text-purple-400">→</span>
+								<span>Start coding daily, even if it&apos;s just 30 minutes. Consistency beats intensity.</span>
+							</p>
+							<p className="flex items-start gap-3">
+								<span className="mt-1 text-purple-400">→</span>
+								<span>Build projects, not just tutorials. Real experience comes from solving real problems.</span>
+							</p>
+							<p className="flex items-start gap-3">
+								<span className="mt-1 text-purple-400">→</span>
+								<span>Join communities, contribute to open source, and learn from others.</span>
+							</p>
+							<p className="flex items-start gap-3">
+								<span className="mt-1 text-purple-400">→</span>
+								<span>Embrace failure as feedback. Every bug is a lesson, every error a teacher.</span>
+							</p>
+							<p className="flex items-start gap-3">
+								<span className="mt-1 text-purple-400">→</span>
+								<span>Stay curious, keep learning, and remember: every expert was once a beginner.</span>
+							</p>
+						</div>
+					</div>
+				</section>
+
 				<Footer />
 			</SpotlightBackground>
 		</main>

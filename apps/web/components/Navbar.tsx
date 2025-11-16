@@ -1,7 +1,7 @@
 "use client";
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 
 interface NavbarProps {
   className?: string;
@@ -10,10 +10,37 @@ interface NavbarProps {
 const Navbar: React.FC<NavbarProps> = ({ className = "" }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [_isScrolled, setIsScrolled] = useState(false);
+  const [isNavbarVisible, setIsNavbarVisible] = useState(true);
+  const lastScrollY = useRef(0);
 
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 10);
+      const currentScrollY = window.scrollY;
+      setIsScrolled(currentScrollY > 10);
+
+      // Don't hide navbar if menu is open
+      if (isMenuOpen) {
+        lastScrollY.current = currentScrollY;
+        return;
+      }
+
+      // Show navbar at the top of the page
+      if (currentScrollY < 10) {
+        setIsNavbarVisible(true);
+        lastScrollY.current = currentScrollY;
+        return;
+      }
+
+      // Hide navbar when scrolling down, show when scrolling up
+      if (currentScrollY > lastScrollY.current && currentScrollY > 100) {
+        // Scrolling down
+        setIsNavbarVisible(false);
+      } else if (currentScrollY < lastScrollY.current) {
+        // Scrolling up
+        setIsNavbarVisible(true);
+      }
+
+      lastScrollY.current = currentScrollY;
     };
 
     const handleEscape = (e: KeyboardEvent) => {
@@ -22,11 +49,12 @@ const Navbar: React.FC<NavbarProps> = ({ className = "" }) => {
       }
     };
 
-    window.addEventListener("scroll", handleScroll);
+    window.addEventListener("scroll", handleScroll, { passive: true });
     document.addEventListener("keydown", handleEscape);
 
     if (isMenuOpen) {
       document.body.style.overflow = "hidden";
+      setIsNavbarVisible(true); // Always show navbar when menu is open
     } else {
       document.body.style.overflow = "";
     }
@@ -40,7 +68,6 @@ const Navbar: React.FC<NavbarProps> = ({ className = "" }) => {
 
   const navLinks = [
     { href: "/about", label: "ABOUT" },
-    { href: "/join", label: "JOIN" },
     { href: "/contact", label: "CONTACT" },
     { href: "/team", label: "TEAMS" },
     { href: "/events", label: "EVENTS" },
@@ -54,14 +81,16 @@ const Navbar: React.FC<NavbarProps> = ({ className = "" }) => {
   return (
     <>
       <nav
-        className={`fixed left-0 right-0 top-0 z-50 px-3 transition-all duration-300 ease-out sm:px-4 md:px-6 lg:px-8 ${className}`}
+        className={`fixed left-0 right-0 top-0 z-50 px-3 transition-transform duration-300 ease-out sm:px-4 md:px-6 lg:px-8 ${
+          isNavbarVisible ? "translate-y-0" : "-translate-y-full"
+        } ${className}`}
         role="navigation"
       >
         <div
-          className={`relative mx-auto mt-3 flex items-center transition-all duration-300 ease-out sm:mt-4 md:mt-5 ${
+          className={`relative mx-auto mt-3 flex w-full max-w-[calc(100%-1rem)] items-center justify-between rounded-2xl bg-[#100C08]/95 px-4 py-3 shadow-xl backdrop-blur-md transition-all duration-300 ease-out sm:mt-4 sm:max-w-[calc(100%-1.5rem)] sm:rounded-3xl sm:px-5 sm:py-3.5 md:mt-5 md:max-w-[96%] md:rounded-[40px] md:px-7 md:py-4 md:h-20 lg:max-w-[94%] lg:rounded-[50px] lg:px-9 lg:py-5 lg:h-24 xl:max-w-[92%] xl:rounded-[60px] xl:px-12 xl:py-6 ${
             isMenuOpen
-              ? "h-16 w-full max-w-[calc(100%-1rem)] justify-between rounded-2xl bg-[#100C08]/95 px-4 py-3 shadow-xl backdrop-blur-md sm:h-18 sm:max-w-[calc(100%-1.5rem)] sm:rounded-3xl sm:px-5 sm:py-3.5 md:h-20 md:max-w-[96%] md:rounded-[40px] md:px-7 md:py-4 lg:h-24 lg:max-w-[94%] lg:rounded-[50px] lg:px-9 lg:py-5 xl:max-w-[92%] xl:rounded-[60px] xl:px-12 xl:py-6"
-              : "w-fit justify-between rounded-full bg-[#100C08]/90 px-3 py-2.5 shadow-lg backdrop-blur-md sm:px-3.5 sm:py-3 md:px-5 md:py-3.5 lg:px-7 lg:py-4 xl:px-9 xl:py-4.5"
+              ? "h-16 sm:h-18"
+              : "h-auto"
           }`}
         >
           <Link
@@ -99,7 +128,7 @@ const Navbar: React.FC<NavbarProps> = ({ className = "" }) => {
           </Link>
 
           <div
-            className={`flex flex-shrink-0 items-center gap-1 transition-opacity duration-300 sm:gap-1.5 md:gap-2 lg:gap-2.5 ${
+            className={`flex flex-shrink-0 items-center gap-2 transition-opacity duration-300 sm:gap-2.5 md:gap-3 lg:gap-4 ${
               isMenuOpen ? "opacity-0" : "opacity-100"
             }`}
           >
