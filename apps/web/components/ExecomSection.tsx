@@ -6,7 +6,8 @@ import MultiSelect from "./MultiSelect";
 
 interface ExecomMember {
   name: string;
-  designation: string;
+  designation?: string;
+  role?: string;
   image: string;
   year: string;
 }
@@ -37,7 +38,11 @@ const ExecomSection: React.FC<ExecomSectionProps> = ({ selectedYear }) => {
     const yearMembers = execomMembers.filter(
       (member) => member.year === selectedYear
     );
-    const roles = [...new Set(yearMembers.map((member) => member.designation))];
+    const roles = [
+      ...new Set(
+        yearMembers.map((member) => member.designation || member.role || "")
+      ),
+    ].filter(Boolean);
     return roles.sort();
   }, [execomMembers, selectedYear]);
 
@@ -48,7 +53,7 @@ const ExecomSection: React.FC<ExecomSectionProps> = ({ selectedYear }) => {
 
     if (selectedRoles.length > 0) {
       members = members.filter((member) =>
-        selectedRoles.includes(member.designation)
+        selectedRoles.includes(member.designation || member.role || "")
       );
     }
 
@@ -64,19 +69,19 @@ const ExecomSection: React.FC<ExecomSectionProps> = ({ selectedYear }) => {
   }, []);
 
   return (
-    <section className="min-h-screen bg-black text-white py-16">
-      <div className="px-6 sm:px-8 lg:px-16 xl:px-24 2xl:px-32">
+    <section className="min-h-screen text-white py-12 sm:py-16">
+      <div className="px-4 sm:px-6 lg:px-12 xl:px-20 2xl:px-28">
         <motion.div
           initial={{ opacity: 0, y: -20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="text-center mb-8"
+          className="text-center mb-6 sm:mb-8"
         >
-          <h2 className="text-4xl md:text-5xl font-bold bg-gradient-to-b from-white to-zinc-400 bg-clip-text text-transparent">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold bg-gradient-to-b from-white to-zinc-400 bg-clip-text text-transparent">
             Our Execom Members
           </h2>
-          <p className="text-zinc-400 text-lg mt-4 max-w-2xl mx-auto">
+          <p className="text-zinc-400 text-base sm:text-lg mt-3 sm:mt-4 max-w-2xl mx-auto px-4">
             Meet the passionate team members who bring our vision to life year
             after year.
           </p>
@@ -87,7 +92,7 @@ const ExecomSection: React.FC<ExecomSectionProps> = ({ selectedYear }) => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6, delay: 0.1 }}
-          className="mb-14 max-w-4xl mx-auto"
+          className="mb-10 sm:mb-14 max-w-4xl mx-auto"
         >
           <MultiSelect
             options={availableRoles}
@@ -97,7 +102,7 @@ const ExecomSection: React.FC<ExecomSectionProps> = ({ selectedYear }) => {
         </motion.div>
 
         {loading ? (
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-16 gap-y-14 place-items-center">
+          <div className="flex flex-wrap justify-center gap-6 sm:gap-8 lg:gap-10">
             {[...Array(8)].map((_, i) => (
               <div
                 key={i}
@@ -117,12 +122,16 @@ const ExecomSection: React.FC<ExecomSectionProps> = ({ selectedYear }) => {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -20 }}
               transition={{ duration: 0.3 }}
-              className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-16 gap-y-14 justify-center"
+              className="flex flex-wrap justify-center gap-6 sm:gap-8 lg:gap-10 xl:gap-12"
             >
               {filteredMembers.map((member, index) => (
                 <ExecomCard
-                  key={`${member.name}-${member.designation}`}
-                  member={member}
+                  key={`${member.name}-${member.designation || member.role}`}
+                  member={{
+                    name: member.name,
+                    designation: member.designation || member.role || "",
+                    image: member.image,
+                  }}
                   index={index}
                 />
               ))}
@@ -134,9 +143,9 @@ const ExecomSection: React.FC<ExecomSectionProps> = ({ selectedYear }) => {
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            className="text-center py-20"
+            className="text-center py-16 sm:py-20"
           >
-            <p className="text-zinc-500 text-lg">
+            <p className="text-zinc-500 text-base sm:text-lg">
               No execom members found for {selectedYear}
             </p>
           </motion.div>
