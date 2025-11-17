@@ -1,9 +1,13 @@
+"use client";
 import React from 'react'
-import { AcmPortfolioComponents } from '@acm/portfolio-components';
+import { Universal_corporate_themed_Hero } from '@acm/portfolio-components';
 
 function Page() {
   return (
-    <AcmPortfolioComponents />
+    <>
+    <Universal_corporate_themed_Hero/>
+    {/* <Universal_corporate_themed_Achievements/> */}
+    </>
   )
 }
 

@@ -13,5 +13,8 @@
       "import": "./dist/index.js",
       "default": "./dist/index.js"
     }
+  },
+  "dependencies": {
+    "lucide-react": "^0.553.0"
   }
 }
