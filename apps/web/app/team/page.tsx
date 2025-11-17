@@ -6,6 +6,7 @@ import TeamCard from "@/components/TeamCard";
 import ExecomSection from "@/components/ExecomSection";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import SpotlightBackground from "@/components/animations/mesh-background";
 
 interface TeamMember {
   name: string;
@@ -63,10 +64,11 @@ const TeamPage: React.FC = () => {
 
   return (
     <>
+    <SpotlightBackground>
       <Navbar />
-      <div className="min-h-screen bg-black text-white overflow-hidden py-8">
-        <div className="fixed top-0 left-1/4 w-96 h-96 bg-blue-900/10 rounded-full blur-3xl pointer-events-none" />
-        <div className="fixed bottom-0 right-1/4 w-96 h-96 bg-blue-900/5 rounded-full blur-3xl pointer-events-none" />
+      <div className="min-h-scree text-white overflow-hidden py-8">
+        <div className="fixed top-0 left-1/4 w-96 h-96 rounded-full blur-3xl pointer-events-none" />
+        <div className="fixed bottom-0 right-1/4 w-96 h-96 rounded-full blur-3xl pointer-events-none" />
 
         <div className="relative pt-24 sm:pt-28 lg:pt-32 pb-12 lg:pb-20">
           <motion.div
@@ -157,6 +159,7 @@ const TeamPage: React.FC = () => {
 
         <ExecomSection selectedYear={selectedYear} />
       </div>
+      </SpotlightBackground>
       <Footer />
     </>
   );

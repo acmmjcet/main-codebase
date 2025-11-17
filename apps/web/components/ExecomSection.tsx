@@ -69,7 +69,7 @@ const ExecomSection: React.FC<ExecomSectionProps> = ({ selectedYear }) => {
   }, []);
 
   return (
-    <section className="min-h-screen bg-black text-white py-12 sm:py-16">
+    <section className="min-h-screen text-white py-12 sm:py-16">
       <div className="px-4 sm:px-6 lg:px-12 xl:px-20 2xl:px-28">
         <motion.div
           initial={{ opacity: 0, y: -20 }}

@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
+import SpotlightBackground from '@/components/animations/mesh-background'
 gsap.registerPlugin(ScrollTrigger)
 
 export interface Event {
@@ -66,7 +67,7 @@ export const upcomingEvents: Event[] = [
       introduction:
         "A special guest session by Thomas Hill, Higher Education Professional from Rutgers University, USA, organized at MJCET for final-year students.",
       proceeding:
-        "The talk covered global career opportunities, U.S. master’s programs, and essential skillsets shaping the future workforce. Thomas Hill shared personal insights from Rutgers Business School.",
+        "The talk covered global career opportunities, U.S. master's programs, and essential skillsets shaping the future workforce. Thomas Hill shared personal insights from Rutgers Business School.",
       highlights:
         "Focused on emerging global trends, postgraduate pathways in analytics and finance, and guidance for international education aspirants.",
       closing:
@@ -74,7 +75,7 @@ export const upcomingEvents: Event[] = [
       impactAndBenefits:
         "Provided practical knowledge of career planning, study abroad preparation, and understanding international academic systems.",
       conclusion:
-        "The Speaker’s Session left students motivated and well-informed about global career opportunities and lifelong learning.",
+        "The Speaker's Session left students motivated and well-informed about global career opportunities and lifelong learning.",
     },
   },
 ];
@@ -90,7 +91,7 @@ export const pastEvents: Event[] = [
     imageUrl: "/assets/Events/HelloWorld25.jpg",
     About: {
       introduction:
-        "Hello World 4.0 was ACM MJCET’s signature event designed to help students explore modern technologies, career paths, and real-world applications.",
+        "Hello World 4.0 was ACM MJCET's signature event designed to help students explore modern technologies, career paths, and real-world applications.",
       proceeding:
         "Sessions covered diverse domains including Web Development, AI/ML, Cybersecurity, Game Development, AR/VR, Blockchain, Cloud, and DevOps.",
       highlights:
@@ -275,7 +276,7 @@ useGSAP(() => {
     y: 100,
     opacity: 0,
     ease: "none",
-  }, {y: 0, opacity: 1, ease: "none", stagger: 0.2}, 'upcomingEventsEnd'); // Start after 0.1 seconds
+  }, {y: 0, opacity: 1, ease: "none", stagger: 0.2}, 'upcomingEventsEnd');
 
   // ===== Hover Animations =====
 
@@ -283,7 +284,7 @@ useGSAP(() => {
     gsap.to(item, {
       scale: 1.1,
       y: -10,
-      boxShadow: "0 0 60px rgba(110, 120, 140, 1)",
+      boxShadow: "0 0 60px rgba(96, 165, 250, 0.6)",
       duration: 0.05,
       ease: "power2.out",
     });
@@ -322,10 +323,12 @@ useGSAP(() => {
     
   return (
     <>
+    <SpotlightBackground>
     <Navbar />
-      <div ref={containerRef} className="min-h-screen w-full overflow-hidden bg-gradient-to-br from-gray-950 via-gray-900 to-gray-950 text-white">
+    
+      <div ref={containerRef} className="min-h-screen w-full overflow-hidden bg-gradient-to-br text-white">
         <section className="h-[80vh] my-12 p-2 flex justify-center">
-        <div ref={imageRef} className="relative w-full h-full overflow-hidden rounded-lg shadow-lg">
+        <div ref={imageRef} className="relative w-full h-full overflow-hidden rounded-lg shadow-lg shadow-blue-400/20">
             <img id='coverImage' className='object-cover blur-sm w-full h-full' src="assets/Events/Team.png" alt="Cover Image" />
             <div className='absolute bottom-0 top-0 left-0 right-0 flex flex-col justify-center items-center text-center text-white bg-opacity-60'>
           <h1 className="mb-8 text-5xl font-black uppercase tracking-tight text-white text-8xl">
@@ -345,14 +348,14 @@ useGSAP(() => {
         </section>
     <section className="text-center flex flex-col items-center justify-center px-6 mb-16">
       <div>
-        <h1 ref={upcomingEventsTitle} className="opacity-0 text-4xl font-bold mb-12">Upcoming Events</h1>
+        <h1 ref={upcomingEventsTitle} className="opacity-0 text-4xl font-bold mb-12 bg-gradient-to-b from-neutral-50 to-neutral-400 bg-clip-text text-transparent">Upcoming Events</h1>
 
         {/* ✅ Upcoming Event Cards Grid */}
         <div className="grid gap-6 w-full sm:grid-cols-2 lg:grid-cols-3">
 
           {upcomingEvents.map((event) => (
               <div
-                className="upcomingEventsGridItems opacity-0 relative h-96 w-80 rounded-2xl shadow-lg bg-gray-950 overflow-hidden backdrop-blur-sm cursor-pointer duration-300"
+                className="upcomingEventsGridItems opacity-0 relative h-96 w-80 rounded-2xl shadow-lg overflow-hidden backdrop-blur-sm cursor-pointer duration-300 border border-gray-700 bg-black/60 hover:border-blue-400 hover:shadow-blue-400/30"
                 onClick={() => router.push(`/events/${event.id}?upcoming=${event.upcoming}`)}
                 key={event.id}
               >
@@ -361,7 +364,9 @@ useGSAP(() => {
                 alt={event.title}
                 className="absolute inset-0 object-cover h-full w-full"
               />
-              <div className='absolute bottom-0 flex flex-col bg-gradient-to-t from-black/100 via-black/90 to-black/10 w-full p-4'>
+              <div className='absolute bottom-0 flex flex-col w-full p-4' style={{
+                background: 'linear-gradient(to top, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0.9) 50%, transparent 100%)'
+              }}>
                 <h2 className="text-3xl font-bold mb-2">{event.title}</h2>
             </div>
             </div>
@@ -372,14 +377,14 @@ useGSAP(() => {
         {/* Past Events */}
             <section className="text-center flex flex-col items-center justify-center px-6 mb-16">
       <div>
-        <h1 ref={pastEventsTitle} className="opacity-0 text-4xl font-bold mb-12">Past Events</h1>
+        <h1 ref={pastEventsTitle} className="opacity-0 text-4xl font-bold mb-12 bg-gradient-to-b from-neutral-50 to-neutral-400 bg-clip-text text-transparent">Past Events</h1>
 
         {/* ✅ Event Cards Grid */}
         <div className="grid gap-6 w-full sm:grid-cols-2 lg:grid-cols-3">
 
           {pastEvents.map((event) => (
             <div
-                className="pastEventsGridItems opacity-0 relative h-96 w-80 rounded-2xl shadow-lg bg-gray-950 overflow-hidden backdrop-blur-sm cursor-pointer duration-300"
+                className="pastEventsGridItems opacity-0 relative h-96 w-80 rounded-2xl shadow-lg overflow-hidden backdrop-blur-sm cursor-pointer duration-300 border border-gray-700 bg-black/60 hover:border-blue-400 hover:shadow-blue-400/30"
                 onClick={() => router.push(`/events/${event.id}?upcoming=${event.upcoming}`)}
                 key={event.id}
               >
@@ -388,7 +393,9 @@ useGSAP(() => {
                 alt={event.title}
                 className="absolute inset-0 object-cover h-full w-full"
               />
-              <div className='absolute bottom-0 h-[20%] flex flex-col bg-gradient-to-t from-black/100 via-black/90 to-black/10 w-full p-4'>
+              <div className='absolute bottom-0 h-[20%] flex flex-col w-full p-4' style={{
+                background: 'linear-gradient(to top, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0.9) 50%, transparent 100%)'
+              }}>
                 <h2 className="text-3xl font-bold mb-2">{event.title}</h2>
               </div>
             </div>
@@ -399,6 +406,8 @@ useGSAP(() => {
 
 
     </div>
+    
+    </SpotlightBackground>
     <Footer />
 
     </>

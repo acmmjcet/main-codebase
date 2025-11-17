@@ -5,6 +5,8 @@ import React, { useRef, useEffect, useState } from 'react'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
+import SpotlightBackground from '@/components/animations/mesh-background'
+
 gsap.registerPlugin(ScrollTrigger)
 
 // Define spacing constants (in pixels) for the timeline layout
@@ -18,13 +20,13 @@ const CheckpointItem = ({ title, description, side, index }: { title: string, de
 
     return (
         <div 
-            className={`timeline-item absolute w-1/2 will-change-transform ${side === 'left' ? 'left-0 pr-12 text-right' : 'right-0 pl-12 text-left'}`}
+            className={`timeline-item absolute w-full md:w-1/2 will-change-transform ${side === 'left' ? 'md:left-0 md:pr-12 md:text-right' : 'md:right-0 md:pl-12 md:text-left'}`}
             style={{ top: `${topPosition}px` }} // Apply calculated vertical position
             data-index={index}
         >
-            <div className={`timeline-circle absolute w-6 h-6 bg-gray-200 rounded-full border-4 border-gray-700 z-10 top-1/2 -mt-3 transform ${side === 'left' ? 'right-[-12px]' : 'left-[-12px]'}`}></div>
-            <div className="timeline-box p-4 rounded-lg bg-gray-900/60 border border-gray-500 shadow-lg transition-transform duration-300 ease-out transform-gpu will-change-transform cursor-pointer hover:scale-105 hover:-translate-y-1 hover:border-gray-800/70 hover:bg-gray-950/70 motion-safe:transition-transform">
-                <h2 className="text-xl font-bold mb-1 text-white">{title}</h2>
+            {/* circle moved out to be rendered centrally in the timeline container for pixel-perfect alignment */}
+            <div className={`timeline-box p-4 rounded-lg blue-400 border border-gray-700 shadow-lg transition-transform duration-300 ease-out transform-gpu will-change-transform cursor-pointer hover:scale-105 hover:-translate-y-1 hover:border-blue-400 hover:bg-black/70 motion-safe:transition-transform w-full md:w-auto md:max-w-xl mx-auto ${side === 'left' ? 'md:ml-0 md:mr-auto md:text-right' : 'md:mr-0 md:ml-auto md:text-left'}`}>
+                <h2 className="text-lg sm:text-xl font-bold mb-1 text-white">{title}</h2>
                 <p className="text-sm text-gray-200">{description}</p>
             </div>
         </div>
@@ -307,12 +309,12 @@ export default function About() {
         masterTl
             // Slide in the Achievements section container
             .fromTo(achievementsAndCollaborationsRef.current, 
-                {yPercent: -100}, // Corrected initial state to 100% since it's sliding *up* from below
+                {yPercent: 100}, // Corrected initial state to 100% since it's sliding *up* from below
                 { yPercent: 0, ease: 'power2.inOut', duration: workSlideDuration / totalScrollDistance, }, 
                 'historyScrollEnd'
             )
             // Parallax 
-            .to(historyRef.current, {y: viewportHeight, ease: 'power2.inOut', duration: workSlideDuration / totalScrollDistance}, '<') // 
+            .to(historyRef.current, {y: -viewportHeight, ease: 'power2.inOut', duration: workSlideDuration / totalScrollDistance}, '<') // 
 
             // Fade in Titles
             .fromTo(achievementsTitleRef.current, { y: -100, opacity: 0 }, { y: 0, scale: 1.2, opacity: 1, ease: 'power3.out', duration: 0.5, }, 'historyScrollEnd+=0.05')
@@ -396,18 +398,19 @@ export default function About() {
 
     return (
         <>
+        <SpotlightBackground>
         <Navbar/>
-    <div ref={containerRef} className="relative w-full h-screen overflow-hidden bg-gradient-to-br from-gray-950 via-gray-900 to-gray-950">
+    <div ref={containerRef} className="relative w-full h-screen overflow-hidden text-gray-200">
             
             {/* HERO SECTION */}
             <section ref={heroRef} className="absolute inset-0 w-full h-screen overflow-hidden">
                 <img ref={imgRef} src="/GB.jpeg" alt="Hero" className="blur-sm absolute inset-0 w-full h-full object-cover will-change-transform" />
-                <div ref={overlayRef} className="absolute inset-0 bg-gray-950/30 will-change-background"></div>
+                <div ref={overlayRef} className="absolute inset-0 bg-black/40 will-change-background"></div>
                 <div className="relative z-0 flex items-center justify-center h-full">
                     <div className="max-w-4xl mx-auto px-6 text-center">
-                        <h1 ref={weRef} className="text-5xl md:text-7xl font-bold leading-tight text-white opacity-1">We Create the Future</h1>
-                        <h1 ref={whoRef} className="text-5xl md:text-7xl font-bold leading-tight text-white opacity-0">WHO WE ARE</h1>
-                        <p ref={descRef} className="mt-6 text-gray-200 max-w-3xl mx-auto text-lg md:text-xl opacity-0">ACM@MJCET is MJCET's student chapter of the Association for Computing Machinery — we promote interdisciplinary computing and professional development on campus.</p>
+                        <h1 ref={weRef} className="text-4xl sm:text-5xl md:text-7xl font-bold leading-tight bg-gradient-to-b from-neutral-50 to-neutral-400 bg-clip-text text-transparent opacity-1">We Create the Future</h1>
+                        <h1 ref={whoRef} className="text-4xl sm:text-5xl md:text-7xl font-bold leading-tight bg-gradient-to-b from-neutral-50 to-neutral-400 bg-clip-text text-transparent opacity-0">WHO WE ARE</h1>
+                        <p ref={descRef} className="mt-4 sm:mt-6 text-gray-300 max-w-3xl mx-auto text-base md:text-xl opacity-0">ACM@MJCET is MJCET's student chapter of the Association for Computing Machinery — we promote interdisciplinary computing and professional development on campus.</p>
                     </div>
                 </div>
             </section>
@@ -415,14 +418,14 @@ export default function About() {
             {/* HISTORY SECTION - Pinned and animated */}
             <section 
                 ref={historyRef} 
-                className="absolute inset-0 w-full h-screen overflow-hidden bg-gradient-to-br from-gray-950 via-gray-900 to-gray-950 z-10"
+                className="absolute inset-0 w-full h-screen overflow-hidden bg-transparent z-10"
             >
                 <div 
                     ref={historyContentRef} 
                     className="relative z-10 w-full text-gray-200 pt-24 pb-24 px-6 opacity-0 will-change-transform"
                 >
                     <div className="max-w-4xl mx-auto my-8 space-y-16">
-                        <h2 ref={historyTitleRef} className="text-4xl md:text-6xl font-bold text-center mb-20">Our History</h2>
+                        <h2 ref={historyTitleRef} className="text-3xl sm:text-4xl md:text-6xl font-bold text-center mb-20 bg-gradient-to-b from-neutral-50 to-neutral-400 bg-clip-text text-transparent">Our History</h2>
                         
                         {/* Timeline Container - Relative for absolute children positioning */}
                         <div className="relative mx-auto w-full md:w-3/4" style={{ height: `${historyHeight - HEADER_OFFSET}px` }}>
@@ -430,7 +433,7 @@ export default function About() {
                             {/* Central Line */}
                             <div 
                                 ref={timelineLineRef} 
-                                className="absolute left-1/2 top-0 w-1 bg-gray-700 transform -translate-x-1/2" 
+                                className="hidden md:block absolute left-1/2 top-0 w-1 bg-gradient-to-b from-blue-400 via-cyan-400 to-transparent transform -translate-x-1/2" 
                                 style={{ height: '100%' }} // Initial height to calculate scaleY
                             ></div>
                             
@@ -444,6 +447,18 @@ export default function About() {
                                     side={index % 2 === 0 ? 'left' : 'right'} // Alternating sides
                                 />
                             ))}
+
+                            {/* Centralized circles (rendered here so they align exactly with the central line) */}
+                            {HISTORY_DATA.map((_, index) => {
+                                const topPosition = HEADER_OFFSET + index * CHECKPOINT_SPACING;
+                                return (
+                                    <div
+                                        key={`circle-${index}`}
+                                        className="timeline-circle hidden md:block absolute w-6 h-6 bg-blue-400 rounded-full border-4 border-blue-400 z-10 left-1/2 -translate-x-1/2 -translate-y-1/2"
+                                        style={{ top: `${topPosition}px` }}
+                                    />
+                                )
+                            })}
                         </div>
                     </div>
                     <div className="text-center text-gray-400">--- End ---</div>
@@ -453,25 +468,25 @@ export default function About() {
             {/* ACHIEVEMENTS & COLLABORATION SECTION */}
             <section 
                 ref={achievementsAndCollaborationsRef} 
-                className="absolute inset-0 w-full h-screen overflow-hidden bg-gradient-to-br from-gray-950 via-gray-900 to-gray-950 z-20 flex flex-col items-center justify-center"
+                className="absolute inset-0 w-full h-screen overflow-hidden bg-transparent z-20 flex flex-col items-center justify-center"
             >
                 <div className="relative z-20 flex flex-col items-center justify-center text-gray-200 w-full h-full px-6 gap-12">
                     
                 {/* ACHIEVEMENTS */}
                 <div className="w-full max-w-6xl mx-auto px-4" ref={achievementsRef}>
-                <h2 ref={achievementsTitleRef} className="text-4xl md:text-6xl font-bold text-center mb-12 opacity-0">Achievements</h2>
+                <h2 ref={achievementsTitleRef} className="text-3xl sm:text-4xl md:text-6xl font-bold text-center mb-12 opacity-0 bg-gradient-to-b from-neutral-50 to-neutral-400 bg-clip-text text-transparent">Achievements</h2>
 
                 {/* Use grid that adapts to screen sizes */}
-                <div className="grid sm:grid-cols-3 md:grid-cols-3 gap-6 justify-items-center">
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 justify-items-center">
                     {ACHIEVEMENTS.map(({ key, value }, index) => (
                         <div
                             key={index}
-                            className="achievement-card flex flex-col gap-4 items-center justify-center w-48 h-36  bg-gray-900/60 border border-gray-500 rounded-2xl shadow-xl opacity-0 transition-transform duration-300 ease-out transform-gpu will-change-transform cursor-pointer hover:scale-105 hover:-translate-y-1 hover:border-gray-800/70 hover:bg-gray-950/70 hover:rounded-2xl motion-safe:transition-transform focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-600 focus-visible:ring-offset-2 focus-visible:ring-offset-gray-950"
+                            className="achievement-card flex flex-col gap-4 items-center justify-center w-48 h-36 bg-black/60 border border-gray-700 rounded-2xl shadow-2xl opacity-0 transition-transform duration-300 ease-out transform-gpu will-change-transform cursor-pointer hover:scale-105 hover:-translate-y-1 hover:border-blue-400 hover:bg-black/70 motion-safe:transition-transform focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-400 focus-visible:ring-offset-2 focus-visible:ring-offset-black"
                         >
-                            <h3 className="achievement-number text-3xl sm:text-4xl md:text-5xl font-extrabold text-gray-200 ">
+                            <h3 className="achievement-number text-3xl sm:text-4xl md:text-5xl font-extrabold text-white ">
                                 {value}
                             </h3>
-                            <p className='bg-gray-800 rounded-xl p-2'>{key}</p>
+                            <p className='bg-black/70 rounded-xl px-3 py-1 text-sm text-gray-300'>{key}</p>
                         </div>
                     ))}
                 </div>
@@ -513,6 +528,7 @@ export default function About() {
             .animate-scroll:hover {animation-play-state: paused; cursor: pointer; will-change: transform;}
             
         `}</style>
+        </SpotlightBackground>
         <Footer/>
         </>
     )
