@@ -328,7 +328,7 @@ export default function ContactPage() {
 									href="mailto:contact@acm.example"
 									className="mt-1 block text-lg font-medium text-neutral-100 underline-offset-4 hover:underline"
 								>
-									contact@acm.example
+									whoislookup@acmmjcet.com
 								</a>
 							</div>
 							<div className="relative rounded-xl border border-neutral-800 bg-neutral-900/40 p-6">
