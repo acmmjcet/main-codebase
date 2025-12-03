@@ -5,7 +5,7 @@ import Blogs from "@/components/blogs/Landing";
 function BlogsPage() {
   return (
     <>
-        <Navbar />
+        {/* <Navbar /> */}
         <Blogs/>
         <Footer />
     </>
