@@ -1,6 +1,8 @@
 import React, { useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { connect } from 'http2';
+import { $ } from 'animejs';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -23,7 +25,8 @@ const FacultyCoordinator = () => {
       department: "Assistant Professor",
       email: "mdafroze@mjcollege.ac.in",
       expertise: "Java Programming, Web Technologies, Software Engineering",
-      image: "assets/Faculty_coordinator_1.jpg"
+      image: "assets/Faculty_coordinator_1.jpg",
+      social: "https://www.linkedin.com/in/afroze-mohammed-32643515"
     },
     {
       name: "Dr. Gouri R Patil",
@@ -31,7 +34,8 @@ const FacultyCoordinator = () => {
       department: "Associate Professor & HOD",
       email: "gouripatil@mjcollege.ac.in",
       expertise: "Computer networks, Network security, cyber security",
-      image: "assets/Faculty_coordinator_2.jpg"
+      image: "assets/Faculty_coordinator_2.jpg",
+      social: "https://www.linkedin.com/in/dr-gouri-r-patil-b710971a7"
     }
   ];
 
@@ -287,11 +291,8 @@ const FacultyCoordinator = () => {
 
               {/* Action buttons */}
               <div className={`flex gap-3 pt-4 md:pt-5 border-t ${isFirst ? 'border-blue-500/20' : 'border-blue-600/20'}`}>
-                <button className={`flex-1 py-2.5 md:py-3 ${isFirst ? 'bg-blue-500/10 hover:bg-blue-500/20 border-blue-500/40 text-blue-500 hover:shadow-[0_0_20px_rgba(59,130,246,0.3)]' : 'bg-blue-600/10 hover:bg-blue-600/20 border-blue-600/40 text-blue-600 hover:shadow-[0_0_20px_rgba(37,99,235,0.3)]'} border rounded-lg text-sm font-semibold tracking-wider transition-all duration-300`}>
+                <button onClick={() => window.location.href = `${data.social}`} className={`flex-1 py-2.5 md:py-3 ${isFirst ? 'bg-blue-500/10 hover:bg-blue-500/20 border-blue-500/40 text-blue-500 hover:shadow-[0_0_20px_rgba(59,130,246,0.3)]' : 'bg-blue-600/10 hover:bg-blue-600/20 border-blue-600/40 text-blue-600 hover:shadow-[0_0_20px_rgba(37,99,235,0.3)]'} border rounded-lg text-sm font-semibold tracking-wider transition-all duration-300`}>
                   CONNECT
-                </button>
-                <button className={`px-4 md:px-5 py-2.5 md:py-3 ${isFirst ? 'bg-blue-600/10 hover:bg-blue-600/20 border-blue-600/40 text-blue-600' : 'bg-blue-500/10 hover:bg-blue-500/20 border-blue-500/40 text-blue-500'} border rounded-lg transition-all duration-300 text-lg font-bold`}>
-                  →
                 </button>
               </div>
             </div>
