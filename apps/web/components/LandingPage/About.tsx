@@ -395,6 +395,7 @@ const AboutSection = ({ className = "" }: AboutSectionProps) => {
             <motion.button
               className="w-full border border-white bg-white px-8 py-4 font-bold uppercase tracking-wider text-black shadow-lg transition-all hover:bg-gray-100 sm:w-auto"
               type="button"
+              onClick={()=> window.location.href = "/join"}
               whileHover={{ scale: 1.05, y: -2 }}
               whileTap={{ scale: 0.95 }}
             >
@@ -403,6 +404,7 @@ const AboutSection = ({ className = "" }: AboutSectionProps) => {
             <motion.button
               className="w-full border border-gray-700 bg-gradient-to-r from-gray-900 to-black px-8 py-4 font-bold uppercase tracking-wider text-white transition-all hover:border-gray-600 hover:from-gray-800 hover:to-gray-900 sm:w-auto"
               type="button"
+              onClick={() => window.location.href = "/about"}
               whileHover={{ scale: 1.05, y: -2 }}
               whileTap={{ scale: 0.95 }}
             >
