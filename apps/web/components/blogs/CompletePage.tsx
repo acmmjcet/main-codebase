@@ -1,6 +1,6 @@
 "use client";
 import React, { useState, useEffect } from 'react';
-import { Calendar, Clock, User, Tag, Eye, ArrowLeft, Share2, Bookmark, ThumbsUp, ThumbsDown, MessageCircle, TrendingUp, ExternalLink } from 'lucide-react';
+import { Calendar, Clock, User, Tag, Eye, ArrowLeft, ArrowUp, Share2, Bookmark, ThumbsUp, ThumbsDown, MessageCircle, TrendingUp, ExternalLink } from 'lucide-react';
 import BlogHeader from './BlogHeader';
 import Link from 'next/link';
 
@@ -86,6 +86,20 @@ const CompletePage: React.FC<CompletePageProps> = ({ slug = "deep-tech-transform
   const [error, setError] = useState<string | null>(null);
   const [userVote, setUserVote] = useState<'up' | 'down' | null>(null);
   const [isBookmarked, setIsBookmarked] = useState(false);
+  const [showScrollTop, setShowScrollTop] = useState(false);
+
+  // Scroll to top visibility handler
+  useEffect(() => {
+    const handleScroll = () => {
+      setShowScrollTop(window.scrollY > 100);
+    };
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
 
   const handleShare = () => {
     if (navigator.share) {
@@ -553,6 +567,19 @@ const CompletePage: React.FC<CompletePageProps> = ({ slug = "deep-tech-transform
           <p>&copy; 2025 ACM MJCET Student Chapter. All rights reserved.</p>
         </div>
       </footer>
+
+      {/* Scroll to Top Button */}
+      <button
+        onClick={scrollToTop}
+        aria-label="Scroll to top"
+        className={`fixed bottom-6 left-1/2 z-50 flex h-12 w-12 -translate-x-1/2 items-center justify-center rounded-full bg-slate-900 text-white shadow-lg transition-all duration-300 hover:bg-slate-800 hover:scale-110 hover:shadow-xl ${
+          showScrollTop
+            ? 'translate-y-0 opacity-100'
+            : 'translate-y-16 opacity-0 pointer-events-none'
+        }`}
+      >
+        <ArrowUp size={20} />
+      </button>
     </div>
   );
 };
