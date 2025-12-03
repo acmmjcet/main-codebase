@@ -86,11 +86,10 @@ const Footer: React.FC = () => {
   ];
 
   const socialLinks: SocialLink[] = [
-    { icon: <Facebook className="h-5 w-5" />, href: 'https://facebook.com', label: 'Facebook' },
-    { icon: <FaXTwitter className="h-5 w-5" />, href: 'https://twitter.com', label: 'X (Twitter)' },
-    { icon: <Instagram className="h-5 w-5" />, href: 'https://instagram.com', label: 'Instagram' },
-    { icon: <Linkedin className="h-5 w-5" />, href: 'https://linkedin.com', label: 'LinkedIn' },
-    { icon: <Github className="h-5 w-5" />, href: 'https://github.com', label: 'GitHub' },
+    { icon: <FaXTwitter className="h-5 w-5" />, href: 'https://x.com/AcmMjcet', label: 'X (Twitter)' },
+    { icon: <Instagram className="h-5 w-5" />, href: 'https://www.instagram.com/mjcet_acm', label: 'Instagram' },
+    { icon: <Linkedin className="h-5 w-5" />, href: 'https://www.linkedin.com/company/acmmjcet', label: 'LinkedIn' },
+    { icon: <Github className="h-5 w-5" />, href: 'https://github.com/acmmjcet', label: 'GitHub' },
   ];
 
   return (
@@ -116,7 +115,7 @@ const Footer: React.FC = () => {
             <Link
               aria-label="Join ACM MJCET Chapter"
               className="group relative inline-flex items-center justify-center overflow-hidden rounded-lg border border-white/20 bg-white/5 px-6 py-2.5 text-sm font-semibold backdrop-blur-sm transition-all duration-300 hover:border-white/40 hover:bg-white/10 hover:shadow-[0_0_20px_rgba(255,255,255,0.15)]"
-              href="#join"
+              href="/join"
             >
               <span className="relative z-10 bg-gradient-to-r from-white via-white to-white bg-[length:200%_100%] bg-clip-text text-transparent transition-all duration-300 group-hover:animate-shine">
                 Join the Chapter
@@ -148,10 +147,10 @@ const Footer: React.FC = () => {
                 <Mail className="mt-0.5 h-4 w-4 flex-shrink-0 text-white/60" />
                 <Link
                   className="group break-all text-sm text-white/80 transition-colors duration-300 hover:text-white"
-                  href="mailto:whoislookup@acmmjcet.com"
+                  href="mailto:acm@mjcollege.ac.in"
                 >
                   <span className="bg-gradient-to-r from-white via-white to-white bg-[length:200%_100%] bg-clip-text transition-all duration-300 group-hover:animate-shine">
-                    whoislookup@acmmjcet.com
+                    acm@mjcollege.ac.in
                   </span>
                 </Link>
               </div>
@@ -159,10 +158,10 @@ const Footer: React.FC = () => {
                 <Phone className="mt-0.5 h-4 w-4 flex-shrink-0 text-white/60" />
                 <Link
                   className="group text-sm text-white/80 transition-colors duration-300 hover:text-white"
-                  href="tel:+919123120913"
+                  href="tel:+917799005866"
                 >
                   <span className="bg-gradient-to-r from-white via-white to-white bg-[length:200%_100%] bg-clip-text transition-all duration-300 group-hover:animate-shine">
-                    +91 912 312 0913
+                    +91 779 900 5866
                   </span>
                 </Link>
               </div>

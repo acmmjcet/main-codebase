@@ -301,6 +301,7 @@ const AboutSection = ({ className = "" }: AboutSectionProps) => {
                 <motion.button
                   className="group relative overflow-hidden border border-gray-700 bg-gradient-to-r from-gray-900 to-black px-8 py-4 font-bold uppercase tracking-wider text-white shadow-lg transition-all hover:border-gray-500 hover:shadow-gray-800/50"
                   type="button"
+                  onClick={() => window.location.href = "/join"}
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
                 >
@@ -321,7 +322,8 @@ const AboutSection = ({ className = "" }: AboutSectionProps) => {
             </motion.div>
           </div>
         </div>
-        <div data-animate className="mb-12 text-center">
+
+        {/* <div data-animate className="mb-12 text-center">
           <h3 className="text-4xl font-black text-white sm:text-5xl lg:text-6xl">
             Our{" "}
             <span className="relative inline-block">
@@ -329,8 +331,9 @@ const AboutSection = ({ className = "" }: AboutSectionProps) => {
               <span className="absolute bottom-0 left-0 right-0 h-3 bg-gradient-to-r from-gray-700 to-gray-600 opacity-30" />
             </span>
           </h3>
-        </div>
-        <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3 lg:gap-6 xl:grid-cols-5 will-change-transform">
+        </div> */}
+
+        {/* <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3 lg:gap-6 xl:grid-cols-5 will-change-transform">
           {milestones.map((milestone, index) => (
             <motion.div
               key={milestone.year}
@@ -367,7 +370,8 @@ const AboutSection = ({ className = "" }: AboutSectionProps) => {
               </div>
             </motion.div>
           ))}
-        </div>
+        </div> */}
+
         <motion.div
           data-animate
           className="mt-20 overflow-hidden rounded-lg border border-gray-800 bg-gradient-to-br from-gray-950 via-slate-950 to-black p-8 text-center shadow-2xl sm:mt-24 md:p-12 lg:mt-28"

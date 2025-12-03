@@ -30,7 +30,10 @@ export interface Event {
   }
 
 export const upcomingEvents: Event[] = [
-  {
+];
+
+export const pastEvents: Event[] = [
+    {
     id: 1,
     upcoming: true,
     title: "Huntopia",
@@ -57,32 +60,6 @@ export const upcomingEvents: Event[] = [
   },
   {
     id: 2,
-    upcoming: true,
-    title: "Speaker's Session",
-    description: "Career Guidance Session by Thomas Hill",
-    date: "November 6, 2025",
-    location: "Seminar Hall, Block 4",
-    imageUrl: "/assets/Events/SpeakerSession25.png",
-    About: {
-      introduction:
-        "A special guest session by Thomas Hill, Higher Education Professional from Rutgers University, USA, organized at MJCET for final-year students.",
-      proceeding:
-        "The talk covered global career opportunities, U.S. master's programs, and essential skillsets shaping the future workforce. Thomas Hill shared personal insights from Rutgers Business School.",
-      highlights:
-        "Focused on emerging global trends, postgraduate pathways in analytics and finance, and guidance for international education aspirants.",
-      closing:
-        "Students interacted directly with the speaker, gaining clarity on academic decisions and professional advancement.",
-      impactAndBenefits:
-        "Provided practical knowledge of career planning, study abroad preparation, and understanding international academic systems.",
-      conclusion:
-        "The Speaker's Session left students motivated and well-informed about global career opportunities and lifelong learning.",
-    },
-  },
-];
-
-export const pastEvents: Event[] = [
-  {
-    id: 1,
     upcoming: false,
     title: "HELLO WORLD 4.0",
     date: "September 23rd",
@@ -105,7 +82,7 @@ export const pastEvents: Event[] = [
     },
   },
   {
-    id: 2,
+    id: 3,
     upcoming: false,
     title: "DESIGNVERSE",
     date: "June 24, 2025",
@@ -128,7 +105,7 @@ export const pastEvents: Event[] = [
     },
   },
   {
-    id: 3,
+    id: 4,
     upcoming: false,
     title: "AI UNLOCKED",
     date: "December 23rd",
@@ -151,7 +128,7 @@ export const pastEvents: Event[] = [
     },
   },
   {
-    id: 4,
+    id: 5,
     upcoming: false,
     title: "Trials of Triumph",
     date: "November 19, 2024",
@@ -176,7 +153,7 @@ export const pastEvents: Event[] = [
     },
   },
   {
-    id: 5,
+    id: 6,
     upcoming: false,
     title: "HELLO WORLD",
     date: "October 5th, 2024",
@@ -199,7 +176,7 @@ export const pastEvents: Event[] = [
     },
   },
   {
-    id: 6,
+    id: 7,
     upcoming: false,
     title: "SOFIVERSE",
     date: "December 28, 2023",
@@ -352,10 +329,25 @@ useGSAP(() => {
 
         {/* ✅ Upcoming Event Cards Grid */}
         <div className="grid gap-6 w-full sm:grid-cols-2 lg:grid-cols-3">
-
-          {upcomingEvents.map((event) => (
+          {
+          (upcomingEvents.length === 0) ? (
+            <div
+                className="upcomingEventsGridItems opacity-0 relative h-96 w-80 rounded-2xl shadow-lg overflow-hidden backdrop-blur-sm cursor-pointer duration-300 border border-gray-700 bg-black/60 hover:border-blue-600"
+              >
+                <img
+                src="/assets/Events/ComingSoon.png"
+                alt="No Upcoming Events"
+                className="absolute inset-0 object-cover h-full w-full"
+              />
+              <div className='absolute bottom-0 flex flex-col w-full p-4' style={{
+                background: 'linear-gradient(to top, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0.9) 50%, transparent 100%)'
+              }}>
+            </div>
+            </div>
+          ) : (
+          upcomingEvents.map((event) => (
               <div
-                className="upcomingEventsGridItems opacity-0 relative h-96 w-80 rounded-2xl shadow-lg overflow-hidden backdrop-blur-sm cursor-pointer duration-300 border border-gray-700 bg-black/60 hover:border-blue-400 hover:shadow-blue-400/30"
+                className="upcomingEventsGridItems opacity-0 relative h-96 w-80 rounded-2xl shadow-lg overflow-hidden backdrop-blur-sm cursor-pointer duration-300 border border-gray-700 bg-black/60 hover:border-blue-600"
                 onClick={() => router.push(`/events/${event.id}?upcoming=${event.upcoming}`)}
                 key={event.id}
               >
@@ -370,7 +362,7 @@ useGSAP(() => {
                 <h2 className="text-3xl font-bold mb-2">{event.title}</h2>
             </div>
             </div>
-          ))}
+          )))}
         </div>
       </div>
     </section>
@@ -384,7 +376,7 @@ useGSAP(() => {
 
           {pastEvents.map((event) => (
             <div
-                className="pastEventsGridItems opacity-0 relative h-96 w-80 rounded-2xl shadow-lg overflow-hidden backdrop-blur-sm cursor-pointer duration-300 border border-gray-700 bg-black/60 hover:border-blue-400 hover:shadow-blue-400/30"
+                className="pastEventsGridItems opacity-0 relative h-96 w-80 rounded-2xl shadow-lg overflow-hidden backdrop-blur-sm cursor-pointer duration-300 border border-gray-700 bg-black/60 hover:border-blue-600 "
                 onClick={() => router.push(`/events/${event.id}?upcoming=${event.upcoming}`)}
                 key={event.id}
               >

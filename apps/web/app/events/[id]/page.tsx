@@ -108,13 +108,13 @@ const EventPage = ({params}: {params: Promise<{id: string}>}) => {
                 </div>
 
                 {/* --- MOVED: Basic Details (Right Side on LG) --- */}
-                <div className="w-full lg:flex-1 bg-black/50 p-4 rounded-lg md:rounded-r-lg border-l-4 border-cyan-400 md:pl-4">
+                <div className="w-full lg:flex-1 bg-black/50 p-4 rounded-lg md:rounded-r-lg border-l-4 border-blue-500 md:pl-4">
                   <h2 className="text-lg md:text-xl font-bold text-white mb-3">EVENT DETAILS</h2>
                   <div className="space-y-2 text-gray-300">
-                    <p><span className="font-semibold text-cyan-400">Event Name:</span> {event.title}</p>
-                    <p><span className="font-semibold text-cyan-400">Date:</span> {event.date}</p>
-                    <p><span className="font-semibold text-cyan-400">Venue:</span> {event.location}</p>
-                    <p><span className="font-semibold text-cyan-400">Description:</span> {event.description}</p>
+                    <p><span className="font-semibold text-blue-400">Event Name:</span> {event.title}</p>
+                    <p><span className="font-semibold text-blue-400">Date:</span> {event.date}</p>
+                    <p><span className="font-semibold text-blue-400">Venue:</span> {event.location}</p>
+                    <p><span className="font-semibold text-blue-400">Description:</span> {event.description}</p>
                   </div>
                 </div>
               </div>
@@ -176,7 +176,7 @@ const EventPage = ({params}: {params: Promise<{id: string}>}) => {
 
               {/* Impact and Benefits */}
               {event.About.impactAndBenefits && (
-                <div className="bg-black/50 p-5 rounded-lg border-l-4 border-cyan-400">
+                <div className="bg-black/50 p-5 rounded-lg border-l-4 border-blue-400">
                   <h2 className="text-xl font-bold text-white mb-3 uppercase">
                     Impact and Benefits
                   </h2>
@@ -186,7 +186,7 @@ const EventPage = ({params}: {params: Promise<{id: string}>}) => {
 
               {/* Conclusion */}
               {event.About.conclusion && (
-                <div className="bg-black/50 p-5 rounded-lg border-l-4 border-cyan-400">
+                <div className="bg-black/50 p-5 rounded-lg border-l-4 border-blue-400">
                   <h2 className="text-xl font-bold text-white mb-3 uppercase">
                     Conclusion
                   </h2>
