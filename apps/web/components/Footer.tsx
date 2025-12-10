@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
-import { Facebook, Github, Instagram, Linkedin, Mail, MapPin, Phone, GitCommit, Users } from 'lucide-react';
+import {  Github, Instagram, Linkedin, Mail, MapPin, Phone, GitCommit, Users } from 'lucide-react';
 import { FaXTwitter } from 'react-icons/fa6';
 
 interface FooterLink {
