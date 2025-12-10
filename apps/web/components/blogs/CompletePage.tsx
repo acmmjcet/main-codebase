@@ -1,6 +1,8 @@
 "use client";
 import React, { useState, useEffect } from 'react';
-import { Calendar, Clock, User, Tag, Eye, ArrowLeft, Share2, Bookmark, ThumbsUp, ThumbsDown, MessageCircle, TrendingUp, ExternalLink } from 'lucide-react';
+import { Calendar, Clock, User, Tag, Eye, ArrowLeft, ArrowUp, Share2, Bookmark, ThumbsUp, ThumbsDown, MessageCircle, TrendingUp, ExternalLink } from 'lucide-react';
+import BlogHeader from './BlogHeader';
+import Link from 'next/link';
 
 const API_BASE_URL = 'https://hono-backend-cms.edventure-park.workers.dev';
 
@@ -84,6 +86,32 @@ const CompletePage: React.FC<CompletePageProps> = ({ slug = "deep-tech-transform
   const [error, setError] = useState<string | null>(null);
   const [userVote, setUserVote] = useState<'up' | 'down' | null>(null);
   const [isBookmarked, setIsBookmarked] = useState(false);
+  const [showScrollTop, setShowScrollTop] = useState(false);
+
+  // Scroll to top visibility handler
+  useEffect(() => {
+    const handleScroll = () => {
+      setShowScrollTop(window.scrollY > 100);
+    };
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const handleShare = () => {
+    if (navigator.share) {
+      navigator.share({
+        title: blog?.title,
+        text: blog?.excerpt,
+        url: window.location.href,
+      }).catch((error) => console.error('Error sharing:', error));
+    } else {
+      alert('Sharing is not supported in this browser.');
+    }
+  };
 
   useEffect(() => {
     const fetchBlog = async () => {
@@ -158,6 +186,16 @@ const CompletePage: React.FC<CompletePageProps> = ({ slug = "deep-tech-transform
   if (loading) {
     return (
       <div className="min-h-screen bg-white">
+        <BlogHeader />
+        <div className='mx-auto max-w-7xl px-4 pt-2'>
+            <Link
+                href="/blogs"
+                className="inline-flex items-center gap-1.5 rounded-md bg-slate-900 px-3 py-1 text-sm font-semibold text-white"
+              >
+                <ArrowLeft size={18} />
+                <span className="font-medium">Back to Blogs</span>
+            </Link>
+        </div>
         <div className="mx-auto max-w-6xl px-4 py-12">
           <div className="animate-pulse">
             <div className="mb-8 h-12 w-3/4 rounded bg-slate-200"></div>
@@ -176,6 +214,16 @@ const CompletePage: React.FC<CompletePageProps> = ({ slug = "deep-tech-transform
   if (error) {
     return (
       <div className="flex min-h-screen items-center justify-center bg-white">
+      <BlogHeader />
+      <div className='mx-auto max-w-7xl px-4 pt-2'>
+            <Link
+                href="/blogs"
+                className="inline-flex items-center gap-1.5 rounded-md bg-slate-900 px-3 py-1 text-sm font-semibold text-white"
+              >
+                <ArrowLeft size={18} />
+                <span className="font-medium">Back to Blogs</span>
+            </Link>
+      </div>
         <div className="mx-auto max-w-md px-4 text-center">
           <div className="rounded-lg border-2 border-red-200 bg-red-50 p-8">
             <div className="mb-4 flex justify-center">
@@ -200,6 +248,16 @@ const CompletePage: React.FC<CompletePageProps> = ({ slug = "deep-tech-transform
   if (!blog) {
     return (
       <div className="flex min-h-screen items-center justify-center bg-white">
+              <BlogHeader />
+      <div className='mx-auto max-w-7xl px-4 pt-2'>
+            <Link
+                href="/blogs"
+                className="inline-flex items-center gap-1.5 rounded-md bg-slate-900 px-3 py-1 text-sm font-semibold text-white"
+              >
+                <ArrowLeft size={18} />
+                <span className="font-medium">Back to Blogs</span>
+            </Link>
+      </div>
         <div className="text-center">
           <h2 className="mb-2 text-xl font-bold text-slate-800">Blog Not Found</h2>
           <p className="text-slate-600">The requested blog post could not be found.</p>
@@ -212,29 +270,19 @@ const CompletePage: React.FC<CompletePageProps> = ({ slug = "deep-tech-transform
 
   return (
     <div className="min-h-screen bg-white">
-      {/* ACM Header */}
-      <header className="sticky top-0 z-50 border-b border-slate-200 bg-white shadow-sm">
-        <div className="mx-auto max-w-7xl">
-          <div className="flex items-center justify-between px-4 py-4">
-            <div className="flex items-center gap-3">
-              <div className="flex size-10 items-center justify-center rounded-lg bg-slate-900 font-bold text-white">
-                ACM
-              </div>
-              <div>
-                <div className="text-lg font-bold leading-tight text-slate-900">ACM MJCET</div>
-                <div className="text-xs text-slate-600">Student Chapter</div>
-              </div>
-            </div>
-            <a href="/blogs" className="flex items-center gap-2 text-slate-700 transition-colors hover:text-slate-900">
-              <ArrowLeft size={18} />
-              <span className="hidden font-medium sm:inline">Back to Blogs</span>
-            </a>
-          </div>
-        </div>
-      </header>
-
+      <BlogHeader />
+      <div className='mx-auto max-w-7xl px-4 pt-2'>
+            <Link
+                href="/blogs"
+                className="inline-flex items-center gap-1.5 rounded-md bg-slate-900 px-3 py-1 text-sm font-semibold text-white"
+              >
+                <ArrowLeft size={18} />
+                <span className="font-medium">Back to Blogs</span>
+            </Link>
+      </div>
       <div className="mx-auto max-w-7xl px-4 py-8 lg:py-12">
         <div className="grid grid-cols-1 gap-8 lg:grid-cols-12">
+
           {/* Main Content */}
           <article className="lg:col-span-8">
             {/* Category Badge */}
@@ -356,7 +404,7 @@ const CompletePage: React.FC<CompletePageProps> = ({ slug = "deep-tech-transform
                   </button>
                 </div>
                 <div className="flex items-center gap-2">
-                  <button className="flex items-center gap-2 rounded-lg border border-slate-300 bg-white px-4 py-2 font-semibold text-slate-700 transition-colors hover:bg-slate-50">
+                  <button onClick={() => handleShare()} className="flex items-center gap-2 rounded-lg border border-slate-300 bg-white px-4 py-2 font-semibold text-slate-700 transition-colors hover:bg-slate-50">
                     <Share2 size={16} />
                     <span className="text-sm">Share</span>
                   </button>
@@ -434,10 +482,11 @@ const CompletePage: React.FC<CompletePageProps> = ({ slug = "deep-tech-transform
           </article>
 
           {/* Sidebar */}
-          <aside className="space-y-6 lg:col-span-4">
+          <aside className="lg:col-span-4">
+            <div className='sticky top-24 space-y-6'>
             {/* Related Articles */}
             {relatedBlogs.length > 0 && (
-              <div className="sticky top-24 rounded-lg border border-slate-200 bg-white p-5">
+              <div className="rounded-lg border border-slate-200 bg-white p-5">
                 <h3 className="mb-4 text-lg font-bold text-slate-900">Related Articles</h3>
                 <div className="space-y-4">
                   {relatedBlogs.map((related) => (
@@ -476,7 +525,7 @@ const CompletePage: React.FC<CompletePageProps> = ({ slug = "deep-tech-transform
             )}
 
             {/* Share Widget */}
-            <div className="rounded-lg border border-slate-200 bg-slate-900 p-5 text-white">
+            {/* <div className="rounded-lg border border-slate-200 bg-slate-900 p-5 text-white">
               <h3 className="mb-4 font-bold">Share this article</h3>
               <div className="grid grid-cols-2 gap-2">
                 <button className="rounded-lg bg-white/10 px-3 py-2.5 text-sm font-semibold transition-colors hover:bg-white/20">
@@ -492,7 +541,7 @@ const CompletePage: React.FC<CompletePageProps> = ({ slug = "deep-tech-transform
                   Copy Link
                 </button>
               </div>
-            </div>
+            </div> */}
 
             {/* ACM Info Box */}
             <div className="rounded-lg border-2 border-slate-900 bg-slate-50 p-5">
@@ -503,10 +552,11 @@ const CompletePage: React.FC<CompletePageProps> = ({ slug = "deep-tech-transform
               <p className="mb-4 text-sm leading-relaxed text-slate-700">
                 Association for Computing Machinery - MJCET Student Chapter. Empowering future tech leaders.
               </p>
-              <button className="w-full rounded-lg bg-slate-900 px-4 py-2.5 font-semibold text-white transition-colors hover:bg-slate-800">
+              <button onClick={() => window.location.href = "/join"} className="w-full rounded-lg bg-slate-900 px-4 py-2.5 font-semibold text-white transition-colors hover:bg-slate-800">
                 Join Our Community
               </button>
             </div>
+          </div>
           </aside>
         </div>
       </div>
@@ -517,6 +567,19 @@ const CompletePage: React.FC<CompletePageProps> = ({ slug = "deep-tech-transform
           <p>&copy; 2025 ACM MJCET Student Chapter. All rights reserved.</p>
         </div>
       </footer>
+
+      {/* Scroll to Top Button */}
+      <button
+        onClick={scrollToTop}
+        aria-label="Scroll to top"
+        className={`fixed bottom-6 left-1/2 z-50 flex h-12 w-12 -translate-x-1/2 items-center justify-center rounded-full bg-slate-900 text-white shadow-lg transition-all duration-300 hover:bg-slate-800 hover:scale-110 hover:shadow-xl ${
+          showScrollTop
+            ? 'translate-y-0 opacity-100'
+            : 'translate-y-16 opacity-0 pointer-events-none'
+        }`}
+      >
+        <ArrowUp size={20} />
+      </button>
     </div>
   );
 };

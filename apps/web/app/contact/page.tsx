@@ -325,10 +325,10 @@ export default function ContactPage() {
 								/>
 								<p className="text-sm text-neutral-400">Email</p>
 								<a
-									href="mailto:contact@acm.example"
+									href="mailto:acm@mjcollege.ac.in"
 									className="mt-1 block text-lg font-medium text-neutral-100 underline-offset-4 hover:underline"
 								>
-									whoislookup@acmmjcet.com
+									acm@mjcollege.ac.in
 								</a>
 							</div>
 							<div className="relative rounded-xl border border-neutral-800 bg-neutral-900/40 p-6">
@@ -416,12 +416,7 @@ export default function ContactPage() {
 					</div>
 
 					<div className="relative mt-6 w-full max-w-xl lg:mt-2 lg:max-w-2xl">
-						<div className="absolute inset-0 rounded-xl bg-gradient-to-b from-white/10 to-transparent blur-3xl" />
-						<form
-							onSubmit={onSubmit}
-							className="relative z-10 space-y-7 rounded-2xl border border-neutral-800 bg-neutral-950/60 p-7 backdrop-blur md:space-y-8 md:p-10"
-						>
-							<GlowingEffect
+						<GlowingEffect
 								blur={0}
 								borderWidth={3}
 								spread={80}
@@ -431,6 +426,13 @@ export default function ContactPage() {
 								inactiveZone={0.01}
 								className="absolute inset-0 rounded-2xl"
 							/>
+						<div className="absolute inset-0 rounded-xl bg-gradient-to-b from-white/10 to-transparent blur-3xl" />
+						
+						<form
+							onSubmit={onSubmit}
+							className="relative z-10 space-y-7 rounded-2xl border border-neutral-800 bg-neutral-950/60 p-7 backdrop-blur md:space-y-8 md:p-10"
+						>
+							
 							<div className="relative z-10 grid grid-cols-1 gap-6 sm:grid-cols-2">
 								<Field id="firstName" label="First name" placeholder="Ada" required />
 								<Field id="lastName" label="Last name" placeholder="Lovelace" required />
@@ -562,9 +564,8 @@ export default function ContactPage() {
 						</div>
 					</div>
 				</section>
-
-				<Footer />
 			</SpotlightBackground>
+			<Footer />
 		</main>
 	);
 }

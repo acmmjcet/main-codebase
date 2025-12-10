@@ -5,43 +5,43 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 gsap.registerPlugin(ScrollTrigger);
 
-interface Milestone {
-  year: string;
-  title: string;
-  description: string;
-}
+// interface Milestone {
+//   year: string ;   
+//   title: string;
+//   description: string;
+// }
 
 interface AboutSectionProps {
   className?: string;
 }
 
-const milestones: Milestone[] = [
-  {
-    year: "2020",
-    title: "Chapter Founded",
-    description: "ACM MJCET Student Chapter established with a vision to empower tech enthusiasts"
-  },
-  {
-    year: "2021",
-    title: "First Tech Fest",
-    description: "Successfully organized our flagship technical symposium with 500+ participants"
-  },
-  {
-    year: "2022",
-    title: "National Recognition",
-    description: "Received ACM India Outstanding Chapter Award for innovation and impact"
-  },
-  {
-    year: "2023",
-    title: "Global Collaboration",
-    description: "Partnered with international tech communities and hosted global speakers"
-  },
-  {
-    year: "2024",
-    title: "Innovation Hub",
-    description: "Launched dedicated innovation lab for cutting-edge research projects"
-  }
-];
+// const milestones: Milestone[] = [
+//   {
+//     year: "2020",
+//     title: "Chapter Founded",
+//     description: "ACM MJCET Student Chapter established with a vision to empower tech enthusiasts"
+//   },
+//   {
+//     year: "2021",
+//     title: "First Tech Fest",
+//     description: "Successfully organized our flagship technical symposium with 500+ participants"
+//   },
+//   {
+//     year: "2022",
+//     title: "National Recognition",
+//     description: "Received ACM India Outstanding Chapter Award for innovation and impact"
+//   },
+//   {
+//     year: "2023",
+//     title: "Global Collaboration",
+//     description: "Partnered with international tech communities and hosted global speakers"
+//   },
+//   {
+//     year: "2024",
+//     title: "Innovation Hub",
+//     description: "Launched dedicated innovation lab for cutting-edge research projects"
+//   }
+// ];
 
 const containerVariants: Variants = {
   hidden: { 
@@ -301,6 +301,7 @@ const AboutSection = ({ className = "" }: AboutSectionProps) => {
                 <motion.button
                   className="group relative overflow-hidden border border-gray-700 bg-gradient-to-r from-gray-900 to-black px-8 py-4 font-bold uppercase tracking-wider text-white shadow-lg transition-all hover:border-gray-500 hover:shadow-gray-800/50"
                   type="button"
+                  onClick={() => window.location.href = "/join"}
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
                 >
@@ -321,7 +322,8 @@ const AboutSection = ({ className = "" }: AboutSectionProps) => {
             </motion.div>
           </div>
         </div>
-        <div data-animate className="mb-12 text-center">
+
+        {/* <div data-animate className="mb-12 text-center">
           <h3 className="text-4xl font-black text-white sm:text-5xl lg:text-6xl">
             Our{" "}
             <span className="relative inline-block">
@@ -329,8 +331,9 @@ const AboutSection = ({ className = "" }: AboutSectionProps) => {
               <span className="absolute bottom-0 left-0 right-0 h-3 bg-gradient-to-r from-gray-700 to-gray-600 opacity-30" />
             </span>
           </h3>
-        </div>
-        <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3 lg:gap-6 xl:grid-cols-5 will-change-transform">
+        </div> */}
+
+        {/* <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3 lg:gap-6 xl:grid-cols-5 will-change-transform">
           {milestones.map((milestone, index) => (
             <motion.div
               key={milestone.year}
@@ -367,7 +370,8 @@ const AboutSection = ({ className = "" }: AboutSectionProps) => {
               </div>
             </motion.div>
           ))}
-        </div>
+        </div> */}
+
         <motion.div
           data-animate
           className="mt-20 overflow-hidden rounded-lg border border-gray-800 bg-gradient-to-br from-gray-950 via-slate-950 to-black p-8 text-center shadow-2xl sm:mt-24 md:p-12 lg:mt-28"
@@ -391,6 +395,7 @@ const AboutSection = ({ className = "" }: AboutSectionProps) => {
             <motion.button
               className="w-full border border-white bg-white px-8 py-4 font-bold uppercase tracking-wider text-black shadow-lg transition-all hover:bg-gray-100 sm:w-auto"
               type="button"
+              onClick={()=> window.location.href = "/join"}
               whileHover={{ scale: 1.05, y: -2 }}
               whileTap={{ scale: 0.95 }}
             >
@@ -399,6 +404,7 @@ const AboutSection = ({ className = "" }: AboutSectionProps) => {
             <motion.button
               className="w-full border border-gray-700 bg-gradient-to-r from-gray-900 to-black px-8 py-4 font-bold uppercase tracking-wider text-white transition-all hover:border-gray-600 hover:from-gray-800 hover:to-gray-900 sm:w-auto"
               type="button"
+              onClick={() => window.location.href = "/about"}
               whileHover={{ scale: 1.05, y: -2 }}
               whileTap={{ scale: 0.95 }}
             >

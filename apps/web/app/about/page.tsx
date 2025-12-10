@@ -25,7 +25,7 @@ const CheckpointItem = ({ title, description, side, index }: { title: string, de
             data-index={index}
         >
             {/* circle moved out to be rendered centrally in the timeline container for pixel-perfect alignment */}
-            <div className={`timeline-box p-4 rounded-lg blue-400 border border-gray-700 shadow-lg transition-transform duration-300 ease-out transform-gpu will-change-transform cursor-pointer hover:scale-105 hover:-translate-y-1 hover:border-blue-400 hover:bg-black/70 motion-safe:transition-transform w-full md:w-auto md:max-w-xl mx-auto ${side === 'left' ? 'md:ml-0 md:mr-auto md:text-right' : 'md:mr-0 md:ml-auto md:text-left'}`}>
+            <div className={`timeline-box p-4 rounded-lg border border-gray-700 shadow-lg transition-transform duration-300 ease-out transform-gpu will-change-transform cursor-pointer hover:scale-105 hover:-translate-y-1 hover:border-blue-600 hover:bg-black/70 motion-safe:transition-transform w-full md:w-auto md:max-w-xl mx-auto ${side === 'left' ? 'md:ml-0 md:mr-auto md:text-right' : 'md:mr-0 md:ml-auto md:text-left'}`}>
                 <h2 className="text-lg sm:text-xl font-bold mb-1 text-white">{title}</h2>
                 <p className="text-sm text-gray-200">{description}</p>
             </div>
@@ -433,7 +433,7 @@ export default function About() {
                             {/* Central Line */}
                             <div 
                                 ref={timelineLineRef} 
-                                className="hidden md:block absolute left-1/2 top-0 w-1 bg-gradient-to-b from-blue-400 via-cyan-400 to-transparent transform -translate-x-1/2" 
+                                className="hidden md:block absolute left-1/2 top-0 w-1 bg-gradient-to-b from-blue-600 via-blue-600 to-transparent transform -translate-x-1/2" 
                                 style={{ height: '100%' }} // Initial height to calculate scaleY
                             ></div>
                             
@@ -454,7 +454,7 @@ export default function About() {
                                 return (
                                     <div
                                         key={`circle-${index}`}
-                                        className="timeline-circle hidden md:block absolute w-6 h-6 bg-blue-400 rounded-full border-4 border-blue-400 z-10 left-1/2 -translate-x-1/2 -translate-y-1/2"
+                                        className="timeline-circle hidden md:block absolute w-6 h-6 bg-blue-500 rounded-full border-4 border-blue-500 z-10 left-1/2 -translate-x-1/2 -translate-y-1/2"
                                         style={{ top: `${topPosition}px` }}
                                     />
                                 )
@@ -481,7 +481,7 @@ export default function About() {
                     {ACHIEVEMENTS.map(({ key, value }, index) => (
                         <div
                             key={index}
-                            className="achievement-card flex flex-col gap-4 items-center justify-center w-48 h-36 bg-black/60 border border-gray-700 rounded-2xl shadow-2xl opacity-0 transition-transform duration-300 ease-out transform-gpu will-change-transform cursor-pointer hover:scale-105 hover:-translate-y-1 hover:border-blue-400 hover:bg-black/70 motion-safe:transition-transform focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-400 focus-visible:ring-offset-2 focus-visible:ring-offset-black"
+                            className="achievement-card flex flex-col gap-4 items-center justify-center w-48 h-36 bg-black/60 border border-gray-700 rounded-2xl shadow-2xl opacity-0 transition-transform duration-300 ease-out transform-gpu will-change-transform cursor-pointer hover:scale-105 hover:-translate-y-1 hover:border-blue-600 hover:bg-black/70 motion-safe:transition-transform focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:ring-offset-2 focus-visible:ring-offset-black"
                         >
                             <h3 className="achievement-number text-3xl sm:text-4xl md:text-5xl font-extrabold text-white ">
                                 {value}
