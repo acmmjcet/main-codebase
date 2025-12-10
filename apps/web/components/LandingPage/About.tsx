@@ -5,43 +5,43 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 gsap.registerPlugin(ScrollTrigger);
 
-interface Milestone {
-  year: string;
-  title: string;
-  description: string;
-}
+// interface Milestone {
+//   year: string ;   
+//   title: string;
+//   description: string;
+// }
 
 interface AboutSectionProps {
   className?: string;
 }
 
-const milestones: Milestone[] = [
-  {
-    year: "2020",
-    title: "Chapter Founded",
-    description: "ACM MJCET Student Chapter established with a vision to empower tech enthusiasts"
-  },
-  {
-    year: "2021",
-    title: "First Tech Fest",
-    description: "Successfully organized our flagship technical symposium with 500+ participants"
-  },
-  {
-    year: "2022",
-    title: "National Recognition",
-    description: "Received ACM India Outstanding Chapter Award for innovation and impact"
-  },
-  {
-    year: "2023",
-    title: "Global Collaboration",
-    description: "Partnered with international tech communities and hosted global speakers"
-  },
-  {
-    year: "2024",
-    title: "Innovation Hub",
-    description: "Launched dedicated innovation lab for cutting-edge research projects"
-  }
-];
+// const milestones: Milestone[] = [
+//   {
+//     year: "2020",
+//     title: "Chapter Founded",
+//     description: "ACM MJCET Student Chapter established with a vision to empower tech enthusiasts"
+//   },
+//   {
+//     year: "2021",
+//     title: "First Tech Fest",
+//     description: "Successfully organized our flagship technical symposium with 500+ participants"
+//   },
+//   {
+//     year: "2022",
+//     title: "National Recognition",
+//     description: "Received ACM India Outstanding Chapter Award for innovation and impact"
+//   },
+//   {
+//     year: "2023",
+//     title: "Global Collaboration",
+//     description: "Partnered with international tech communities and hosted global speakers"
+//   },
+//   {
+//     year: "2024",
+//     title: "Innovation Hub",
+//     description: "Launched dedicated innovation lab for cutting-edge research projects"
+//   }
+// ];
 
 const containerVariants: Variants = {
   hidden: { 
