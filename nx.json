@@ -77,6 +77,8 @@
     }
   },
   "projects": {
-    "web": "apps/web"
+    "web": "apps/web",
+    "admin": "apps/web",
+    "cf-server": "apps/cf-server"
   }
 }

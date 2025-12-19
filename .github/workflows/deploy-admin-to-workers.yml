@@ -1,0 +1,100 @@
+name: Automated Web App Deployment to Cloudflare Workers
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'apps/admin/**'
+      - 'packages/**'
+  pull_request:
+    branches:
+      - main
+    paths:
+      - 'apps/admin/**'
+      - 'packages/**'
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: latest
+          run_install: false
+
+      - name: Get pnpm store directory
+        shell: bash
+        run: |
+          echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV
+
+      - name: Setup pnpm cache
+        uses: actions/cache@v3
+        with:
+          path: ${{ env.STORE_PATH }}
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-store-
+
+      - name: Install dependencies (root workspace)
+        run: pnpm install --no-frozen-lockfile
+
+      # -----------------------------------------------------
+      # 🔥 Build all Nx libraries your web app depends on
+      # -----------------------------------------------------
+      - name: Build internal packages (@acm/api-endpoints & @acm/portfolio-components)
+        run: |
+          pnpm nx build api-endpoints
+          pnpm nx build portfolio-components
+
+      # Debug internal package builds
+      - name: Debug built packages
+        run: |
+          echo "API Endpoints dist:"
+          ls -la ./packages/api-endpoints/dist || echo "No dist folder"
+          echo "Portfolio Components dist:"
+          ls -la ./packages/portfolio-components/dist || echo "No dist folder"
+
+      # Verify workspace packages
+      - name: Check workspace packages
+        run: pnpm list --depth 0
+
+      # Debug to ensure packages resolve inside apps/web
+      - name: Debug imports inside apps/web
+        run: |
+          echo "API Endpoints:"
+          pnpm list @acm/api-endpoints || echo "Not found"
+          echo "Portfolio Components:"
+          pnpm list @acm/portfolio-components || echo "Not found"
+        working-directory: apps/admin
+
+      # -----------------------------------------------------
+      # 🔥 Build Next.js app with OpenNext (inside apps/admin)
+      # -----------------------------------------------------
+      - name: Build OpenNext output
+        run: pnpm exec opennextjs-cloudflare build
+        working-directory: apps/admin
+
+      # Install Wrangler globally
+      - name: Install wrangler CLI
+        run: pnpm add -g wrangler
+
+      # -----------------------------------------------------
+      # 🚀 Deploy to Cloudflare Workers
+      # -----------------------------------------------------
+      - name: Deploy to Cloudflare Workers
+        run: pnpm run deploy
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+        working-directory: apps/admin
