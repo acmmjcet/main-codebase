@@ -1,0 +1,19 @@
+{
+  "name": "cf-server",
+  "sourceRoot": "apps/cf-server/src",
+  "projectType": "application",
+  "targets": {
+    "serve": {
+      "executor": "nx:run-commands",
+      "dependsOn": [
+        {
+          "target": "build",
+          "projects": ["@acm/api-endpoints"]
+        }
+      ],
+      "options": {
+        "command": "pnpm --filter cf-server dev"
+      }
+    }
+  }
+}
