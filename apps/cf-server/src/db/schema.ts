@@ -67,3 +67,5 @@ export const blogs = sqliteTable("blogs", {
   status: text("status").default("draft").notNull(),
   externalUrl: text("external_url"),
 });
+
+export * from "./profile.schema";
