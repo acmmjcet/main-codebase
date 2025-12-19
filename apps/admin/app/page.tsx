@@ -1,294 +1,693 @@
 "use client";
-import React, { useState } from 'react';
-import Link from 'next/link';
-import Image from 'next/image';
-import { 
-  Home, 
-  Compass, 
-  MessageSquare, 
-  Bell, 
-  LayoutDashboard, 
-  Users, 
-  User, 
+import React, { useState } from "react";
+import {
+  Home,
+  Compass,
+  MessageSquare,
+  Bell,
+  LayoutDashboard,
+  Users,
+  User,
   Search,
   FileText,
-  DollarSign,
-  Settings,
-  HelpCircle,
-  Globe,
-  Moon,
-  FileCheck,
-  LogOut,
   Menu,
-  ChevronRight,
   Plus,
-  HelpCircle as HelpIcon
-} from 'lucide-react';
+  HelpCircle,
+  X,
+  ChevronDown,
+  ChevronRight,
+  BookOpen,
+  Sparkles,
+  Award,
+  Briefcase,
+  FolderKanban,
+  Code2,
+  Quote,
+  UserCircle,
+  Wrench,
+  Heart,
+  Mail,
+  Calendar,
+  TrendingUp,
+  Settings,
+} from "lucide-react";
+
+// ACM Logo Icon
+const ACMLogo = () => (
+  <svg
+    width="28"
+    height="28"
+    viewBox="0 0 24 24"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    {/* A */}
+    <path
+      d="M6 20V4L12 2L18 4V20"
+      stroke="#FF6B35"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+    <path
+      d="M6 20H18"
+      stroke="#FF6B35"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+    <path
+      d="M9 11H15"
+      stroke="#FF6B35"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  </svg>
+);
+
+// Profile Section Keys
+type ProfileSection =
+  | "hero"
+  | "achievements"
+  | "specializations"
+  | "projects"
+  | "skills"
+  | "testimonials"
+  | "about"
+  | "services"
+  | "support"
+  | "contact";
+
+// Navigation Keys
+type NavKey =
+  | "home"
+  | "discover"
+  | "events"
+  | "notifications"
+  | "dashboard"
+  | "members"
+  | "blogs"
+  | ProfileSection;
+
+// Profile Sections Config
+const profileSections: {
+  key: ProfileSection;
+  label: string;
+  icon: React.ElementType;
+}[] = [
+  { key: "hero", label: "Hero Section", icon: Sparkles },
+  { key: "achievements", label: "Achievements", icon: Award },
+  { key: "specializations", label: "Specializations", icon: Briefcase },
+  { key: "projects", label: "Featured Projects", icon: FolderKanban },
+  { key: "skills", label: "Skills & Tech Stack", icon: Code2 },
+  { key: "testimonials", label: "Testimonials", icon: Quote },
+  { key: "about", label: "About Me", icon: UserCircle },
+  { key: "services", label: "Services", icon: Wrench },
+  { key: "support", label: "Support My Work", icon: Heart },
+  { key: "contact", label: "Contact CTA", icon: Mail },
+];
+
+// Navigation Item Component
+const NavItem = ({
+  icon: Icon,
+  label,
+  isActive = false,
+  onClick,
+}: {
+  icon: React.ElementType;
+  label: string;
+  isActive?: boolean;
+  onClick?: () => void;
+}) => (
+  <button
+    onClick={onClick}
+    className={`
+      flex items-center gap-3 px-3 py-2.5 rounded-xl transition-all duration-200 w-full text-left
+      ${
+        isActive
+          ? "bg-[#1c2333] text-white"
+          : "text-[#8b8b8b] hover:text-white hover:bg-[#141414]"
+      }
+    `}
+  >
+    <Icon size={20} strokeWidth={1.8} className="flex-shrink-0" />
+    <span className="text-[14px] font-medium truncate">{label}</span>
+  </button>
+);
+
+// Dropdown Navigation Item
+const DropdownNavItem = ({
+  icon: Icon,
+  label,
+  isOpen,
+  isActive,
+  onToggle,
+  children,
+}: {
+  icon: React.ElementType;
+  label: string;
+  isOpen: boolean;
+  isActive: boolean;
+  onToggle: () => void;
+  children: React.ReactNode;
+}) => (
+  <div className="space-y-0.5">
+    <button
+      onClick={onToggle}
+      className={`
+        flex items-center gap-3 px-3 py-2.5 rounded-xl transition-all duration-200 w-full text-left
+        ${
+          isActive
+            ? "bg-[#1c2333] text-white"
+            : "text-[#8b8b8b] hover:text-white hover:bg-[#141414]"
+        }
+      `}
+    >
+      <Icon size={20} strokeWidth={1.8} className="flex-shrink-0" />
+      <span className="text-[14px] font-medium truncate flex-1">{label}</span>
+      {isOpen ? (
+        <ChevronDown size={16} className="flex-shrink-0" />
+      ) : (
+        <ChevronRight size={16} className="flex-shrink-0" />
+      )}
+    </button>
+    {isOpen && (
+      <div className="ml-4 pl-3 border-l border-[#1f1f1f] space-y-0.5">
+        {children}
+      </div>
+    )}
+  </div>
+);
+
+// Sub Navigation Item
+const SubNavItem = ({
+  icon: Icon,
+  label,
+  isActive = false,
+  onClick,
+}: {
+  icon: React.ElementType;
+  label: string;
+  isActive?: boolean;
+  onClick?: () => void;
+}) => (
+  <button
+    onClick={onClick}
+    className={`
+      flex items-center gap-2.5 px-3 py-2 rounded-lg transition-all duration-200 w-full text-left
+      ${
+        isActive
+          ? "bg-[#1c2333]/70 text-white"
+          : "text-[#6b6b6b] hover:text-white hover:bg-[#141414]"
+      }
+    `}
+  >
+    <Icon size={16} strokeWidth={1.8} className="flex-shrink-0" />
+    <span className="text-[13px] font-medium truncate">{label}</span>
+  </button>
+);
+
+// Content Section Component
+const ContentSection = ({
+  title,
+  description,
+  icon: Icon,
+}: {
+  title: string;
+  description: string;
+  icon: React.ElementType;
+}) => (
+  <div className="bg-[#161616] border border-[#222222] rounded-2xl p-8 sm:p-10">
+    <div className="flex items-start gap-4 mb-6">
+      <div className="w-12 h-12 bg-[#1c2333] rounded-xl flex items-center justify-center flex-shrink-0">
+        <Icon size={24} className="text-[#FF6B35]" />
+      </div>
+      <div>
+        <h2 className="text-xl sm:text-2xl font-semibold text-white mb-2">
+          {title}
+        </h2>
+        <p className="text-[#6b6b6b] text-sm sm:text-base">{description}</p>
+      </div>
+    </div>
+    <div className="bg-[#111111] rounded-xl p-6 border border-[#1f1f1f]">
+      <p className="text-[#8b8b8b] text-sm">
+        Configure and manage the <span className="text-white">{title}</span>{" "}
+        section of your portfolio from here. Add content, update settings, and
+        preview changes in real-time.
+      </p>
+      <button className="mt-4 px-4 py-2 bg-[#1c2333] hover:bg-[#243044] text-white text-sm font-medium rounded-lg transition-colors">
+        Edit Section
+      </button>
+    </div>
+  </div>
+);
+
+// Content configurations
+const contentConfig: Record<
+  NavKey,
+  { title: string; description: string; icon: React.ElementType }
+> = {
+  home: {
+    title: "Welcome to ACM MJCET Admin",
+    description:
+      "Manage your ACM chapter's digital presence. Access all administrative tools, analytics, and content management features from this central dashboard.",
+    icon: Home,
+  },
+  discover: {
+    title: "Discover",
+    description:
+      "Explore trending topics, popular content, and discover new opportunities within the ACM community.",
+    icon: Compass,
+  },
+  events: {
+    title: "Events Management",
+    description:
+      "Create, schedule, and manage ACM MJCET events. Track registrations, send notifications, and analyze event performance.",
+    icon: Calendar,
+  },
+  notifications: {
+    title: "Notifications Center",
+    description:
+      "Manage push notifications, email alerts, and in-app messages for ACM members and subscribers.",
+    icon: Bell,
+  },
+  dashboard: {
+    title: "Analytics Dashboard",
+    description:
+      "View comprehensive analytics, member growth metrics, engagement statistics, and performance insights.",
+    icon: TrendingUp,
+  },
+  members: {
+    title: "Members Management",
+    description:
+      "Manage ACM MJCET members, roles, permissions, and membership tiers. View member activity and engagement.",
+    icon: Users,
+  },
+  blogs: {
+    title: "Blogs Management",
+    description:
+      "Create, edit, and publish blog posts. Manage categories, tags, and featured articles for the ACM MJCET blog.",
+    icon: BookOpen,
+  },
+  hero: {
+    title: "Hero Section",
+    description:
+      "Configure the hero banner with name, profession, value statement, CTAs, and visual elements.",
+    icon: Sparkles,
+  },
+  achievements: {
+    title: "Achievements & Social Proof",
+    description:
+      "Showcase company logos, publications, achievements metrics, and social proof elements.",
+    icon: Award,
+  },
+  specializations: {
+    title: "Specializations",
+    description:
+      "Define your business-oriented skill categories and expertise areas.",
+    icon: Briefcase,
+  },
+  projects: {
+    title: "Featured Projects",
+    description:
+      "Manage your portfolio projects with case studies, tech stacks, and outcomes.",
+    icon: FolderKanban,
+  },
+  skills: {
+    title: "Skills & Tech Stack",
+    description:
+      "Organize your technical skills across Frontend, Backend, Tools, and other categories.",
+    icon: Code2,
+  },
+  testimonials: {
+    title: "Testimonials",
+    description:
+      "Manage client reviews, quotes, and testimonials to build trust.",
+    icon: Quote,
+  },
+  about: {
+    title: "About Me",
+    description:
+      "Share your story, motivation, mission, and add a personal touch to your portfolio.",
+    icon: UserCircle,
+  },
+  services: {
+    title: "Services",
+    description:
+      "Define your service offerings, deliverables, pricing tiers, and target audience.",
+    icon: Wrench,
+  },
+  support: {
+    title: "Support My Work",
+    description:
+      "Set up donation links, sponsorship options, and ways for people to support your work.",
+    icon: Heart,
+  },
+  contact: {
+    title: "Contact CTA",
+    description:
+      "Configure contact forms, social links, email, and booking integrations.",
+    icon: Mail,
+  },
+};
 
 const AdminDashboard = () => {
-  const [isLegalOpen, setIsLegalOpen] = useState(false);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [activeNav, setActiveNav] = useState<NavKey>("home");
+  const [isProfileOpen, setIsProfileOpen] = useState(false);
+
+  const closeSidebar = () => setIsSidebarOpen(false);
+
+  const handleNavClick = (nav: NavKey) => {
+    setActiveNav(nav);
+    closeSidebar();
+  };
+
+  const isProfileSection = (nav: NavKey): nav is ProfileSection => {
+    return profileSections.some((s) => s.key === nav);
+  };
+
+  const currentContent = contentConfig[activeNav];
 
   return (
-    <div className="flex h-screen bg-black text-white overflow-hidden">
-      <style jsx>{`
-        aside::-webkit-scrollbar {
+    <div className="flex h-screen bg-[#0a0a0a] text-white overflow-hidden">
+      {/* Custom Scrollbar Styles */}
+      <style jsx global>{`
+        /* Sleek Scrollbar for Sidebar */
+        .sidebar-scroll::-webkit-scrollbar {
+          width: 4px;
+        }
+        .sidebar-scroll::-webkit-scrollbar-track {
+          background: transparent;
+        }
+        .sidebar-scroll::-webkit-scrollbar-thumb {
+          background: rgba(255, 255, 255, 0.1);
+          border-radius: 10px;
+        }
+        .sidebar-scroll::-webkit-scrollbar-thumb:hover {
+          background: rgba(255, 255, 255, 0.2);
+        }
+        .sidebar-scroll {
+          scrollbar-width: thin;
+          scrollbar-color: rgba(255, 255, 255, 0.1) transparent;
+        }
+
+        /* Main Content Scrollbar */
+        .main-scroll::-webkit-scrollbar {
           width: 6px;
         }
-        aside::-webkit-scrollbar-track {
+        .main-scroll::-webkit-scrollbar-track {
           background: transparent;
         }
-        aside::-webkit-scrollbar-thumb {
-          background: #2a2a2a;
-          border-radius: 3px;
+        .main-scroll::-webkit-scrollbar-thumb {
+          background: rgba(255, 255, 255, 0.15);
+          border-radius: 10px;
         }
-        aside::-webkit-scrollbar-thumb:hover {
-          background: #3a3a3a;
+        .main-scroll::-webkit-scrollbar-thumb:hover {
+          background: rgba(255, 255, 255, 0.25);
         }
-        main::-webkit-scrollbar {
-          width: 8px;
-        }
-        main::-webkit-scrollbar-track {
-          background: transparent;
-        }
-        main::-webkit-scrollbar-thumb {
-          background: #2a2a2a;
-          border-radius: 4px;
-        }
-        main::-webkit-scrollbar-thumb:hover {
-          background: #3a3a3a;
+        .main-scroll {
+          scrollbar-width: thin;
+          scrollbar-color: rgba(255, 255, 255, 0.15) transparent;
         }
       `}</style>
 
       {/* Sidebar */}
-      <aside className={`
+      <aside
+        className={`
         fixed lg:static inset-y-0 left-0 z-50
-        w-64 bg-black border-r border-[#1a1a1a]
-        transform transition-transform duration-300 ease-in-out
-        ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}
-        flex flex-col
-      `}>
-        {/* Logo */}
-        <div className="flex items-center gap-2 px-5 py-5 border-b border-[#1a1a1a]">
-          <div className="w-6 h-6 bg-gradient-to-br from-orange-500 to-white-600 rounded-md flex items-center justify-center">
-            <span className="text-white text-sm font-bold">$</span>
+        w-[280px] bg-[#0a0a0a] 
+        transform transition-transform duration-300 ease-out
+        ${isSidebarOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"}
+        flex flex-col h-full overflow-hidden
+      `}
+      >
+        {/* Logo Header */}
+        <div className="flex items-center justify-between px-4 py-4 flex-shrink-0">
+          <div className="flex items-center gap-2">
+            <ACMLogo />
+            <span className="text-white font-semibold text-lg tracking-tight">
+              ACM MJCET
+            </span>
           </div>
-          <span className="text-white font-semibold text-lg">ACM MJCET</span>
+          {/* Close button for mobile */}
+          <button
+            onClick={closeSidebar}
+            className="lg:hidden p-1.5 rounded-lg text-gray-400 hover:text-white hover:bg-[#141414] transition-colors"
+          >
+            <X size={20} />
+          </button>
         </div>
 
-        {/* Main Navigation */}
-        <nav className="flex-1 py-3 px-2 overflow-y-auto">
-          <Link 
-            href="/home" 
-            className="flex items-center gap-3 px-4 py-2.5 mx-1 rounded-xl bg-[#1a2332] border border-[#2a3a4a] text-white mb-1.5 hover:bg-[#1f2938] transition-colors"
-          >
-            <Home size={18} />
-            <span className="text-sm font-medium">Home</span>
-          </Link>
+        {/* Scrollable Navigation Area */}
+        <nav className="flex-1 px-3 py-2 overflow-y-auto overflow-x-hidden sidebar-scroll">
+          {/* Main Navigation */}
+          <div className="space-y-0.5">
+            <NavItem
+              icon={Home}
+              label="Home"
+              isActive={activeNav === "home"}
+              onClick={() => handleNavClick("home")}
+            />
+            <NavItem
+              icon={Compass}
+              label="Discover"
+              isActive={activeNav === "discover"}
+              onClick={() => handleNavClick("discover")}
+            />
+            <NavItem
+              icon={Calendar}
+              label="Events"
+              isActive={activeNav === "events"}
+              onClick={() => handleNavClick("events")}
+            />
+            <NavItem
+              icon={Bell}
+              label="Notifications"
+              isActive={activeNav === "notifications"}
+              onClick={() => handleNavClick("notifications")}
+            />
+            <NavItem
+              icon={LayoutDashboard}
+              label="Dashboard"
+              isActive={activeNav === "dashboard"}
+              onClick={() => handleNavClick("dashboard")}
+            />
+            <NavItem
+              icon={Users}
+              label="Members"
+              isActive={activeNav === "members"}
+              onClick={() => handleNavClick("members")}
+            />
+            <NavItem
+              icon={BookOpen}
+              label="Blogs"
+              isActive={activeNav === "blogs"}
+              onClick={() => handleNavClick("blogs")}
+            />
+          </div>
 
-          <Link 
-            href="/discover" 
-            className="flex items-center gap-3 px-4 py-2.5 mx-1 rounded-xl text-gray-400 mb-1.5 hover:bg-[#0f0f0f] hover:text-white transition-colors"
-          >
-            <Compass size={18} />
-            <span className="text-sm font-medium">Discover</span>
-          </Link>
+          {/* Divider */}
+          <div className="my-4 mx-1 h-px bg-[#1f1f1f]" />
 
-          <Link 
-            href="/messages" 
-            className="flex items-center gap-3 px-4 py-2.5 mx-1 rounded-xl text-gray-400 mb-1.5 hover:bg-[#0f0f0f] hover:text-white transition-colors"
-          >
-            <MessageSquare size={18} />
-            <span className="text-sm font-medium">Messages</span>
-          </Link>
-
-          <Link 
-            href="/notifications" 
-            className="flex items-center gap-3 px-4 py-2.5 mx-1 rounded-xl text-gray-400 mb-1.5 hover:bg-[#0f0f0f] hover:text-white transition-colors"
-          >
-            <Bell size={18} />
-            <span className="text-sm font-medium">Notifications</span>
-          </Link>
-
-          <Link 
-            href="/dashboard" 
-            className="flex items-center gap-3 px-4 py-2.5 mx-1 rounded-xl text-gray-400 mb-1.5 hover:bg-[#0f0f0f] hover:text-white transition-colors"
-          >
-            <LayoutDashboard size={18} />
-            <span className="text-sm font-medium">Dashboard</span>
-          </Link>
-
-          <Link 
-            href="/affiliates" 
-            className="flex items-center gap-3 px-4 py-2.5 mx-1 rounded-xl text-gray-400 mb-1.5 hover:bg-[#0f0f0f] hover:text-white transition-colors"
-          >
-            <Users size={18} />
-            <span className="text-sm font-medium">Affiliates</span>
-          </Link>
-
-          <Link 
-            href="/profile" 
-            className="flex items-center gap-3 px-4 py-2.5 mx-1 rounded-xl text-gray-400 mb-1.5 hover:bg-[#0f0f0f] hover:text-white transition-colors"
-          >
-            <User size={18} />
-            <span className="text-sm font-medium">Profile</span>
-          </Link>
-
-          {/* Your FANs Section */}
-          <div className="mt-6 mb-2">
-            <div className="flex items-center justify-between px-4 py-2">
-              <span className="text-xs font-semibold text-gray-500 uppercase tracking-wider">
-                YOUR Fans
+          {/* Profile Portfolio Section */}
+          <div className="mb-2">
+            <div className="flex items-center justify-between px-3 py-2">
+              <span className="text-[11px] font-semibold text-[#6b6b6b] uppercase tracking-wider">
+                Portfolio Sections
               </span>
-              <button className="text-gray-400 hover:text-white transition-colors">
-                <Search size={16} />
+            </div>
+          </div>
+
+          {/* Profile Dropdown */}
+          <DropdownNavItem
+            icon={User}
+            label="Profile Portfolio"
+            isOpen={isProfileOpen}
+            isActive={isProfileSection(activeNav)}
+            onToggle={() => setIsProfileOpen(!isProfileOpen)}
+          >
+            {profileSections.map((section) => (
+              <SubNavItem
+                key={section.key}
+                icon={section.icon}
+                label={section.label}
+                isActive={activeNav === section.key}
+                onClick={() => handleNavClick(section.key)}
+              />
+            ))}
+          </DropdownNavItem>
+
+          {/* Divider */}
+          <div className="my-4 mx-1 h-px bg-[#1f1f1f]" />
+
+          {/* Quick Actions */}
+          <div className="mb-2">
+            <div className="flex items-center justify-between px-3 py-2">
+              <span className="text-[11px] font-semibold text-[#6b6b6b] uppercase tracking-wider">
+                Quick Actions
+              </span>
+              <button className="p-1 rounded-md text-[#6b6b6b] hover:text-white hover:bg-[#141414] transition-colors">
+                <Search size={14} />
               </button>
             </div>
           </div>
 
-          {/* FANS List */}
-          <Link 
-            href="/cloudy-jean" 
-            className="flex items-center gap-3 px-4 py-2.5 mx-1 rounded-xl text-gray-300 mb-1.5 hover:bg-[#0f0f0f] hover:text-white transition-colors"
-          >
-            <div className="w-5 h-5 bg-teal-600 rounded-md flex items-center justify-center flex-shrink-0">
-              <span className="text-white text-xs font-bold">C</span>
-            </div>
-            <span className="text-sm font-medium">Cloudy bro</span>
-          </Link>
-
-          <button className="w-full flex items-center gap-3 px-4 py-2.5 mx-1 rounded-xl text-gray-400 mb-3 hover:bg-[#0f0f0f] hover:text-white transition-colors">
-            <Plus size={18} />
-            <span className="text-sm font-medium">Invite new FAN</span>
-          </button>
-
-          <Link 
-            href="/orders" 
-            className="flex items-center gap-3 px-4 py-2.5 mx-1 rounded-xl text-gray-400 mb-1.5 hover:bg-[#0f0f0f] hover:text-white transition-colors"
-          >
-            <FileText size={18} />
-            <span className="text-sm font-medium">Service Orders</span>
-          </Link>
-
-          <Link 
-            href="/balance" 
-            className="flex items-center gap-3 px-4 py-2.5 mx-1 rounded-xl text-gray-400 mb-1.5 hover:bg-[#0f0f0f] hover:text-white transition-colors"
-          >
-            <DollarSign size={18} />
-            <span className="text-sm font-medium">Your earnigns</span>
-          </Link>
-
-          <Link 
-            href="/account-settings" 
-            className="flex items-center gap-3 px-4 py-2.5 mx-1 rounded-xl text-gray-400 mb-1.5 hover:bg-[#0f0f0f] hover:text-white transition-colors"
-          >
-            <Settings size={18} />
-            <span className="text-sm font-medium">Account settings</span>
-          </Link>
-
-          <Link 
-            href="/help" 
-            className="flex items-center gap-3 px-4 py-2.5 mx-1 rounded-xl text-gray-400 mb-1.5 hover:bg-[#0f0f0f] hover:text-white transition-colors"
-          >
-            <HelpCircle size={18} />
-            <span className="text-sm font-medium">Help and Support</span>
-          </Link>
-
-          <button 
-            onClick={() => setIsLegalOpen(!isLegalOpen)}
-            className="w-full flex items-center gap-3 px-4 py-2.5 mx-1 rounded-xl text-gray-400 mb-1.5 hover:bg-[#0f0f0f] hover:text-white transition-colors"
-          >
-            <FileCheck size={18} />
-            <span className="text-sm font-medium">Legal</span>
-            <ChevronRight size={16} className={`ml-auto transition-transform ${isLegalOpen ? 'rotate-90' : ''}`} />
-          </button>
-
-          {/* Legal Submenu */}
-          {isLegalOpen && (
-            <div className="ml-6 border-l border-[#1a1a1a] pl-3 space-y-1 mb-1.5">
-              <Link 
-                href="/about" 
-                className="block px-3 py-2 rounded-lg text-sm text-gray-400 hover:bg-[#0f0f0f] hover:text-white transition-colors"
-              >
-                About
-              </Link>
-              <Link 
-                href="/privacy" 
-                className="block px-3 py-2 rounded-lg text-sm text-gray-400 hover:bg-[#0f0f0f] hover:text-white transition-colors"
-              >
-                Privacy
-              </Link>
-              <Link 
-                href="/terms" 
-                className="block px-3 py-2 rounded-lg text-sm text-gray-400 hover:bg-[#0f0f0f] hover:text-white transition-colors"
-              >
-                Terms
-              </Link>
-              <Link 
-                href="/docs" 
-                className="block px-3 py-2 rounded-lg text-sm text-gray-400 hover:bg-[#0f0f0f] hover:text-white transition-colors"
-              >
-                Docs
-              </Link>
-            </div>
-          )}
+          {/* Quick Action Buttons */}
+          <div className="space-y-0.5">
+            <button className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-[#6b6b6b] hover:text-white hover:bg-[#141414] transition-all duration-200 w-full">
+              <div className="w-6 h-6 rounded-lg border border-[#2a2a2a] border-dashed flex items-center justify-center flex-shrink-0">
+                <Plus size={14} className="text-[#6b6b6b]" />
+              </div>
+              <span className="text-[14px] font-medium">New Blog Post</span>
+            </button>
+            <button className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-[#6b6b6b] hover:text-white hover:bg-[#141414] transition-all duration-200 w-full">
+              <div className="w-6 h-6 bg-teal-700 rounded-lg flex items-center justify-center flex-shrink-0">
+                <Calendar size={14} className="text-white" />
+              </div>
+              <span className="text-[14px] font-medium">Create Event</span>
+            </button>
+          </div>
         </nav>
 
-        {/* Menu Button at Bottom */}
-        <div className="border-t border-[#1a1a1a] p-3">
-          <button className="w-full flex items-center gap-3 px-4 py-2.5 rounded-xl text-gray-400 hover:bg-[#0f0f0f] hover:text-white transition-colors">
-            <Menu size={18} />
-            <span className="text-sm font-medium">Menu</span>
-            <HelpIcon size={18} className="ml-auto" />
-          </button>
+        {/* Bottom Menu Bar */}
+        <div className="px-3 py-3 flex-shrink-0 border-t border-[#1a1a1a]">
+          <div className="flex items-center justify-between px-3 py-2">
+            <button className="flex items-center gap-2 text-[#8b8b8b] hover:text-white transition-colors">
+              <Settings size={18} strokeWidth={1.5} />
+              <span className="text-[14px] font-medium">Settings</span>
+            </button>
+            <button className="p-1.5 rounded-lg text-[#6b6b6b] hover:text-white hover:bg-[#141414] transition-colors">
+              <HelpCircle size={18} strokeWidth={1.5} />
+            </button>
+          </div>
         </div>
       </aside>
 
       {/* Mobile Overlay */}
       {isSidebarOpen && (
-        <div 
-          className="fixed inset-0 bg-black/50 z-40 lg:hidden"
-          onClick={() => setIsSidebarOpen(false)}
+        <div
+          className="fixed inset-0 bg-black/60 backdrop-blur-sm z-40 lg:hidden transition-opacity duration-300"
+          onClick={closeSidebar}
         />
       )}
 
-      {/* Main Content with Rounded Container */}
-      <main className="flex-1 overflow-hidden bg-black p-2 lg:p-3">
-        <div className="h-full bg-[#0a0a0a] rounded-2xl lg:rounded-3xl overflow-y-auto border border-[#1a1a1a]">
+      {/* Main Content Area */}
+      <main className="flex-1 overflow-hidden bg-[#0a0a0a] lg:p-2">
+        <div className="h-full bg-[#111111] lg:rounded-2xl overflow-y-auto main-scroll lg:border lg:border-[#1a1a1a]">
           {/* Mobile Header */}
-          <div className="lg:hidden flex items-center justify-between p-4 border-b border-[#1a1a1a] bg-[#0a0a0a] sticky top-0 z-10">
-            <button 
+          <div className="lg:hidden flex items-center justify-between p-4 bg-[#111111] sticky top-0 z-10 border-b border-[#1a1a1a]">
+            <button
               onClick={() => setIsSidebarOpen(true)}
-              className="text-white"
+              className="p-2 rounded-lg text-white hover:bg-[#1a1a1a] transition-colors"
             >
-              <Menu size={24} />
+              <Menu size={22} />
             </button>
             <div className="flex items-center gap-2">
-              <div className="w-6 h-6 bg-gradient-to-br from-orange-500 to-red-600 rounded-md flex items-center justify-center">
-                <span className="text-white text-sm font-bold">A</span>
-              </div>
-              <span className="text-white font-semibold text-lg">ACM</span>
+              <ACMLogo />
+              <span className="text-white font-semibold text-lg">
+                ACM MJCET
+              </span>
             </div>
-            <div className="w-6" />
+            <div className="w-10" /> {/* Spacer for centering */}
           </div>
 
-          {/* Content Area */}
-          <div className="flex items-center justify-center min-h-[calc(100vh-100px)] lg:min-h-full p-6 lg:p-8">
-            <div className="max-w-2xl w-full">
-              {/* Empty State Card */}
-              <div className="bg-[#141414] border border-[#1f1f1f] rounded-3xl p-12 text-center">
-                <div className="mb-6">
-                  <div className="w-20 h-20 bg-[#1a1a1a] rounded-2xl mx-auto flex items-center justify-center">
-                    <FileText size={32} className="text-gray-600" />
+          {/* Content Area - Switch Based Rendering */}
+          <div className="p-6 lg:p-8">
+            <div className="max-w-4xl mx-auto">
+              {/* Breadcrumb */}
+              <div className="flex items-center gap-2 text-sm text-[#6b6b6b] mb-6">
+                <span>Admin</span>
+                <ChevronRight size={14} />
+                <span className="text-white">{currentContent.title}</span>
+              </div>
+
+              {/* Dynamic Content */}
+              <ContentSection
+                title={currentContent.title}
+                description={currentContent.description}
+                icon={currentContent.icon}
+              />
+
+              {/* Additional Quick Stats for Home */}
+              {activeNav === "home" && (
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mt-6">
+                  <div className="bg-[#161616] border border-[#222222] rounded-xl p-5">
+                    <div className="flex items-center gap-3 mb-3">
+                      <div className="w-10 h-10 bg-blue-500/20 rounded-lg flex items-center justify-center">
+                        <Users size={20} className="text-blue-400" />
+                      </div>
+                      <span className="text-[#6b6b6b] text-sm">
+                        Total Members
+                      </span>
+                    </div>
+                    <p className="text-2xl font-bold text-white">1,234</p>
+                  </div>
+                  <div className="bg-[#161616] border border-[#222222] rounded-xl p-5">
+                    <div className="flex items-center gap-3 mb-3">
+                      <div className="w-10 h-10 bg-green-500/20 rounded-lg flex items-center justify-center">
+                        <BookOpen size={20} className="text-green-400" />
+                      </div>
+                      <span className="text-[#6b6b6b] text-sm">Blog Posts</span>
+                    </div>
+                    <p className="text-2xl font-bold text-white">48</p>
+                  </div>
+                  <div className="bg-[#161616] border border-[#222222] rounded-xl p-5">
+                    <div className="flex items-center gap-3 mb-3">
+                      <div className="w-10 h-10 bg-purple-500/20 rounded-lg flex items-center justify-center">
+                        <Calendar size={20} className="text-purple-400" />
+                      </div>
+                      <span className="text-[#6b6b6b] text-sm">
+                        Upcoming Events
+                      </span>
+                    </div>
+                    <p className="text-2xl font-bold text-white">5</p>
                   </div>
                 </div>
-                <h2 className="text-2xl font-semibold text-white mb-3">
-                  Looks like there aren't any posts yet.
-                </h2>
-                <p className="text-gray-500 text-base">
-                  Be the first one to make a post!
-                </p>
-              </div>
+              )}
+
+              {/* Blogs specific content */}
+              {activeNav === "blogs" && (
+                <div className="mt-6 space-y-4">
+                  <div className="flex items-center justify-between">
+                    <h3 className="text-lg font-semibold text-white">
+                      Recent Posts
+                    </h3>
+                    <button className="px-4 py-2 bg-[#FF6B35] hover:bg-[#e55a2a] text-white text-sm font-medium rounded-lg transition-colors flex items-center gap-2">
+                      <Plus size={16} />
+                      New Post
+                    </button>
+                  </div>
+                  <div className="bg-[#161616] border border-[#222222] rounded-xl divide-y divide-[#222222]">
+                    {[
+                      "Getting Started with React 19",
+                      "ACM Code Sprint Results",
+                      "Web Dev Workshop Recap",
+                    ].map((post, i) => (
+                      <div
+                        key={i}
+                        className="p-4 flex items-center justify-between hover:bg-[#1a1a1a] transition-colors"
+                      >
+                        <div className="flex items-center gap-3">
+                          <div className="w-10 h-10 bg-[#1c2333] rounded-lg flex items-center justify-center">
+                            <FileText size={18} className="text-[#6b6b6b]" />
+                          </div>
+                          <div>
+                            <p className="text-white font-medium">{post}</p>
+                            <p className="text-[#6b6b6b] text-sm">
+                              Draft • Updated 2 days ago
+                            </p>
+                          </div>
+                        </div>
+                        <button className="text-[#6b6b6b] hover:text-white transition-colors">
+                          <ChevronRight size={20} />
+                        </button>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
             </div>
           </div>
         </div>
