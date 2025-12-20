@@ -1,9 +1,8 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Home,
   Compass,
-  MessageSquare,
   Bell,
   LayoutDashboard,
   Users,
@@ -30,7 +29,13 @@ import {
   Calendar,
   TrendingUp,
   Settings,
+  LogOut,
+  Loader2,
 } from "lucide-react";
+import Auth from "@/components/Auth";
+import { supabase } from "@/utils/supabase/client";
+import type { User as SupabaseUser, Session } from "@supabase/supabase-js";
+import Image from "next/image";
 
 // ACM Logo Icon
 const ACMLogo = () => (
@@ -353,9 +358,112 @@ const contentConfig: Record<
 };
 
 const AdminDashboard = () => {
+  // Authentication State
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+  const [user, setUser] = useState<SupabaseUser | null>(null);
+  const [authError, setAuthError] = useState<string | null>(null);
+
+  // Dashboard State
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [activeNav, setActiveNav] = useState<NavKey>("home");
   const [isProfileOpen, setIsProfileOpen] = useState(false);
+
+  // Allowed email domain
+  const ALLOWED_EMAIL_DOMAIN = "@mjcollege.ac.in";
+
+  // Validate email domain
+  const isValidEmailDomain = (email: string | undefined): boolean => {
+    if (!email) return false;
+    return email.toLowerCase().endsWith(ALLOWED_EMAIL_DOMAIN.toLowerCase());
+  };
+
+  // Handle unauthorized email - sign out and show error
+  const handleUnauthorizedEmail = async (email: string) => {
+    await supabase.auth.signOut();
+    setUser(null);
+    setIsAuthenticated(false);
+    setAuthError(
+      `Access denied. Only ${ALLOWED_EMAIL_DOMAIN} emails are allowed. You signed in with: ${email}`
+    );
+    setIsLoading(false);
+  };
+
+  // Check authentication status on mount
+  useEffect(() => {
+    const checkAuth = async () => {
+      try {
+        const { data: { session }, error } = await supabase.auth.getSession();
+        
+        if (error) {
+          setAuthError(error.message);
+          setIsAuthenticated(false);
+        } else if (session?.user) {
+          // Validate email domain
+          if (!isValidEmailDomain(session.user.email)) {
+            await handleUnauthorizedEmail(session.user.email || "unknown");
+            return;
+          }
+          setUser(session.user);
+          setIsAuthenticated(true);
+        } else {
+          setIsAuthenticated(false);
+        }
+      } catch (err: any) {
+        setAuthError(err.message || "Authentication failed");
+        setIsAuthenticated(false);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    checkAuth();
+
+    // Listen for auth state changes
+    const { data: { subscription } } = supabase.auth.onAuthStateChange(
+      async (event, session) => {
+        if (event === "SIGNED_IN" && session?.user) {
+          if (!isValidEmailDomain(session.user.email)) {
+            await handleUnauthorizedEmail(session.user.email || "unknown");
+            return;
+          }
+          setUser(session.user);
+          setIsAuthenticated(true);
+          setAuthError(null);
+        } else if (event === "SIGNED_OUT") {
+          setUser(null);
+          setIsAuthenticated(false);
+        }
+      }
+    );
+
+    return () => subscription.unsubscribe();
+  }, []);
+
+  // Handle sign out
+  const handleSignOut = async () => {
+    try {
+      setIsLoading(true);
+      const { error } = await supabase.auth.signOut();
+      if (error) throw error;
+      setIsAuthenticated(false);
+      setUser(null);
+    } catch (err: any) {
+      console.error("Sign out error:", err);
+      setAuthError(err.message || "Failed to sign out");
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  // Auth callbacks
+  const handleAuthSuccess = () => {
+    setAuthError(null);
+  };
+
+  const handleAuthError = (error: string) => {
+    setAuthError(error);
+  };
 
   const closeSidebar = () => setIsSidebarOpen(false);
 
@@ -370,6 +478,32 @@ const AdminDashboard = () => {
 
   const currentContent = contentConfig[activeNav];
 
+  // Loading State
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-[#0a0a0a] flex items-center justify-center">
+        <div className="text-center">
+          <div className="w-16 h-16 bg-[#161616] rounded-2xl flex items-center justify-center mx-auto mb-4 animate-pulse">
+            <Loader2 size={32} className="text-[#FF6B35] animate-spin" />
+          </div>
+          <p className="text-[#6b6b6b] text-sm">Checking authentication...</p>
+        </div>
+      </div>
+    );
+  }
+
+  // Not Authenticated - Show Auth Screen
+  if (!isAuthenticated) {
+    return (
+      <Auth 
+        onAuthSuccess={handleAuthSuccess}
+        onAuthError={handleAuthError}
+        initialError={authError}
+      />
+    );
+  }
+
+  // Authenticated - Show Dashboard
   return (
     <div className="flex h-screen bg-[#0a0a0a] text-white overflow-hidden">
       {/* Custom Scrollbar Styles */}
@@ -553,14 +687,50 @@ const AdminDashboard = () => {
 
         {/* Bottom Menu Bar */}
         <div className="px-3 py-3 flex-shrink-0 border-t border-[#1a1a1a]">
+          {/* User Info */}
+          {user && (
+            <div className="flex items-center gap-3 px-3 py-2 mb-2">
+              {user.user_metadata?.avatar_url ? (
+                <Image
+                  src={user.user_metadata.avatar_url}
+                  alt="Profile"
+                  width={32}
+                  height={32}
+                  className="w-8 h-8 rounded-lg object-cover"
+                />
+              ) : (
+                <div className="w-8 h-8 bg-[#1c2333] rounded-lg flex items-center justify-center">
+                  <User size={16} className="text-[#6b6b6b]" />
+                </div>
+              )}
+              <div className="flex-1 min-w-0">
+                <p className="text-white text-sm font-medium truncate">
+                  {user.user_metadata?.full_name || user.email?.split('@')[0] || 'Admin'}
+                </p>
+                <p className="text-[#6b6b6b] text-xs truncate">
+                  {user.email}
+                </p>
+              </div>
+            </div>
+          )}
+          
           <div className="flex items-center justify-between px-3 py-2">
             <button className="flex items-center gap-2 text-[#8b8b8b] hover:text-white transition-colors">
               <Settings size={18} strokeWidth={1.5} />
               <span className="text-[14px] font-medium">Settings</span>
             </button>
-            <button className="p-1.5 rounded-lg text-[#6b6b6b] hover:text-white hover:bg-[#141414] transition-colors">
-              <HelpCircle size={18} strokeWidth={1.5} />
-            </button>
+            <div className="flex items-center gap-1">
+              <button className="p-1.5 rounded-lg text-[#6b6b6b] hover:text-white hover:bg-[#141414] transition-colors">
+                <HelpCircle size={18} strokeWidth={1.5} />
+              </button>
+              <button 
+                onClick={handleSignOut}
+                className="p-1.5 rounded-lg text-[#6b6b6b] hover:text-red-400 hover:bg-red-500/10 transition-colors"
+                title="Sign out"
+              >
+                <LogOut size={18} strokeWidth={1.5} />
+              </button>
+            </div>
           </div>
         </div>
       </aside>

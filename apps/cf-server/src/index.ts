@@ -2,6 +2,7 @@ import { Hono } from "hono";
 import { cors } from "hono/cors";
 import {rateLimiter}  from "hono-rate-limiter";
 import blogRoutes from "./routes/blog";
+import userProfileRoutes from "./routes/user.auth";
 
 // Initialize app
 const app = new Hono();
@@ -52,5 +53,7 @@ app.use('*', (c, next) => {
 
 // Mount routes
 app.route('/blog',blogRoutes);
+app.route('/profiles', userProfileRoutes);
+
 
 export default app;

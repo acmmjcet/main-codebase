@@ -1,25 +1,6 @@
 import { sqliteTable, text, integer} from "drizzle-orm/sqlite-core";
 import { sql } from "drizzle-orm";
 
-
-export const userProfiles = sqliteTable("userProfiles", {
-  id: integer("id").primaryKey({ autoIncrement: true }),
-
-  uuid: text("uuid").notNull().unique(),
-
-  created_at: text("created_at").notNull().default(sql`CURRENT_TIMESTAMP`),
-  updated_at: text("updated_at"),
-
-  email: text("email").notNull(),
-  full_name: text("full_name").notNull(),
-  avatar_url: text("avatar_url"),
-
-  // Auth & identity
-  user_login_info: text("user_login_info"), // JWT, auth provider metadata etc.
-
-  bio: text("bio"),
-});
-
 export const blogs = sqliteTable("blogs", {
   id: integer("id").primaryKey({ autoIncrement: true }),
   
