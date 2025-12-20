@@ -1,4 +1,4 @@
-name: Automated Web App Deployment to Cloudflare Workers
+name: Automated Admin App Deployment to Cloudflare Workers
 
 on:
   push:

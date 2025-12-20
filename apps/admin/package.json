@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.89.0",
+    "@opennextjs/cloudflare": "1.3.0",
     "next": "15.3.6",
     "react": "19.0.1",
     "react-dom": "19.0.1"
