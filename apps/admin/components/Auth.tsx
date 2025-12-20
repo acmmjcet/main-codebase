@@ -20,9 +20,6 @@ interface AuthProps {
   initialError?: string | null;
 }
 
-// Allowed email domain
-const ALLOWED_EMAIL_DOMAIN = "@mjcollege.ac.in";
-
 // Google Icon Component
 const GoogleIcon = () => (
   <svg width="20" height="20" viewBox="0 0 24 24">
@@ -101,8 +98,8 @@ const Auth: React.FC<AuthProps> = ({ onAuthSuccess, onAuthError, initialError })
 
       // Success callback
       onAuthSuccess?.();
-    } catch (err: any) {
-      const errorMessage = err.message || 'Failed to sign in with Google. Please try again.';
+    } catch (err: unknown) {
+      const errorMessage = err instanceof Error ? err.message : 'Failed to sign in with Google. Please try again.';
       setError(errorMessage);
       onAuthError?.(errorMessage);
       setIsLoading(false);

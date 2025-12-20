@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { supabase } from "@/utils/supabase/client";
 import { API_ENDPOINTS } from "@/config/api";
 
@@ -46,7 +46,7 @@ export function useUser() {
   const [user, setUser] = useState<UserProfile | null>(null);
   const [loading, setLoading] = useState(true);
 
-  const fetchUserProfile = async (uuid: string) => {
+  const fetchUserProfile = useCallback(async (uuid: string) => {
     try {
       const res = await fetch(API_ENDPOINTS.getProfileByUUID(uuid));
 
@@ -89,21 +89,26 @@ export function useUser() {
     } catch (err) {
       console.error("❌ Error fetching user profile:", err);
     }
-  };
-
-  const checkSession = async () => {
-    const { data } = await supabase.auth.getSession();
-    if (data.session) {
-      await fetchUserProfile(data.session.user.id);
-    }
-    setLoading(false);
-  };
+  }, []);
 
   useEffect(() => {
-    checkSession();
+    let isMounted = true;
+
+    const initSession = async () => {
+      const { data } = await supabase.auth.getSession();
+      if (isMounted) {
+        if (data.session) {
+          await fetchUserProfile(data.session.user.id);
+        }
+        setLoading(false);
+      }
+    };
+
+    initSession();
 
     const { data: subscription } = supabase.auth.onAuthStateChange(
       async (event, session) => {
+        if (!isMounted) return;
         if (event === "SIGNED_IN" && session) {
           await fetchUserProfile(session.user.id);
         } else if (event === "SIGNED_OUT") {
@@ -112,8 +117,11 @@ export function useUser() {
       }
     );
 
-    return () => subscription.subscription.unsubscribe();
-  }, []);
+    return () => {
+      isMounted = false;
+      subscription.subscription.unsubscribe();
+    };
+  }, [fetchUserProfile]);
 
   return { user, loading };
 }

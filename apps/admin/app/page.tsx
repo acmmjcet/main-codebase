@@ -34,7 +34,7 @@ import {
 } from "lucide-react";
 import Auth from "@/components/Auth";
 import { supabase } from "@/utils/supabase/client";
-import type { User as SupabaseUser, Session } from "@supabase/supabase-js";
+import type { User as SupabaseUser } from "@supabase/supabase-js";
 import Image from "next/image";
 
 // ACM Logo Icon
@@ -409,8 +409,9 @@ const AdminDashboard = () => {
         } else {
           setIsAuthenticated(false);
         }
-      } catch (err: any) {
-        setAuthError(err.message || "Authentication failed");
+      } catch (err: unknown) {
+        const message = err instanceof Error ? err.message : "Authentication failed";
+        setAuthError(message);
         setIsAuthenticated(false);
       } finally {
         setIsLoading(false);
@@ -448,9 +449,10 @@ const AdminDashboard = () => {
       if (error) throw error;
       setIsAuthenticated(false);
       setUser(null);
-    } catch (err: any) {
+    } catch (err: unknown) {
       console.error("Sign out error:", err);
-      setAuthError(err.message || "Failed to sign out");
+      const message = err instanceof Error ? err.message : "Failed to sign out";
+      setAuthError(message);
     } finally {
       setIsLoading(false);
     }
