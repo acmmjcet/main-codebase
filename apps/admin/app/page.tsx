@@ -28,11 +28,12 @@ import {
   Mail,
   Calendar,
   TrendingUp,
-  Settings,
+  Settings as SettingsIcon,
   LogOut,
   Loader2,
 } from "lucide-react";
 import Auth from "@/components/Auth";
+import SettingsComponent from "@/components/Settings";
 import { supabase } from "@/utils/supabase/client";
 import type { User as SupabaseUser } from "@supabase/supabase-js";
 import Image from "next/image";
@@ -93,6 +94,7 @@ type NavKey =
   | "dashboard"
   | "members"
   | "blogs"
+  | "settings"
   | ProfileSection;
 
 // Profile Sections Config
@@ -354,6 +356,12 @@ const contentConfig: Record<
     description:
       "Configure contact forms, social links, email, and booking integrations.",
     icon: Mail,
+  },
+  settings: {
+    title: "Profile Settings",
+    description:
+      "Manage your profile information, preferences, and account settings.",
+    icon: SettingsIcon,
   },
 };
 
@@ -717,8 +725,14 @@ const AdminDashboard = () => {
           )}
           
           <div className="flex items-center justify-between px-3 py-2">
-            <button className="flex items-center gap-2 text-[#8b8b8b] hover:text-white transition-colors">
-              <Settings size={18} strokeWidth={1.5} />
+            <button 
+              onClick={() => {
+                setActiveNav("settings");
+                setIsSidebarOpen(false);
+              }}
+              className={`flex items-center gap-2 transition-colors ${activeNav === "settings" ? "text-[#FF6B35]" : "text-[#8b8b8b] hover:text-white"}`}
+            >
+              <SettingsIcon size={18} strokeWidth={1.5} />
               <span className="text-[14px] font-medium">Settings</span>
             </button>
             <div className="flex items-center gap-1">
@@ -775,12 +789,14 @@ const AdminDashboard = () => {
                 <span className="text-white">{currentContent.title}</span>
               </div>
 
-              {/* Dynamic Content */}
-              <ContentSection
-                title={currentContent.title}
-                description={currentContent.description}
-                icon={currentContent.icon}
-              />
+              {/* Dynamic Content - Skip for settings page */}
+              {activeNav !== "settings" && (
+                <ContentSection
+                  title={currentContent.title}
+                  description={currentContent.description}
+                  icon={currentContent.icon}
+                />
+              )}
 
               {/* Additional Quick Stats for Home */}
               {activeNav === "home" && (
@@ -860,6 +876,9 @@ const AdminDashboard = () => {
                   </div>
                 </div>
               )}
+
+              {/* Settings Component */}
+              {activeNav === "settings" && <SettingsComponent />}
             </div>
           </div>
         </div>
