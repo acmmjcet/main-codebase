@@ -3,31 +3,38 @@ import { ArrowRight, CalendarDays, Code2, Cpu, Sparkles, Users } from "lucide-re
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 
+const focusAreas = [
+  {
+    title: "Technical Excellence",
+    description: "Hands-on labs, coding sprints, and mentorship-driven learning paths.",
+    icon: Code2,
+  },
+  {
+    title: "Research & Innovation",
+    description: "Build impactful projects and explore emerging technologies with peers.",
+    icon: Cpu,
+  },
+  {
+    title: "Community Leadership",
+    description: "Host events, collaborate across teams, and grow as future tech leaders.",
+    icon: Users,
+  },
+];
+
+const events = [
+  { name: "HackForge 2026", type: "Hackathon", date: "August 2026" },
+  { name: "AI Builders Week", type: "Workshop Series", date: "September 2026" },
+  { name: "Industry Connect Summit", type: "Conference", date: "October 2026" },
+];
+
+const stats = [
+  { label: "Active Members", value: "250+" },
+  { label: "Events Hosted", value: "40+" },
+  { label: "Projects Built", value: "60+" },
+  { label: "Industry Mentors", value: "25+" },
+];
+
 export default function Index() {
-  const focusAreas = [
-    {
-      title: "Technical Excellence",
-      description: "Hands-on labs, coding sprints, and mentorship-driven learning paths.",
-      icon: Code2,
-    },
-    {
-      title: "Research & Innovation",
-      description: "Build impactful projects and explore emerging technologies with peers.",
-      icon: Cpu,
-    },
-    {
-      title: "Community Leadership",
-      description: "Host events, collaborate across teams, and grow as future tech leaders.",
-      icon: Users,
-    },
-  ];
-
-  const events = [
-    { name: "HackForge 2026", type: "Hackathon", date: "August 2026" },
-    { name: "AI Builders Week", type: "Workshop Series", date: "September 2026" },
-    { name: "Industry Connect Summit", type: "Conference", date: "October 2026" },
-  ];
-
   return (
     <>
       <div className="min-h-screen bg-[#060608] text-white">
@@ -69,12 +76,7 @@ export default function Index() {
                 </div>
               </div>
               <div className="grid w-full max-w-xl grid-cols-2 gap-4">
-                {[
-                  { label: "Active Members", value: "250+" },
-                  { label: "Events Hosted", value: "40+" },
-                  { label: "Projects Built", value: "60+" },
-                  { label: "Industry Mentors", value: "25+" },
-                ].map((item) => (
+                {stats.map((item) => (
                   <div
                     key={item.label}
                     className="rounded-2xl border border-white/10 bg-white/[0.04] p-5 backdrop-blur"
