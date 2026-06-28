@@ -158,10 +158,10 @@ const Footer: React.FC = () => {
                 <Phone className="mt-0.5 h-4 w-4 flex-shrink-0 text-white/60" />
                 <Link
                   className="group text-sm text-white/80 transition-colors duration-300 hover:text-white"
-                  href="tel:+917799005866"
+                  href="tel:+919059538426"
                 >
                   <span className="bg-gradient-to-r from-white via-white to-white bg-[length:200%_100%] bg-clip-text transition-all duration-300 group-hover:animate-shine">
-                    +91 779 900 5866
+                    +91 905 953 8426
                   </span>
                 </Link>
               </div>
