@@ -18,9 +18,9 @@ interface TeamMember {
 const TeamPage: React.FC = () => {
   const [teamMembers, setTeamMembers] = useState<TeamMember[]>([]);
   const [loading, setLoading] = useState(true);
-  const [selectedYear, setSelectedYear] = useState<string>("2025-2026");
+  const [selectedYear, setSelectedYear] = useState<string>("2026-2027");
 
-  const years = ["2022-2023", "2023-2024", "2024-2025", "2025-2026"];
+  const years = ["2022-2023", "2023-2024", "2024-2025", "2025-2026", "2026-2027"];
 
   useEffect(() => {
     fetch("/team.json")

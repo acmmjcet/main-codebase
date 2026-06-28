@@ -386,10 +386,10 @@ export default function ContactPage() {
 								/>
 								<p className="text-sm text-neutral-400">Chair</p>
 								<a
-									href="tel:+917799005866"
+									href="tel:+919059538426"
 									className="mt-1 block text-lg font-medium text-neutral-100 underline-offset-4 hover:underline"
 								>
-									Waasi: +91 77990 05866
+									Afifah: +91 90595 38426
 								</a>
 							</div>
 							<div className="relative rounded-xl border border-neutral-800 bg-neutral-900/40 p-6">
@@ -405,10 +405,10 @@ export default function ContactPage() {
 								/>
 								<p className="text-sm text-neutral-400">Vice Chair</p>
 								<a
-									href="tel:+918978868781"
+									href="tel:+919484834444"
 									className="mt-1 block text-lg font-medium text-neutral-100 underline-offset-4 hover:underline"
 								>
-									Faaroq: +91 89788 68781
+									Luqman: +91 94848 34444
 								</a>
 							</div>
 						</div>
